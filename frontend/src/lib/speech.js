@@ -22,7 +22,10 @@ export function getRecognition() {
   if (!SR) return null
   const r = new SR()
   r.lang = 'de-DE'
-  r.interimResults = false
+  // Keep listening until the user stops, and stream interim results so the
+  // transcript appears live while speaking instead of only at the very end.
+  r.continuous = true
+  r.interimResults = true
   r.maxAlternatives = 1
   return r
 }

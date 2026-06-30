@@ -250,6 +250,7 @@ function SpeakingWidget({ content, response, setResponse, disabled }) {
   const [listening, setListening] = useState(false)
   const [error, setError] = useState('')
   const recRef = useRef(null)
+  const gotResultRef = useRef(false)
   const supported = recognitionSupported()
 
   function start() {
@@ -260,13 +261,24 @@ function SpeakingWidget({ content, response, setResponse, disabled }) {
       return
     }
     recRef.current = r
+    gotResultRef.current = false
     setError('')
-    r.onresult = (e) => setResponse({ transcript: e.results[0][0].transcript })
+    r.onresult = (e) => {
+      let text = ''
+      for (let i = 0; i < e.results.length; i++) text += e.results[i][0].transcript
+      if (text.trim()) gotResultRef.current = true
+      setResponse({ transcript: text })
+    }
     r.onerror = (e) => {
       setListening(false)
       setError(recognitionErrorMessage(e.error))
     }
-    r.onend = () => setListening(false)
+    r.onend = () => {
+      setListening(false)
+      if (!gotResultRef.current) {
+        setError((prev) => prev || 'Ich habe nichts verstanden. Sprich noch einmal deutlich – oder tippe deine Antwort unten ein.')
+      }
+    }
     try {
       r.start()
       setListening(true)
