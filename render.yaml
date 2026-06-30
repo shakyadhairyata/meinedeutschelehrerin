@@ -57,7 +57,6 @@ services:
     runtime: static
     buildCommand: cd frontend && npm ci && npm run build
     staticPublishPath: frontend/dist
-    region: frankfurt
     envVars:
       - key: VITE_API_BASE_URL
         value: https://meinedeutschelehrerin-api.onrender.com
