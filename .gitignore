@@ -1,0 +1,32 @@
+# .NET
+bin/
+obj/
+*.user
+
+# Local databases
+*.db
+*.db-shm
+*.db-wal
+
+# Python
+language-service/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node
+node_modules/
+frontend/dist/
+
+# Env & secrets
+.env
+
+# Logs / runtime
+*.log
+
+# Editor / OS / tooling
+.vs/
+.vscode/
+.idea/
+.DS_Store
+.claude/

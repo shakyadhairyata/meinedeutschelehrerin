@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MeineDeutscheLehrerin.Api/MeineDeutscheLehrerin.Api.csproj" />
+    <Project Path="src/MeineDeutscheLehrerin.Domain/MeineDeutscheLehrerin.Domain.csproj" />
+    <Project Path="src/MeineDeutscheLehrerin.Infrastructure/MeineDeutscheLehrerin.Infrastructure.csproj" />
+  </Folder>
+</Solution>
