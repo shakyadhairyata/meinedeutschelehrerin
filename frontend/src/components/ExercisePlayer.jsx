@@ -248,16 +248,36 @@ function WritingWidget({ content, response, setResponse, disabled }) {
 
 function SpeakingWidget({ content, response, setResponse, disabled }) {
   const [listening, setListening] = useState(false)
+  const [error, setError] = useState('')
+  const recRef = useRef(null)
   const supported = recognitionSupported()
 
-  function record() {
+  function start() {
+    if (listening) return
     const r = getRecognition()
-    if (!r) return
-    setListening(true)
+    if (!r) {
+      setError('Spracherkennung ist in diesem Browser nicht verfügbar.')
+      return
+    }
+    recRef.current = r
+    setError('')
     r.onresult = (e) => setResponse({ transcript: e.results[0][0].transcript })
-    r.onerror = () => setListening(false)
+    r.onerror = (e) => {
+      setListening(false)
+      setError(recognitionErrorMessage(e.error))
+    }
     r.onend = () => setListening(false)
-    r.start()
+    try {
+      r.start()
+      setListening(true)
+    } catch {
+      setError('Die Aufnahme konnte nicht gestartet werden. Versuche es noch einmal.')
+    }
+  }
+
+  function stop() {
+    recRef.current?.stop()
+    setListening(false)
   }
 
   return (
@@ -269,16 +289,42 @@ function SpeakingWidget({ content, response, setResponse, disabled }) {
         </div>
       )}
       {supported ? (
-        <button type="button" className={listening ? 'btn bg-rose-600 text-white' : 'btn-ghost'} disabled={disabled} onClick={record}>
-          {listening ? '● Aufnahme läuft…' : '🎙️ Sprechen & aufnehmen'}
+        <button type="button" className={listening ? 'btn bg-rose-600 text-white' : 'btn-ghost'}
+          disabled={disabled} onClick={listening ? stop : start}>
+          {listening ? '■ Aufnahme stoppen' : '🎙️ Sprechen & aufnehmen'}
         </button>
       ) : (
-        <p className="text-xs text-slate-400">Spracherkennung nicht verfügbar — tippe deine Antwort unten.</p>
+        <p className="text-xs text-slate-400">
+          Spracherkennung wird in diesem Browser nicht unterstützt (am besten Chrome oder Edge).
+          Tippe deine Antwort unten ein.
+        </p>
       )}
+      {error && <Alert kind="error">{error}</Alert>}
       <textarea className="input min-h-[70px]" value={response.transcript} disabled={disabled}
-        onChange={(e) => setResponse({ transcript: e.target.value })} placeholder="Transkription / Antwort…" />
+        onChange={(e) => setResponse({ transcript: e.target.value })}
+        placeholder="Sprich, und die Transkription erscheint hier – oder tippe deine Antwort ein." />
     </div>
   )
+}
+
+function recognitionErrorMessage(code) {
+  switch (code) {
+    case 'not-allowed':
+    case 'service-not-allowed':
+      return 'Kein Zugriff auf das Mikrofon. Erlaube den Mikrofonzugriff im Browser und versuche es erneut.'
+    case 'no-speech':
+      return 'Ich habe nichts gehört. Sprich etwas lauter und versuche es erneut.'
+    case 'audio-capture':
+      return 'Kein Mikrofon gefunden. Schließe ein Mikrofon an oder tippe deine Antwort unten ein.'
+    case 'network':
+      return 'Netzwerkfehler bei der Spracherkennung. Prüfe deine Verbindung oder tippe deine Antwort ein.'
+    case 'language-not-supported':
+      return 'Dieser Browser unterstützt keine deutsche Spracherkennung. Tippe deine Antwort ein.'
+    case 'aborted':
+      return ''
+    default:
+      return 'Die Aufnahme hat nicht funktioniert. Tippe deine Antwort unten ein.'
+  }
 }
 
 // ---------------- feedback ----------------
