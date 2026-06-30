@@ -27,6 +27,5 @@
   { "german": "spürbar", "english": "noticeable", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "ein spürbarer Unterschied", "theme": "Allgemein" },
   { "german": "der Ansatz", "english": "approach", "partOfSpeech": "Nomen", "article": "der", "plural": "die Ansätze", "example": "ein interessanter Ansatz", "theme": "Allgemein" },
   { "german": "die Strategie", "english": "strategy", "partOfSpeech": "Nomen", "article": "die", "plural": "die Strategien", "example": "Wir brauchen eine neue Strategie.", "theme": "Allgemein" },
-  { "german": "die Belastung", "english": "burden, strain", "partOfSpeech": "Nomen", "article": "die", "plural": "die Belastungen", "example": "Die Belastung am Arbeitsplatz steigt.", "theme": "Allgemein" },
-  { "german": "der Mindestlohn", "english": "minimum wage", "partOfSpeech": "Nomen", "article": "der", "plural": "die Mindestlöhne", "example": "Der Mindestlohn gilt für alle.", "theme": "Arbeit" }
+  { "german": "die Belastung", "english": "burden, strain", "partOfSpeech": "Nomen", "article": "die", "plural": "die Belastungen", "example": "Die Belastung am Arbeitsplatz steigt.", "theme": "Allgemein" }
 ]

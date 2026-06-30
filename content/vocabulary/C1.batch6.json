@@ -21,7 +21,6 @@
   { "german": "paradox", "english": "paradoxical", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "Das klingt paradox.", "theme": "Stil" },
   { "german": "plausibel", "english": "plausible", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "eine plausible Erklärung", "theme": "Stil" },
   { "german": "schlüssig", "english": "conclusive, coherent", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "eine schlüssige Argumentation", "theme": "Stil" },
-  { "german": "grundlegend", "english": "fundamental", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "ein grundlegender Wandel", "theme": "Wissenschaft" },
   { "german": "die Ambiguität", "english": "ambiguity", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "die Ambiguität des Begriffs", "theme": "Stil" },
   { "german": "die Gegebenheit", "english": "circumstance, given fact", "partOfSpeech": "Nomen", "article": "die", "plural": "die Gegebenheiten", "example": "die örtlichen Gegebenheiten", "theme": "Wissenschaft" },
   { "german": "die Empirie", "english": "empiricism", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Die Empirie stützt die Theorie.", "theme": "Wissenschaft" },

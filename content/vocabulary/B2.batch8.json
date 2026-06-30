@@ -2,7 +2,6 @@
   { "german": "das Defizit", "english": "deficit", "partOfSpeech": "Nomen", "article": "das", "plural": "die Defizite", "example": "Der Haushalt weist ein Defizit auf.", "theme": "Wirtschaft" },
   { "german": "die Kaufkraft", "english": "purchasing power", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Die Kaufkraft sinkt.", "theme": "Wirtschaft" },
   { "german": "die Verschuldung", "english": "indebtedness", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Die Verschuldung des Staates wächst.", "theme": "Wirtschaft" },
-  { "german": "der Haushalt", "english": "budget, household", "partOfSpeech": "Nomen", "article": "der", "plural": "die Haushalte", "example": "Der Haushalt wurde gekürzt.", "theme": "Wirtschaft" },
   { "german": "die Beschäftigung", "english": "employment", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Die Beschäftigung ist gestiegen.", "theme": "Arbeit" },
   { "german": "das Homeoffice", "english": "home office", "partOfSpeech": "Nomen", "article": "das", "plural": null, "example": "Ich arbeite im Homeoffice.", "theme": "Arbeit" },
   { "german": "die Gesetzgebung", "english": "legislation", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Die Gesetzgebung ist Sache des Parlaments.", "theme": "Gesellschaft" },
