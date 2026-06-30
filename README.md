@@ -1,5 +1,10 @@
 # MeineDeutscheLehrerin
 
+**Live demo → [meinedeutschelehrerin.onrender.com](https://meinedeutschelehrerin.onrender.com)**
+
+*Hosted on Render's free tier — the backend sleeps when idle, so the first request after a quiet
+spell can take ~30–60s to wake. The page itself loads instantly.*
+
 A German learning platform that takes you from A1 to C1 and helps you prepare for the
 Goethe-Institut exams. Each level is laid out as a two-week course (one themed unit per study
 day) and covers all six skills: grammar, vocabulary, reading, listening, speaking and writing.
