@@ -1,0 +1,67 @@
+# Render Blueprint: provisions the database, API, language service and static frontend.
+# Deploy by connecting this repo at https://dashboard.render.com/blueprints.
+# Service names below are used to build cross-service URLs; if Render appends a suffix
+# because a name is taken, update the matching *_URL / AllowedOrigins values. See docs/DEPLOY.md.
+
+databases:
+  - name: meinedeutschelehrerin-db
+    databaseName: meinedeutschelehrerin
+    user: mdl
+    plan: free
+    region: frankfurt
+
+services:
+  # ---- .NET API ----
+  - type: web
+    name: meinedeutschelehrerin-api
+    runtime: docker
+    dockerfilePath: ./src/MeineDeutscheLehrerin.Api/Dockerfile
+    dockerContext: .
+    plan: free
+    region: frankfurt
+    healthCheckPath: /api/health
+    envVars:
+      - key: Database__Provider
+        value: Postgres
+      - key: ConnectionStrings__Default
+        fromDatabase:
+          name: meinedeutschelehrerin-db
+          property: connectionString
+      - key: Identity__RequireConfirmedEmail
+        value: "false"
+      - key: Seed__ImportContent
+        value: "true"
+      - key: Cors__AllowedOrigins__0
+        value: https://meinedeutschelehrerin.onrender.com
+      - key: LanguageService__BaseUrl
+        value: https://meinedeutschelehrerin-ai.onrender.com
+
+  # ---- Python language service (writing/speaking feedback) ----
+  - type: web
+    name: meinedeutschelehrerin-ai
+    runtime: docker
+    dockerfilePath: ./language-service/Dockerfile
+    dockerContext: ./language-service
+    plan: free
+    region: frankfurt
+    healthCheckPath: /health
+    envVars:
+      - key: ANTHROPIC_API_KEY   # optional; set in the dashboard to enable real AI feedback
+        sync: false
+      - key: LLM_MODEL
+        value: claude-sonnet-4-6
+
+  # ---- React static frontend ----
+  - type: web
+    name: meinedeutschelehrerin
+    runtime: static
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: frontend/dist
+    region: frankfurt
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://meinedeutschelehrerin-api.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

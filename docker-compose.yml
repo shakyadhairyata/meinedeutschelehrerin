@@ -1,0 +1,52 @@
+# MeineDeutscheLehrerin — full stack. Defaults to SQLite so `docker compose up` works with
+# zero configuration. Set ANTHROPIC_API_KEY (in .env) to enable real Claude feedback.
+services:
+  api:
+    build:
+      context: .
+      dockerfile: src/MeineDeutscheLehrerin.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      Database__Provider: Sqlite
+      ConnectionStrings__Default: "Data Source=/data/mydeutschteacher.db"
+      LanguageService__BaseUrl: "http://language-service:8001"
+    volumes:
+      - api-data:/data
+    depends_on:
+      - language-service
+    ports:
+      - "5099:8080"
+
+  language-service:
+    build: ./language-service
+    environment:
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-claude-sonnet-4-6}
+    ports:
+      - "8001:8001"
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - api
+    ports:
+      - "5173:80"
+
+  # Optional Postgres. Enable with: docker compose --profile postgres up
+  # and set api env: Database__Provider=Postgres,
+  # ConnectionStrings__Default=Host=db;Database=mydeutschteacher;Username=postgres;Password=postgres
+  db:
+    image: postgres:16-alpine
+    profiles: ["postgres"]
+    environment:
+      POSTGRES_DB: mydeutschteacher
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  api-data:
+  pgdata:
