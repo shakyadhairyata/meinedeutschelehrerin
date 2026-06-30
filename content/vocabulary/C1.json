@@ -1,0 +1,22 @@
+[
+  { "german": "die Voreingenommenheit", "english": "bias", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Die Studie warnt vor Voreingenommenheit.", "theme": "Wissenschaft" },
+  { "german": "die Plausibilität", "english": "plausibility", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Die Plausibilität der These ist fraglich.", "theme": "Wissenschaft" },
+  { "german": "die Korrelation", "english": "correlation", "partOfSpeech": "Nomen", "article": "die", "plural": "die Korrelationen", "example": "Eine Korrelation ist keine Kausalität.", "theme": "Wissenschaft" },
+  { "german": "die Stichprobe", "english": "sample", "partOfSpeech": "Nomen", "article": "die", "plural": "die Stichproben", "example": "Die Stichprobe war zu klein.", "theme": "Wissenschaft" },
+  { "german": "die Verallgemeinerung", "english": "generalization", "partOfSpeech": "Nomen", "article": "die", "plural": "die Verallgemeinerungen", "example": "Das ist eine unzulässige Verallgemeinerung.", "theme": "Wissenschaft" },
+  { "german": "abstrahieren", "english": "to abstract", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Man muss vom Einzelfall abstrahieren.", "theme": "Stil" },
+  { "german": "differenzieren", "english": "to differentiate", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Man muss hier klar differenzieren.", "theme": "Stil" },
+  { "german": "die Nuance", "english": "nuance", "partOfSpeech": "Nomen", "article": "die", "plural": "die Nuancen", "example": "Die Übersetzung verliert feine Nuancen.", "theme": "Stil" },
+  { "german": "die Prämisse", "english": "premise", "partOfSpeech": "Nomen", "article": "die", "plural": "die Prämissen", "example": "Die Argumentation beruht auf einer falschen Prämisse.", "theme": "Wissenschaft" },
+  { "german": "die Tragweite", "english": "significance, scope", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Die Tragweite der Entscheidung ist enorm.", "theme": "Gesellschaft" },
+  { "german": "tiefgreifend", "english": "profound, far-reaching", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "Es gab tiefgreifende Veränderungen.", "theme": "Gesellschaft" },
+  { "german": "unerlässlich", "english": "indispensable", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "Sorgfalt ist hier unerlässlich.", "theme": "Stil" },
+  { "german": "die Befürchtung", "english": "concern, apprehension", "partOfSpeech": "Nomen", "article": "die", "plural": "die Befürchtungen", "example": "Die Befürchtungen haben sich bestätigt.", "theme": "Gesellschaft" },
+  { "german": "der Konsens", "english": "consensus", "partOfSpeech": "Nomen", "article": "der", "plural": null, "example": "Man erzielte einen breiten Konsens.", "theme": "Gesellschaft" },
+  { "german": "die Kontroverse", "english": "controversy", "partOfSpeech": "Nomen", "article": "die", "plural": "die Kontroversen", "example": "Das Thema löste eine Kontroverse aus.", "theme": "Gesellschaft" },
+  { "german": "beleuchten", "english": "to shed light on, examine", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Der Artikel beleuchtet das Problem von mehreren Seiten.", "theme": "Stil" },
+  { "german": "die Schlussfolgerung", "english": "conclusion", "partOfSpeech": "Nomen", "article": "die", "plural": "die Schlussfolgerungen", "example": "Daraus ziehe ich folgende Schlussfolgerung.", "theme": "Wissenschaft" },
+  { "german": "maßgebend", "english": "authoritative, decisive", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "Seine Arbeit gilt als maßgebend.", "theme": "Wissenschaft" },
+  { "german": "die Relevanz", "english": "relevance", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Die Relevanz des Themas ist unbestritten.", "theme": "Wissenschaft" },
+  { "german": "untermauern", "english": "to substantiate, back up", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Er untermauert seine These mit Daten.", "theme": "Stil" }
+]

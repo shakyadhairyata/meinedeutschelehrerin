@@ -1,0 +1,22 @@
+[
+  { "german": "der Kopf", "english": "head", "partOfSpeech": "Nomen", "article": "der", "plural": "die Köpfe", "example": "Mein Kopf tut weh.", "theme": "Körper" },
+  { "german": "die Hand", "english": "hand", "partOfSpeech": "Nomen", "article": "die", "plural": "die Hände", "example": "Gib mir die Hand.", "theme": "Körper" },
+  { "german": "der Fuß", "english": "foot", "partOfSpeech": "Nomen", "article": "der", "plural": "die Füße", "example": "Mein Fuß ist kalt.", "theme": "Körper" },
+  { "german": "das Auge", "english": "eye", "partOfSpeech": "Nomen", "article": "das", "plural": "die Augen", "example": "Sie hat blaue Augen.", "theme": "Körper" },
+  { "german": "der Mund", "english": "mouth", "partOfSpeech": "Nomen", "article": "der", "plural": "die Münder", "example": "Mach den Mund auf.", "theme": "Körper" },
+  { "german": "die Hose", "english": "trousers", "partOfSpeech": "Nomen", "article": "die", "plural": "die Hosen", "example": "Die Hose ist zu groß.", "theme": "Kleidung" },
+  { "german": "der Schuh", "english": "shoe", "partOfSpeech": "Nomen", "article": "der", "plural": "die Schuhe", "example": "Die Schuhe sind neu.", "theme": "Kleidung" },
+  { "german": "die Jacke", "english": "jacket", "partOfSpeech": "Nomen", "article": "die", "plural": "die Jacken", "example": "Zieh die Jacke an.", "theme": "Kleidung" },
+  { "german": "der Morgen", "english": "morning", "partOfSpeech": "Nomen", "article": "der", "plural": "die Morgen", "example": "Am Morgen trinke ich Kaffee.", "theme": "Zeit" },
+  { "german": "der Abend", "english": "evening", "partOfSpeech": "Nomen", "article": "der", "plural": "die Abende", "example": "Guten Abend!", "theme": "Zeit" },
+  { "german": "die Nacht", "english": "night", "partOfSpeech": "Nomen", "article": "die", "plural": "die Nächte", "example": "Gute Nacht!", "theme": "Zeit" },
+  { "german": "machen", "english": "to do, make", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Was machst du heute?", "theme": "Verben" },
+  { "german": "geben", "english": "to give", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Gib mir das Buch.", "theme": "Verben" },
+  { "german": "nehmen", "english": "to take", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Ich nehme den Bus.", "theme": "Verben" },
+  { "german": "fahren", "english": "to drive, go", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Wir fahren nach Berlin.", "theme": "Verben" },
+  { "german": "spielen", "english": "to play", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Die Kinder spielen im Park.", "theme": "Verben" },
+  { "german": "schreiben", "english": "to write", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Ich schreibe eine E-Mail.", "theme": "Verben" },
+  { "german": "lesen", "english": "to read", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Er liest gern Bücher.", "theme": "Verben" },
+  { "german": "schön", "english": "beautiful, nice", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "Das Wetter ist schön.", "theme": "Adjektive" },
+  { "german": "schnell", "english": "fast", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "Das Auto ist schnell.", "theme": "Adjektive" }
+]

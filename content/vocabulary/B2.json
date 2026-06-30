@@ -1,0 +1,22 @@
+[
+  { "german": "die Arbeitslosigkeit", "english": "unemployment", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Die Arbeitslosigkeit ist gesunken.", "theme": "Arbeit" },
+  { "german": "der Tarifvertrag", "english": "collective agreement", "partOfSpeech": "Nomen", "article": "der", "plural": "die Tarifverträge", "example": "Der Tarifvertrag wurde verlängert.", "theme": "Arbeit" },
+  { "german": "die Gewerkschaft", "english": "trade union", "partOfSpeech": "Nomen", "article": "die", "plural": "die Gewerkschaften", "example": "Die Gewerkschaft fordert mehr Lohn.", "theme": "Arbeit" },
+  { "german": "die Fachkraft", "english": "skilled worker", "partOfSpeech": "Nomen", "article": "die", "plural": "die Fachkräfte", "example": "Es fehlen Fachkräfte.", "theme": "Arbeit" },
+  { "german": "der Journalist", "english": "journalist", "partOfSpeech": "Nomen", "article": "der", "plural": "die Journalisten", "example": "Der Journalist stellt kritische Fragen.", "theme": "Medien" },
+  { "german": "die Pressefreiheit", "english": "freedom of the press", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Pressefreiheit ist ein Grundrecht.", "theme": "Medien" },
+  { "german": "die Zielgruppe", "english": "target group", "partOfSpeech": "Nomen", "article": "die", "plural": "die Zielgruppen", "example": "Die Werbung spricht eine junge Zielgruppe an.", "theme": "Medien" },
+  { "german": "manipulieren", "english": "to manipulate", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Bilder können die Meinung manipulieren.", "theme": "Medien" },
+  { "german": "der Verbraucher", "english": "consumer", "partOfSpeech": "Nomen", "article": "der", "plural": "die Verbraucher", "example": "Verbraucher achten auf den Preis.", "theme": "Wirtschaft" },
+  { "german": "die Inflation", "english": "inflation", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Die Inflation steigt.", "theme": "Wirtschaft" },
+  { "german": "der Gewinn", "english": "profit", "partOfSpeech": "Nomen", "article": "der", "plural": "die Gewinne", "example": "Die Firma macht Gewinn.", "theme": "Wirtschaft" },
+  { "german": "der Verlust", "english": "loss", "partOfSpeech": "Nomen", "article": "der", "plural": "die Verluste", "example": "Das Unternehmen meldet einen Verlust.", "theme": "Wirtschaft" },
+  { "german": "das Wachstum", "english": "growth", "partOfSpeech": "Nomen", "article": "das", "plural": null, "example": "Das Wachstum verlangsamt sich.", "theme": "Wirtschaft" },
+  { "german": "sich lohnen", "english": "to be worth it", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Die Investition lohnt sich.", "theme": "Allgemein" },
+  { "german": "voraussetzen", "english": "to presuppose, require", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Die Stelle setzt Erfahrung voraus.", "theme": "Allgemein" },
+  { "german": "hervorheben", "english": "to emphasize", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Ich möchte einen Punkt hervorheben.", "theme": "Stil" },
+  { "german": "der Sachverhalt", "english": "state of affairs, facts", "partOfSpeech": "Nomen", "article": "der", "plural": "die Sachverhalte", "example": "Der Sachverhalt ist kompliziert.", "theme": "Allgemein" },
+  { "german": "das Vorhaben", "english": "plan, project", "partOfSpeech": "Nomen", "article": "das", "plural": "die Vorhaben", "example": "Das Vorhaben ist ehrgeizig.", "theme": "Allgemein" },
+  { "german": "entscheidend", "english": "decisive, crucial", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "Das war der entscheidende Moment.", "theme": "Allgemein" },
+  { "german": "die Bilanz", "english": "balance, outcome", "partOfSpeech": "Nomen", "article": "die", "plural": "die Bilanzen", "example": "Wir ziehen eine positive Bilanz.", "theme": "Wirtschaft" }
+]

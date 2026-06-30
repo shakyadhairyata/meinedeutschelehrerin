@@ -1,0 +1,22 @@
+[
+  { "german": "der Regen", "english": "rain", "partOfSpeech": "Nomen", "article": "der", "plural": null, "example": "Der Regen hört nicht auf.", "theme": "Wetter" },
+  { "german": "der Schnee", "english": "snow", "partOfSpeech": "Nomen", "article": "der", "plural": null, "example": "Im Winter gibt es Schnee.", "theme": "Wetter" },
+  { "german": "der Wind", "english": "wind", "partOfSpeech": "Nomen", "article": "der", "plural": "die Winde", "example": "Der Wind ist stark.", "theme": "Wetter" },
+  { "german": "die Wolke", "english": "cloud", "partOfSpeech": "Nomen", "article": "die", "plural": "die Wolken", "example": "Am Himmel sind viele Wolken.", "theme": "Wetter" },
+  { "german": "der Nachbar", "english": "neighbour", "partOfSpeech": "Nomen", "article": "der", "plural": "die Nachbarn", "example": "Mein Nachbar ist nett.", "theme": "Wohnen" },
+  { "german": "die Miete", "english": "rent", "partOfSpeech": "Nomen", "article": "die", "plural": "die Mieten", "example": "Die Miete ist hoch.", "theme": "Wohnen" },
+  { "german": "die Rechnung", "english": "bill", "partOfSpeech": "Nomen", "article": "die", "plural": "die Rechnungen", "example": "Die Rechnung, bitte!", "theme": "Alltag" },
+  { "german": "das Konto", "english": "account", "partOfSpeech": "Nomen", "article": "das", "plural": "die Konten", "example": "Ich eröffne ein Konto.", "theme": "Alltag" },
+  { "german": "sich anmelden", "english": "to register, sign up", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Ich melde mich für den Kurs an.", "theme": "Alltag" },
+  { "german": "die Verspätung", "english": "delay", "partOfSpeech": "Nomen", "article": "die", "plural": "die Verspätungen", "example": "Der Zug hat Verspätung.", "theme": "Reisen" },
+  { "german": "umsteigen", "english": "to change (trains)", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "In Köln müssen wir umsteigen.", "theme": "Reisen" },
+  { "german": "die Unterkunft", "english": "accommodation", "partOfSpeech": "Nomen", "article": "die", "plural": "die Unterkünfte", "example": "Wir suchen eine Unterkunft.", "theme": "Reisen" },
+  { "german": "die Sehenswürdigkeit", "english": "sight, attraction", "partOfSpeech": "Nomen", "article": "die", "plural": "die Sehenswürdigkeiten", "example": "Das Brandenburger Tor ist eine Sehenswürdigkeit.", "theme": "Reisen" },
+  { "german": "das Fieber", "english": "fever", "partOfSpeech": "Nomen", "article": "das", "plural": null, "example": "Das Kind hat Fieber.", "theme": "Gesundheit" },
+  { "german": "der Husten", "english": "cough", "partOfSpeech": "Nomen", "article": "der", "plural": null, "example": "Ich habe Husten.", "theme": "Gesundheit" },
+  { "german": "sich erholen", "english": "to recover, rest", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Du musst dich erholen.", "theme": "Gesundheit" },
+  { "german": "fit", "english": "fit", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "Sport hält fit.", "theme": "Gesundheit" },
+  { "german": "die Verabredung", "english": "appointment, date", "partOfSpeech": "Nomen", "article": "die", "plural": "die Verabredungen", "example": "Ich habe eine Verabredung um sechs.", "theme": "Alltag" },
+  { "german": "der Markt", "english": "market", "partOfSpeech": "Nomen", "article": "der", "plural": "die Märkte", "example": "Am Samstag ist Markt.", "theme": "Einkaufen" },
+  { "german": "die Quittung", "english": "receipt", "partOfSpeech": "Nomen", "article": "die", "plural": "die Quittungen", "example": "Kann ich eine Quittung haben?", "theme": "Einkaufen" }
+]

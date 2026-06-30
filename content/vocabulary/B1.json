@@ -1,0 +1,22 @@
+[
+  { "german": "der Antrag", "english": "application (form)", "partOfSpeech": "Nomen", "article": "der", "plural": "die Anträge", "example": "Ich stelle einen Antrag.", "theme": "Beruf" },
+  { "german": "die Abteilung", "english": "department", "partOfSpeech": "Nomen", "article": "die", "plural": "die Abteilungen", "example": "Sie arbeitet in der Marketing-Abteilung.", "theme": "Beruf" },
+  { "german": "der Chef", "english": "boss", "partOfSpeech": "Nomen", "article": "der", "plural": "die Chefs", "example": "Mein Chef ist heute nicht da.", "theme": "Beruf" },
+  { "german": "die Gehaltserhöhung", "english": "pay rise", "partOfSpeech": "Nomen", "article": "die", "plural": "die Gehaltserhöhungen", "example": "Er bittet um eine Gehaltserhöhung.", "theme": "Beruf" },
+  { "german": "das Vorurteil", "english": "prejudice", "partOfSpeech": "Nomen", "article": "das", "plural": "die Vorurteile", "example": "Man sollte Vorurteile abbauen.", "theme": "Gesellschaft" },
+  { "german": "die Gleichberechtigung", "english": "equality", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Gleichberechtigung ist wichtig.", "theme": "Gesellschaft" },
+  { "german": "die Integration", "english": "integration", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Sprache hilft bei der Integration.", "theme": "Gesellschaft" },
+  { "german": "die Spende", "english": "donation", "partOfSpeech": "Nomen", "article": "die", "plural": "die Spenden", "example": "Wir sammeln Spenden.", "theme": "Gesellschaft" },
+  { "german": "das Ehrenamt", "english": "voluntary work", "partOfSpeech": "Nomen", "article": "das", "plural": "die Ehrenämter", "example": "Sie hat ein Ehrenamt im Tierheim.", "theme": "Gesellschaft" },
+  { "german": "der Stress", "english": "stress", "partOfSpeech": "Nomen", "article": "der", "plural": null, "example": "Ich habe viel Stress bei der Arbeit.", "theme": "Gefühle" },
+  { "german": "die Angst", "english": "fear", "partOfSpeech": "Nomen", "article": "die", "plural": "die Ängste", "example": "Sie hat Angst vor Spinnen.", "theme": "Gefühle" },
+  { "german": "sich freuen", "english": "to be glad", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Ich freue mich auf das Wochenende.", "theme": "Gefühle" },
+  { "german": "sich ärgern", "english": "to get annoyed", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Er ärgert sich über den Stau.", "theme": "Gefühle" },
+  { "german": "enttäuscht", "english": "disappointed", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "Ich bin etwas enttäuscht.", "theme": "Gefühle" },
+  { "german": "stolz", "english": "proud", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "Sie ist stolz auf ihre Tochter.", "theme": "Gefühle" },
+  { "german": "die Ernährung", "english": "nutrition, diet", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Eine gesunde Ernährung ist wichtig.", "theme": "Gesundheit" },
+  { "german": "vegetarisch", "english": "vegetarian", "partOfSpeech": "Adjektiv", "article": null, "plural": null, "example": "Ich esse vegetarisch.", "theme": "Gesundheit" },
+  { "german": "die Bedingung", "english": "condition", "partOfSpeech": "Nomen", "article": "die", "plural": "die Bedingungen", "example": "Unter einer Bedingung helfe ich dir.", "theme": "Allgemein" },
+  { "german": "abnehmen", "english": "to decrease, lose weight", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Ich möchte ein paar Kilo abnehmen.", "theme": "Gesundheit" },
+  { "german": "die Auswahl", "english": "selection, choice", "partOfSpeech": "Nomen", "article": "die", "plural": null, "example": "Die Auswahl ist groß.", "theme": "Allgemein" }
+]
