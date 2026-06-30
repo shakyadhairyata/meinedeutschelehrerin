@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { font-size: 18px; }            /* a touch larger overall */
+  body {
+    @apply text-white antialiased;
+    background-color: #050807;
+    background-image:
+      radial-gradient(900px 500px at 12% -10%, rgba(16,217,106,0.12), transparent 60%),
+      radial-gradient(800px 480px at 100% 0%, rgba(16,185,129,0.10), transparent 55%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3, .font-display { font-family: 'Fredoka', 'Nunito', system-ui, sans-serif; }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[15px] font-bold
+           transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-brand-400/60
+           disabled:opacity-50 disabled:cursor-not-allowed active:scale-95;
+  }
+  .btn-primary { @apply btn text-ink-900; background-image: linear-gradient(135deg,#10d96a,#10b981); }
+  .btn-primary:hover { box-shadow: 0 0 0 1px rgba(16,217,106,.4), 0 10px 28px -8px rgba(16,217,106,.6); transform: translateY(-1px); }
+  .btn-ghost { @apply btn bg-white/5 text-white ring-1 ring-white/15 hover:bg-white/10; }
+  .btn-success { @apply btn text-ink-900; background-image: linear-gradient(135deg,#34d399,#10b981); }
+  .card {
+    @apply rounded-2xl p-5 ring-1 transition-all duration-200;
+    background-color: rgba(17,24,21,0.85);
+    box-shadow: 0 10px 30px -18px rgba(0,0,0,0.8);
+    --tw-ring-color: rgba(255,255,255,0.08);
+  }
+  a.card:hover, button.card:hover { transform: translateY(-3px); box-shadow: 0 0 0 1px rgba(16,217,106,.35), 0 16px 40px -16px rgba(16,217,106,.35); }
+  .input {
+    @apply w-full rounded-xl px-3.5 py-2.5 text-[15px] text-white placeholder:text-white/30
+           focus:outline-none focus:ring-2 focus:ring-brand-400/60;
+    background-color: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .label { @apply mb-1 block text-sm font-semibold text-white/70; }
+  .chip { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold; }
+}
+
+/* native <select> dropdown list: dark background + readable white text (fixes white-on-white) */
+select.input { color-scheme: dark; }
+.input option, select option, option, optgroup {
+  background-color: #111815;
+  color: #ffffff;
+}
+
+/* ---- lesson markdown, dark ---- */
+.prose-lesson { @apply text-slate-200; }
+.prose-lesson h2 { @apply mt-4 mb-2 text-xl font-bold text-white; }
+.prose-lesson h3 { @apply mt-3 mb-1 text-lg font-semibold text-white; }
+.prose-lesson p { @apply my-2 leading-relaxed; }
+.prose-lesson ul { @apply my-2 list-disc pl-6 space-y-1 marker:text-brand-400; }
+.prose-lesson strong { @apply font-bold text-brand-400; }
+.prose-lesson table { @apply my-3 w-full border-collapse overflow-hidden rounded-lg text-sm; }
+.prose-lesson th { @apply border border-white/10 bg-brand-500/15 px-3 py-1.5 text-left font-bold text-white; }
+.prose-lesson td { @apply border border-white/10 px-3 py-1.5; }
+.prose-lesson code { @apply rounded bg-white/10 px-1 py-0.5 text-sm text-brand-300; }
+
+/*
+  Dark-theme remap: the pages use a light Tailwind slate palette. These rules come AFTER
+  @tailwind utilities, so (same specificity) they win — flipping the whole app to dark
+  without editing every page. Hover/state variants keep their original behaviour.
+*/
+.bg-white { background-color: rgba(17,24,21,0.85) !important; }
+.bg-slate-50 { background-color: transparent !important; }
+.bg-slate-100 { background-color: rgba(255,255,255,0.06) !important; }
+.bg-slate-200 { background-color: rgba(255,255,255,0.10) !important; }
+.text-slate-800 { color: #ffffff !important; }
+.text-slate-700 { color: #e7ece9 !important; }
+.text-slate-600 { color: #cbd5cf !important; }
+.text-slate-500 { color: #9fb0a8 !important; }
+.text-slate-400 { color: #7f8f87 !important; }
+.text-slate-300 { color: #aebbb4 !important; }
+.text-brand-700 { color: #34d399 !important; }
+.text-brand-600 { color: #10d96a !important; }
+.bg-brand-50 { background-color: rgba(16,217,106,0.12) !important; }
+.bg-brand-100 { background-color: rgba(16,217,106,0.18) !important; }
+.ring-slate-200, .ring-slate-200\/70 { --tw-ring-color: rgba(255,255,255,0.08) !important; }
+.border-slate-200 { border-color: rgba(255,255,255,0.10) !important; }
+.border-slate-300 { border-color: rgba(255,255,255,0.16) !important; }
+.bg-slate-900 { background-color: rgba(0,0,0,0.4) !important; }
+
+/* semantic status colors (feedback boxes, choice buttons, badges) → dark variants */
+.bg-emerald-50 { background-color: rgba(16,217,106,0.12) !important; }
+.bg-emerald-100 { background-color: rgba(16,217,106,0.20) !important; }
+.bg-amber-50 { background-color: rgba(251,191,36,0.12) !important; }
+.bg-amber-100 { background-color: rgba(251,191,36,0.18) !important; }
+.bg-rose-50 { background-color: rgba(244,63,94,0.12) !important; }
+.bg-rose-100 { background-color: rgba(244,63,94,0.18) !important; }
+.text-emerald-600 { color: #34d399 !important; }
+.text-emerald-700 { color: #6ee7b7 !important; }
+.text-emerald-800 { color: #a7f3d0 !important; }
+.text-amber-700 { color: #fcd34d !important; }
+.text-rose-600 { color: #fb7185 !important; }
+.text-rose-700 { color: #fda4af !important; }
+.text-rose-800 { color: #fecdd3 !important; }
+.ring-emerald-200, .ring-emerald-300 { --tw-ring-color: rgba(16,217,106,0.4) !important; }
+.ring-amber-200 { --tw-ring-color: rgba(251,191,36,0.4) !important; }
+.ring-rose-200, .ring-rose-300 { --tw-ring-color: rgba(244,63,94,0.4) !important; }
+.border-slate-200 { border-color: rgba(255,255,255,0.12) !important; }
+
+/* fun: cards/sections gently pop in */
+.card { animation: pop 0.18s ease-out; }
