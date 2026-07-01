@@ -24,9 +24,7 @@
   { "german": "der Hinweis", "english": "hint, clue", "partOfSpeech": "Nomen", "article": "der", "plural": "die Hinweise", "example": "Danke für den Hinweis.", "theme": "Allgemein" },
   { "german": "der Anlass", "english": "occasion, reason", "partOfSpeech": "Nomen", "article": "der", "plural": "die Anlässe", "example": "Zu welchem Anlass feiert ihr?", "theme": "Allgemein" },
   { "german": "der Trend", "english": "trend", "partOfSpeech": "Nomen", "article": "der", "plural": "die Trends", "example": "Das ist der neueste Trend.", "theme": "Gesellschaft" },
-  { "german": "bestehen", "english": "to pass, consist, exist", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Sie hat die Prüfung bestanden.", "theme": "Allgemein" },
   { "german": "sich beteiligen", "english": "to participate", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Viele beteiligen sich an der Aktion.", "theme": "Gesellschaft" },
   { "german": "ausdrücken", "english": "to express", "partOfSpeech": "Verb", "article": null, "plural": null, "example": "Ich kann das schwer ausdrücken.", "theme": "Kommunikation" },
-  { "german": "die Bedeutung", "english": "meaning, importance", "partOfSpeech": "Nomen", "article": "die", "plural": "die Bedeutungen", "example": "Das Wort hat mehrere Bedeutungen.", "theme": "Allgemein" },
-  { "german": "der Vorgesetzte", "english": "superior, manager", "partOfSpeech": "Nomen", "article": "der", "plural": "die Vorgesetzten", "example": "Sprich mit deinem Vorgesetzten.", "theme": "Beruf" }
+  { "german": "die Bedeutung", "english": "meaning, importance", "partOfSpeech": "Nomen", "article": "die", "plural": "die Bedeutungen", "example": "Das Wort hat mehrere Bedeutungen.", "theme": "Allgemein" }
 ]
