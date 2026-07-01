@@ -3,6 +3,15 @@ import { get, post } from '../api/client'
 import { Spinner, AudioButton, Alert } from '../components/ui'
 import { speak } from '../lib/speech'
 
+// Vocab items keep the article inside `german` (e.g. "die Prämisse") and also expose it
+// separately. Strip the leading article so the coloured article isn't rendered twice.
+function nounOnly(german, article) {
+  if (article && german.toLowerCase().startsWith(article.toLowerCase() + ' ')) {
+    return german.slice(article.length + 1)
+  }
+  return german
+}
+
 export default function Vocabulary() {
   const [levels, setLevels] = useState([])
   const [levelId, setLevelId] = useState(null)
@@ -64,12 +73,12 @@ export default function Vocabulary() {
           <div className="text-center text-xs text-slate-400">Karte {pos + 1} / {deck.length}</div>
           <button
             type="button"
-            onClick={() => { setFlipped((f) => !f); if (!flipped) speak(card.article ? `${card.article} ${card.german}` : card.german) }}
+            onClick={() => { setFlipped((f) => !f); if (!flipped) speak(card.german) }}
             className="card flex min-h-[220px] w-full flex-col items-center justify-center gap-3 text-center transition hover:shadow-md">
             {!flipped ? (
               <>
                 <div className="text-3xl font-bold text-slate-800">
-                  {card.article && <span className="text-brand-600">{card.article} </span>}{card.german}
+                  {card.article && <span className="text-brand-600">{card.article} </span>}{nounOnly(card.german, card.article)}
                 </div>
                 <span className="text-xs text-slate-400">Tippen zum Umdrehen · Box {card.box}</span>
               </>
@@ -84,7 +93,7 @@ export default function Vocabulary() {
           </button>
 
           <div className="flex items-center justify-center gap-2">
-            <AudioButton text={card.article ? `${card.article} ${card.german}` : card.german} label="Aussprache" />
+            <AudioButton text={card.german} label="Aussprache" />
           </div>
 
           {flipped && (
