@@ -55,7 +55,6 @@ export default function PracticeSet() {
         />
       ) : (
         <div className="card text-center">
-          <div className="text-4xl">{passed ? '🏆' : '💪'}</div>
           <h2 className="mt-2 text-xl font-bold text-slate-800">{set.isExam ? (passed ? 'Bestanden!' : 'Noch nicht bestanden') : 'Set abgeschlossen'}</h2>
           <p className="mt-1 text-slate-500">Ergebnis: <strong>{score}%</strong></p>
           <button className="btn-primary mt-4" onClick={() => { setStep(0); setResults([]) }}>Nochmal üben</button>
