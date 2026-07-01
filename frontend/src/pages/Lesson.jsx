@@ -78,7 +78,6 @@ export default function Lesson() {
         <div className="card text-center">
           {total > 0 && (
             <>
-              <div className="text-4xl">{avgScore >= 80 ? '🎉' : avgScore >= 50 ? '👍' : '💪'}</div>
               <h2 className="mt-2 text-xl font-bold text-slate-800">Übungen geschafft!</h2>
               <p className="mt-1 text-slate-500">Durchschnitt: <strong>{avgScore}%</strong> ({results.length} Übungen)</p>
             </>

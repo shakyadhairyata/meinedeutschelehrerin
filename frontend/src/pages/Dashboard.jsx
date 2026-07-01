@@ -19,7 +19,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">Hallo, {data.displayName} 👋</h1>
+        <h1 className="text-2xl font-bold text-slate-800">Hallo, {data.displayName}</h1>
         <p className="text-slate-500">
           {data.targetLevel ? `Zielniveau: ${data.targetLevel}. ` : ''}
           Bleib dran — Konstanz schlägt Intensität.
@@ -79,7 +79,7 @@ export default function Dashboard() {
         <section className="card">
           <h2 className="mb-3 text-lg font-semibold text-slate-700">Schwerpunkte zum Üben</h2>
           {data.topWeaknesses.length === 0 ? (
-            <p className="text-sm text-slate-400">Keine Schwächen erkannt. Weiter so! 🎉</p>
+            <p className="text-sm text-slate-400">Keine Schwächen erkannt. Weiter so!</p>
           ) : (
             <ul className="space-y-2">
               {data.topWeaknesses.map((w) => (

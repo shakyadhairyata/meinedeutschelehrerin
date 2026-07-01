@@ -11,7 +11,7 @@ export default function AuthShell({ title, subtitle, children, footer }) {
         </div>
         <div className="relative">
           <h1 className="font-display text-4xl font-bold leading-tight">
-            Dein Weg von <span className="text-brand-300">A1 bis C1</span> – mit Spaß. 🚀
+            Dein Weg von <span className="text-brand-300">A1 bis C1</span> – mit Spaß.
           </h1>
           <p className="mt-4 max-w-md text-white/80">
             Lektionen, Grammatik, Wortschatz, Lesen, Hören, Sprechen und Schreiben — mit Sofort-Feedback,
@@ -24,7 +24,7 @@ export default function AuthShell({ title, subtitle, children, footer }) {
             ))}
           </div>
         </div>
-        <p className="relative text-sm text-brand-300/80">Üben. Wiederholen. Bestehen. 💪</p>
+        <p className="relative text-sm text-brand-300/80">Üben. Wiederholen. Bestehen.</p>
       </div>
       <div className="flex items-center justify-center p-6">
         <div className="w-full max-w-sm animate-pop">

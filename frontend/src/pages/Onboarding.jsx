@@ -32,7 +32,7 @@ export default function Onboarding() {
     <div className="flex min-h-screen items-center justify-center p-6">
       <form onSubmit={submit} className="card w-full max-w-lg space-y-5">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Willkommen! 🇩🇪</h1>
+          <h1 className="text-2xl font-bold text-slate-800">Willkommen!</h1>
           <p className="text-slate-500">Erzähl uns kurz von dir, dann stellen wir deinen Kurs ein.</p>
         </div>
         {error && <Alert kind="error">{error}</Alert>}

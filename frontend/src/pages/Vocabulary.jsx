@@ -51,10 +51,9 @@ export default function Vocabulary() {
       </div>
 
       {deck.length === 0 ? (
-        <Alert kind="success">Keine fälligen Karten für dieses Niveau — komm später wieder! 🎉</Alert>
+        <Alert kind="success">Keine fälligen Karten für dieses Niveau — komm später wieder!</Alert>
       ) : done ? (
         <div className="card text-center">
-          <div className="text-4xl">🎉</div>
           <h2 className="mt-2 text-xl font-bold">Runde geschafft!</h2>
           <p className="mt-1 text-slate-500">Gewusst: {stats.known} · Nochmal: {stats.again}</p>
           <button className="btn-primary mt-4" onClick={() => setLevelId(levelId)}>Neue Runde</button>
