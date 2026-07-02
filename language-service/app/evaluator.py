@@ -59,7 +59,7 @@ def _offline_writing(req: WritingRequest) -> dict:
 
     return {
         "scorePercent": score,
-        "summary": "Offline-Bewertung (starte den ANTHROPIC_API_KEY-Modus für volles KI-Feedback).",
+        "summary": "Automatische Bewertung deines Textes.",
         "strengths": strengths,
         "corrections": corrections,
         "correctedText": req.text,
@@ -93,7 +93,7 @@ def _offline_speaking(req: SpeakingRequest) -> dict:
     return {
         "scorePercent": acc,
         "transcript": req.transcript,
-        "summary": "Offline-Bewertung (starte den ANTHROPIC_API_KEY-Modus für volles Aussprache-Feedback).",
+        "summary": "Automatische Bewertung deiner Aussprache.",
         "pronunciationTips": [
             "Sprich langsam und deutlich.",
             "Betone die erste Silbe bei trennbaren Verben.",

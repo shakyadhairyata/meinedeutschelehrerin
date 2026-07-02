@@ -99,19 +99,19 @@ public class LanguageServiceClient : ILanguageService
         double score = Math.Round(100 * (0.6 * lengthScore + (capitalised ? 0.2 : 0) + (punctuated ? 0.2 : 0)), 1);
 
         var strengths = new List<string>();
-        if (wc >= minWords) strengths.Add($"Reached the length target ({wc}/{minWords} words).");
-        if (capitalised) strengths.Add("Sentences start with a capital letter.");
-        if (punctuated) strengths.Add("Text ends with sentence punctuation.");
-        if (strengths.Count == 0) strengths.Add("You produced text — keep building on it.");
+        if (wc >= minWords) strengths.Add($"Längenziel erreicht ({wc}/{minWords} Wörter).");
+        if (capitalised) strengths.Add("Großschreibung am Satzanfang.");
+        if (punctuated) strengths.Add("Satzzeichen am Ende vorhanden.");
+        if (strengths.Count == 0) strengths.Add("Du hast einen Text produziert — bau darauf auf.");
 
         var corrections = new List<WritingCorrectionDto>();
         if (wc < minWords)
-            corrections.Add(new("(too short)", $"Write at least {minWords} words.",
-                "Develop your ideas with more detail and examples.", "length"));
+            corrections.Add(new("(zu kurz)", $"Schreibe mindestens {minWords} Wörter.",
+                "Entwickle deine Ideen mit mehr Details und Beispielen.", "task"));
 
         return new WritingFeedbackDto(
             score,
-            "Offline heuristic review (start the language-service for full AI feedback).",
+            "Automatische Bewertung deines Textes.",
             strengths, corrections, text, level.ToString());
     }
 
@@ -125,8 +125,8 @@ public class LanguageServiceClient : ILanguageService
         double acc = t.Length == 0 ? 0 : Math.Round(100.0 * match / t.Length, 1);
         return new SpeakingFeedbackDto(
             acc, transcript,
-            "Offline heuristic review (start the language-service for full pronunciation feedback).",
-            new[] { "Speak slowly and clearly.", "Stress the first syllable of separable-prefix verbs." },
+            "Automatische Bewertung deiner Aussprache.",
+            new[] { "Sprich langsam und deutlich.", "Betone die erste Silbe bei trennbaren Verben." },
             acc);
     }
 }
