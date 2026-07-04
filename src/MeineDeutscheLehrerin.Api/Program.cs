@@ -6,6 +6,7 @@ using MeineDeutscheLehrerin.Infrastructure;
 using MeineDeutscheLehrerin.Infrastructure.Data;
 using MeineDeutscheLehrerin.Infrastructure.Identity;
 using MeineDeutscheLehrerin.Infrastructure.Seeding;
+using MeineDeutscheLehrerin.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,7 @@ builder.Services
         options.SignIn.RequireConfirmedAccount =
             builder.Configuration.GetValue<bool>("Identity:RequireConfirmedEmail");
     })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
 
 // ---- CORS for the Vite dev server / containerised frontend ----
@@ -60,6 +62,27 @@ using (var scope = app.Services.CreateScope())
     else
         await db.Database.MigrateAsync();
     await DbSeeder.SeedAsync(db);
+    await FeatureFlagService.SeedAsync(db);
+
+    // Seed the Admin role, and the configured admin account (skipped unless Admin:Email + Admin:Password are set).
+    var roles = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    if (!await roles.RoleExistsAsync("Admin"))
+        await roles.CreateAsync(new IdentityRole("Admin"));
+
+    var adminEmail = app.Configuration["Admin:Email"];
+    var adminPassword = app.Configuration["Admin:Password"];
+    if (!string.IsNullOrWhiteSpace(adminEmail) && !string.IsNullOrWhiteSpace(adminPassword))
+    {
+        var users = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var admin = await users.FindByEmailAsync(adminEmail);
+        if (admin is null)
+        {
+            admin = new ApplicationUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true, DisplayName = "Admin" };
+            await users.CreateAsync(admin, adminPassword);
+        }
+        if (!await users.IsInRoleAsync(admin, "Admin"))
+            await users.AddToRoleAsync(admin, "Admin");
+    }
 }
 
 // Top up the seeded curriculum with the curated JSON decks (idempotent). Enabled in hosted

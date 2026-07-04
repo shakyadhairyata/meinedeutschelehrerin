@@ -6,10 +6,12 @@ export const useAuth = () => useContext(AuthContext)
 
 export function AuthProvider({ children }) {
   const [profile, setProfile] = useState(null)
+  const [features, setFeatures] = useState({})
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     (async () => {
+      try { setFeatures(await get('/api/features')) } catch { /* keep defaults */ }
       if (getAuth()?.accessToken) {
         try { setProfile(await get('/api/profile')) } catch { setAuth(null) }
       }
@@ -56,6 +58,11 @@ export function AuthProvider({ children }) {
     return updated
   }
 
-  const value = { profile, loading, login, register, logout, saveProfile, refreshProfile: async () => setProfile(await get('/api/profile')) }
+  const value = {
+    profile, features, loading, login, register, logout, saveProfile,
+    isFeatureOn: (key) => features[key] !== false,
+    refreshProfile: async () => setProfile(await get('/api/profile')),
+    refreshFeatures: async () => setFeatures(await get('/api/features')),
+  }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

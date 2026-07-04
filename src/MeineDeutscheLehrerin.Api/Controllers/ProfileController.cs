@@ -6,7 +6,7 @@ using MeineDeutscheLehrerin.Infrastructure.Identity;
 namespace MeineDeutscheLehrerin.Api.Controllers;
 
 public record ProfileDto(string Email, string DisplayName, CefrLevel? TargetLevel,
-    string TimeZoneId, int CurrentStreak, int LongestStreak, DateTimeOffset CreatedAt);
+    string TimeZoneId, int CurrentStreak, int LongestStreak, DateTimeOffset CreatedAt, bool IsAdmin);
 
 public record UpdateProfileRequest(string? DisplayName, CefrLevel? TargetLevel, string? TimeZoneId);
 
@@ -21,7 +21,7 @@ public class ProfileController : ApiControllerBase
     {
         var user = await _users.GetUserAsync(User);
         if (user is null) return NotFound();
-        return Ok(ToDto(user));
+        return Ok(ToDto(user, await _users.IsInRoleAsync(user, "Admin")));
     }
 
     [HttpPut]
@@ -35,10 +35,11 @@ public class ProfileController : ApiControllerBase
         if (!string.IsNullOrWhiteSpace(req.TimeZoneId)) user.TimeZoneId = req.TimeZoneId.Trim();
 
         var result = await _users.UpdateAsync(user);
-        return result.Succeeded ? Ok(ToDto(user)) : BadRequest(result.Errors);
+        if (!result.Succeeded) return BadRequest(result.Errors);
+        return Ok(ToDto(user, await _users.IsInRoleAsync(user, "Admin")));
     }
 
-    private static ProfileDto ToDto(ApplicationUser u) => new(
+    private static ProfileDto ToDto(ApplicationUser u, bool isAdmin) => new(
         u.Email ?? "", string.IsNullOrWhiteSpace(u.DisplayName) ? (u.Email ?? "").Split('@')[0] : u.DisplayName,
-        u.TargetLevel, u.TimeZoneId, u.CurrentStreak, u.LongestStreak, u.CreatedAt);
+        u.TargetLevel, u.TimeZoneId, u.CurrentStreak, u.LongestStreak, u.CreatedAt, isAdmin);
 }

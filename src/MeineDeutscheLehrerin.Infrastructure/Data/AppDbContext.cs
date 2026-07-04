@@ -23,6 +23,8 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<UserStudyPlan> UserStudyPlans => Set<UserStudyPlan>();
     public DbSet<StudyPlanDay> StudyPlanDays => Set<StudyPlanDay>();
 
+    public DbSet<FeatureFlag> FeatureFlags => Set<FeatureFlag>();
+
     protected override void OnModelCreating(ModelBuilder b)
     {
         base.OnModelCreating(b);
@@ -113,6 +115,13 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
                 .HasForeignKey(x => x.StudyPlanId).OnDelete(DeleteBehavior.Cascade);
             e.HasOne(x => x.Unit).WithMany()
                 .HasForeignKey(x => x.UnitId).OnDelete(DeleteBehavior.NoAction);
+        });
+
+        b.Entity<FeatureFlag>(e =>
+        {
+            e.HasKey(x => x.Key);
+            e.Property(x => x.Key).HasMaxLength(60);
+            e.Property(x => x.Description).HasMaxLength(300);
         });
     }
 }
