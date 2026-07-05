@@ -56,11 +56,9 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    var provider = app.Configuration["Database:Provider"] ?? "Sqlite";
-    if (provider.Equals("Postgres", StringComparison.OrdinalIgnoreCase))
-        await db.Database.EnsureCreatedAsync();
-    else
-        await db.Database.MigrateAsync();
+    // Both providers migrate: SQLite migrations live in Infrastructure, Postgres migrations in the
+    // Migrations.Postgres assembly (selected in AddInfrastructure). Schema evolves on every deploy.
+    await db.Database.MigrateAsync();
     await DbSeeder.SeedAsync(db);
     await FeatureFlagService.SeedAsync(db);
 
