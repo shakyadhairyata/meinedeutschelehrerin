@@ -4,8 +4,8 @@ import { useAuth } from '../auth/AuthContext'
 const NAV = [
   { to: '/', label: 'Dashboard', end: true, icon: '🏠' },
   { to: '/levels', label: 'Kurse', icon: '📚' },
-  { to: '/vocabulary', label: 'Vokabeln', icon: '🗂️' },
-  { to: '/study-plan', label: 'Lernplan', icon: '🗓️' },
+  { to: '/vocabulary', label: 'Vokabeln', icon: '🗂️', flag: 'vocabulary' },
+  { to: '/study-plan', label: 'Lernplan', icon: '🗓️', flag: 'study_plan' },
 ]
 
 export function Brand({ className = '' }) {
@@ -19,8 +19,9 @@ export function Brand({ className = '' }) {
 }
 
 export default function Layout() {
-  const { profile, logout } = useAuth()
+  const { profile, logout, isFeatureOn } = useAuth()
   const navigate = useNavigate()
+  const nav = NAV.filter((n) => !n.flag || isFeatureOn(n.flag))
 
   return (
     <div className="min-h-screen">
@@ -28,7 +29,7 @@ export default function Layout() {
         <div className="mx-auto flex max-w-6xl items-center gap-6 px-4 py-3">
           <NavLink to="/"><Brand /></NavLink>
           <nav className="hidden gap-1 md:flex">
-            {NAV.map((n) => (
+            {nav.map((n) => (
               <NavLink key={n.to} to={n.to} end={n.end}
                 className={({ isActive }) =>
                   `flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm font-bold transition ${
@@ -36,6 +37,14 @@ export default function Layout() {
                 <span>{n.icon}</span>{n.label}
               </NavLink>
             ))}
+            {profile?.isAdmin && (
+              <NavLink to="/admin"
+                className={({ isActive }) =>
+                  `flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm font-bold transition ${
+                    isActive ? 'bg-amber-500/15 text-amber-300 ring-1 ring-amber-400/30' : 'text-white/70 hover:bg-white/5 hover:text-white'}`}>
+                <span>🛠️</span>Admin
+              </NavLink>
+            )}
           </nav>
           <div className="ml-auto flex items-center gap-3">
             {profile?.currentStreak > 0 && (

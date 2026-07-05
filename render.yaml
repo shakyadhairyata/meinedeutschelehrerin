@@ -31,6 +31,10 @@ services:
         value: "false"
       - key: Seed__ImportContent
         value: "true"
+      - key: Admin__Email      # set to seed an admin account (no admin is created if unset)
+        sync: false
+      - key: Admin__Password   # use a strong password; the admin can log in at /login then open /admin
+        sync: false
       - key: Cors__AllowedOrigins__0
         value: https://meinedeutschelehrerin.onrender.com
       - key: LanguageService__BaseUrl
