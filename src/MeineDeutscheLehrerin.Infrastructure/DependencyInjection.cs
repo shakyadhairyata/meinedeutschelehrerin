@@ -38,6 +38,7 @@ public static class DependencyInjection
         services.AddScoped<IVocabularyService, VocabularyService>();
         services.AddScoped<IStudyPlanService, StudyPlanService>();
         services.AddScoped<IFeatureFlagService, FeatureFlagService>();
+        services.AddScoped<IAiAccessService, AiAccessService>();
 
         return services;
     }

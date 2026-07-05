@@ -1,5 +1,12 @@
 namespace MeineDeutscheLehrerin.Domain.Entities;
 
+/// <summary>Subscription tier. Paid unlocks the AI-cost features (within a daily quota).</summary>
+public enum SubscriptionTier
+{
+    Free = 0,
+    Paid = 1,
+}
+
 /// <summary>
 /// A toggleable feature. Stored in the DB and flipped by an admin; the frontend reads the
 /// public map to show/hide features, and the API enforces the sensitive ones server-side.
