@@ -31,6 +31,24 @@ export default function Profile() {
         <Stat label="Mitglied seit" value={new Date(profile.createdAt).toLocaleDateString('de-DE')} />
       </div>
 
+      <div className="card">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-xs font-bold uppercase tracking-wide text-brand-600">Abo</div>
+            <div className="text-lg font-bold text-slate-800">{profile.tier === 'Paid' ? 'Paid' : 'Free'}</div>
+          </div>
+          <div className="text-right text-sm text-slate-500">
+            KI-Feedback heute<br /><strong className="text-slate-700">{profile.aiUsageToday} / {profile.aiDailyLimit}</strong>
+          </div>
+        </div>
+        {profile.tier !== 'Paid' && (
+          <p className="mt-3 text-sm text-slate-500">
+            KI-Bewertung für Schreiben &amp; Sprechen gehört zum <strong>Paid</strong>-Tarif. Im Free-Tarif
+            erhältst du die automatische Bewertung.
+          </p>
+        )}
+      </div>
+
       <form onSubmit={submit} className="card space-y-4">
         {saved && <Alert kind="success">Profil gespeichert.</Alert>}
         {error && <Alert kind="error">{error}</Alert>}

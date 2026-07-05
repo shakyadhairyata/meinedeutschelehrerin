@@ -20,13 +20,15 @@ public class ProgressService : IProgressService
     private readonly AppDbContext _db;
     private readonly IExerciseGrader _grader;
     private readonly ILanguageService _language;
+    private readonly IAiAccessService _aiAccess;
     private static readonly JsonSerializerOptions JsonOpts = new(JsonSerializerDefaults.Web);
 
-    public ProgressService(AppDbContext db, IExerciseGrader grader, ILanguageService language)
+    public ProgressService(AppDbContext db, IExerciseGrader grader, ILanguageService language, IAiAccessService aiAccess)
     {
         _db = db;
         _grader = grader;
         _language = language;
+        _aiAccess = aiAccess;
     }
 
     public async Task<LessonDetailDto?> GetLessonAsync(int lessonId, string userId, CancellationToken ct = default)
@@ -64,11 +66,14 @@ public class ProgressService : IProgressService
             var level = await LevelOfExerciseAsync(exercise.Id, ct);
             var content = string.IsNullOrWhiteSpace(exercise.ContentJson) ? null : JsonNode.Parse(exercise.ContentJson);
 
+            // Gate the paid AI path; Free / over-quota users get the deterministic offline scorer.
+            var useAi = await _aiAccess.TryConsumeAsync(userId, ct);
+
             if (exercise.Type == ExerciseType.Writing)
             {
                 var text = req.Response?["text"]?.GetValue<string>() ?? "";
                 var minWords = content?["minWords"]?.GetValue<int?>() ?? 40;
-                var fb = await _language.EvaluateWritingAsync(exercise.Prompt, text, level, minWords, ct);
+                var fb = await _language.EvaluateWritingAsync(exercise.Prompt, text, level, minWords, useAi, ct);
                 feedbackNode = JsonSerializer.SerializeToNode(fb, JsonOpts);
                 result = new GradeResultDto(fb.ScorePercent >= 60, fb.ScorePercent, exercise.Explanation, null, feedbackNode);
             }
@@ -76,7 +81,7 @@ public class ProgressService : IProgressService
             {
                 var transcript = req.Response?["transcript"]?.GetValue<string>() ?? "";
                 var target = content?["targetText"]?.GetValue<string>() ?? exercise.Prompt;
-                var fb = await _language.EvaluateSpeakingAsync(target, transcript, level, ct);
+                var fb = await _language.EvaluateSpeakingAsync(target, transcript, level, useAi, ct);
                 feedbackNode = JsonSerializer.SerializeToNode(fb, JsonOpts);
                 result = new GradeResultDto(fb.ScorePercent >= 60, fb.ScorePercent, exercise.Explanation, null, feedbackNode);
             }

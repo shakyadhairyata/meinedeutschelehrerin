@@ -19,8 +19,8 @@ public class LanguageServiceOptions
 /// </summary>
 public interface ILanguageService
 {
-    Task<WritingFeedbackDto> EvaluateWritingAsync(string prompt, string text, CefrLevel level, int minWords, CancellationToken ct = default);
-    Task<SpeakingFeedbackDto> EvaluateSpeakingAsync(string targetText, string transcript, CefrLevel level, CancellationToken ct = default);
+    Task<WritingFeedbackDto> EvaluateWritingAsync(string prompt, string text, CefrLevel level, int minWords, bool useAi, CancellationToken ct = default);
+    Task<SpeakingFeedbackDto> EvaluateSpeakingAsync(string targetText, string transcript, CefrLevel level, bool useAi, CancellationToken ct = default);
     Task<GeneratedVocabularyDto> GenerateVocabularyAsync(CefrLevel level, string? theme, int count, IEnumerable<string> exclude, CancellationToken ct = default);
 }
 
@@ -35,8 +35,9 @@ public class LanguageServiceClient : ILanguageService
         _log = log;
     }
 
-    public async Task<WritingFeedbackDto> EvaluateWritingAsync(string prompt, string text, CefrLevel level, int minWords, CancellationToken ct = default)
+    public async Task<WritingFeedbackDto> EvaluateWritingAsync(string prompt, string text, CefrLevel level, int minWords, bool useAi, CancellationToken ct = default)
     {
+        if (!useAi) return OfflineWriting(text, minWords, level);
         try
         {
             var resp = await _http.PostAsJsonAsync("/evaluate/writing",
@@ -52,8 +53,9 @@ public class LanguageServiceClient : ILanguageService
         return OfflineWriting(text, minWords, level);
     }
 
-    public async Task<SpeakingFeedbackDto> EvaluateSpeakingAsync(string targetText, string transcript, CefrLevel level, CancellationToken ct = default)
+    public async Task<SpeakingFeedbackDto> EvaluateSpeakingAsync(string targetText, string transcript, CefrLevel level, bool useAi, CancellationToken ct = default)
     {
+        if (!useAi) return OfflineSpeaking(targetText, transcript);
         try
         {
             var resp = await _http.PostAsJsonAsync("/evaluate/speaking",

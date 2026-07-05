@@ -27,12 +27,8 @@ export default function AdminFeatures() {
   if (!flags) return <Spinner />
 
   return (
-    <div className="mx-auto max-w-2xl space-y-5">
-      <div>
-        <div className="text-xs font-bold uppercase tracking-wide text-brand-600">Admin</div>
-        <h1 className="text-2xl font-bold text-slate-800">Funktionen</h1>
-        <p className="text-slate-500">Schalte Features für alle Nutzer ein oder aus.</p>
-      </div>
+    <div className="space-y-4">
+      <p className="text-sm text-slate-500">Schalte Features für alle Nutzer ein oder aus.</p>
       <div className="space-y-3">
         {flags.map((f) => (
           <div key={f.key} className="card flex items-center justify-between gap-4">
