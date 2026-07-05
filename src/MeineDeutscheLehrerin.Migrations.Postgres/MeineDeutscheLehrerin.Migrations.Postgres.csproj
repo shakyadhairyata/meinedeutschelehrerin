@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>MeineDeutscheLehrerin.Migrations.Postgres</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Holds the PostgreSQL migration set (production). SQLite migrations live in Infrastructure. -->
+  <ItemGroup>
+    <ProjectReference Include="..\MeineDeutscheLehrerin.Infrastructure\MeineDeutscheLehrerin.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

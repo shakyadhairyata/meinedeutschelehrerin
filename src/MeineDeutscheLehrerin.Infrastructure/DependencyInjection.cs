@@ -18,7 +18,8 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(opt =>
         {
             if (provider.Equals("Postgres", StringComparison.OrdinalIgnoreCase))
-                opt.UseNpgsql(ToNpgsql(conn) ?? "Host=localhost;Database=mydeutschteacher;Username=postgres;Password=postgres");
+                opt.UseNpgsql(ToNpgsql(conn) ?? "Host=localhost;Database=mydeutschteacher;Username=postgres;Password=postgres",
+                    o => o.MigrationsAssembly("MeineDeutscheLehrerin.Migrations.Postgres"));
             else
                 opt.UseSqlite(conn ?? "Data Source=mydeutschteacher.db");
         });

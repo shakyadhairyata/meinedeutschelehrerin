@@ -43,6 +43,17 @@ feedback, set `ANTHROPIC_API_KEY` on the `meinedeutschelehrerin-ai` service and 
 - Email confirmation is off (`Identity__RequireConfirmedEmail=false`) so anyone can register and
   sign in immediately. Turn it on and configure SMTP (`Email__*`) for a real launch.
 
+## Database & schema changes
+
+The API applies **EF Core migrations** on startup for both providers (SQLite migrations live in
+`Infrastructure`, PostgreSQL migrations in the `Migrations.Postgres` project). So new schema is
+applied automatically on each deploy — no manual step for normal changes.
+
+**One-time transition:** the app previously used `EnsureCreated` for Postgres, which doesn't record
+a migrations history. To move an existing prod database onto migrations, **recreate the free
+Postgres once** (set `Admin__Email`/`Admin__Password` first). The API re-seeds curriculum, content,
+feature flags and the admin on first boot. After that, schema changes apply cleanly with no data loss.
+
 ## Verifying
 
 - API health: `https://<api-url>/api/health` → `{"status":"ok"}`

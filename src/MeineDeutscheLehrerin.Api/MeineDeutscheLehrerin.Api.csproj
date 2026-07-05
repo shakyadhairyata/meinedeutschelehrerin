@@ -17,6 +17,8 @@
   <ItemGroup>
     <ProjectReference Include="..\MeineDeutscheLehrerin.Infrastructure\MeineDeutscheLehrerin.Infrastructure.csproj" />
     <ProjectReference Include="..\MeineDeutscheLehrerin.Domain\MeineDeutscheLehrerin.Domain.csproj" />
+    <!-- Carries the PostgreSQL migration set; loaded at runtime via MigrationsAssembly. -->
+    <ProjectReference Include="..\MeineDeutscheLehrerin.Migrations.Postgres\MeineDeutscheLehrerin.Migrations.Postgres.csproj" />
   </ItemGroup>
 
 </Project>
