@@ -89,6 +89,8 @@ if (builder.Configuration.GetValue<bool>("Seed:ImportContent"))
 {
     await MeineDeutscheLehrerin.Api.Tools.VocabGenerationRunner.ImportAllAsync(app.Services, "content/vocabulary");
     await MeineDeutscheLehrerin.Api.Tools.ExerciseImportRunner.ImportAllAsync(app.Services, "content/exercises");
+    // Assemble Goethe-style practice sets from the imported exercises (idempotent, A1–B1).
+    await MeineDeutscheLehrerin.Api.Tools.PracticeSetGenerator.GenerateAsync(app.Services);
 }
 
 // CLI mode: `dotnet run -- generate-vocab <LEVEL> [count] [theme]` — generate vocab and exit.
@@ -122,6 +124,15 @@ if (args.Length > 0 && args[0].Equals("import-exercises", StringComparison.Ordin
         await MeineDeutscheLehrerin.Api.Tools.ExerciseImportRunner.ImportAsync(app.Services, args[1]);
     else
         Console.WriteLine("Usage: import-exercises all <dir> | import-exercises <file.json>");
+    return;
+}
+
+// CLI mode: `dotnet run -- generate-practice-sets [count] [A1,A2,B1]` — assemble practice sets and exit.
+if (args.Length > 0 && args[0].Equals("generate-practice-sets", StringComparison.OrdinalIgnoreCase))
+{
+    var count = args.Length > 1 && int.TryParse(args[1], out var c) ? c : 5;
+    var levels = args.Length > 2 ? args[2].Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) : null;
+    await MeineDeutscheLehrerin.Api.Tools.PracticeSetGenerator.GenerateAsync(app.Services, count, levels);
     return;
 }
 
