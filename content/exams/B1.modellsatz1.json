@@ -1,0 +1,810 @@
+{
+  "level": "B1",
+  "title": "B1 Modellsatz 1",
+  "description": "Vollständige Modellprüfung im Format des Goethe-Zertifikats B1: Lesen (65 Min.), Hören (40 Min.), Schreiben (60 Min.) und Sprechen (15 Min.) — jedes Modul mit eigenem Zeitlimit.",
+  "modules": [
+    {
+      "title": "Lesen",
+      "skill": "Reading",
+      "minutes": 65,
+      "items": [
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie den Blog von Lena. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "Mein neues Leben in Hamburg — Blog von Lena\n\nSeit drei Monaten wohne ich jetzt in Hamburg. Ich habe hier eine Stelle als Krankenschwester gefunden und bin von München hierhergezogen. Am Anfang war alles fremd: Die Stadt ist viel größer als meine Heimatstadt, und das Wetter ist oft grau und regnerisch. Trotzdem fühle ich mich inzwischen sehr wohl. Meine Kollegen sind freundlich und haben mir geholfen, eine kleine Wohnung in der Nähe des Krankenhauses zu finden. Am Wochenende erkunde ich gern den Hafen oder treffe neue Freunde in einem Café. Was mir noch fehlt, ist meine Familie – aber meine Eltern haben versprochen, mich bald zu besuchen. Ich bereue meine Entscheidung nicht.",
+            "question": "Lena wohnt seit einem Jahr in Hamburg.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Seit drei Monaten wohne ich jetzt in Hamburg.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie den Blog von Lena. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "Mein neues Leben in Hamburg — Blog von Lena\n\nSeit drei Monaten wohne ich jetzt in Hamburg. Ich habe hier eine Stelle als Krankenschwester gefunden und bin von München hierhergezogen. Am Anfang war alles fremd: Die Stadt ist viel größer als meine Heimatstadt, und das Wetter ist oft grau und regnerisch. Trotzdem fühle ich mich inzwischen sehr wohl. Meine Kollegen sind freundlich und haben mir geholfen, eine kleine Wohnung in der Nähe des Krankenhauses zu finden. Am Wochenende erkunde ich gern den Hafen oder treffe neue Freunde in einem Café. Was mir noch fehlt, ist meine Familie – aber meine Eltern haben versprochen, mich bald zu besuchen. Ich bereue meine Entscheidung nicht.",
+            "question": "Lena arbeitet im medizinischen Bereich.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… eine Stelle als Krankenschwester gefunden …«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie den Blog von Lena. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "Mein neues Leben in Hamburg — Blog von Lena\n\nSeit drei Monaten wohne ich jetzt in Hamburg. Ich habe hier eine Stelle als Krankenschwester gefunden und bin von München hierhergezogen. Am Anfang war alles fremd: Die Stadt ist viel größer als meine Heimatstadt, und das Wetter ist oft grau und regnerisch. Trotzdem fühle ich mich inzwischen sehr wohl. Meine Kollegen sind freundlich und haben mir geholfen, eine kleine Wohnung in der Nähe des Krankenhauses zu finden. Am Wochenende erkunde ich gern den Hafen oder treffe neue Freunde in einem Café. Was mir noch fehlt, ist meine Familie – aber meine Eltern haben versprochen, mich bald zu besuchen. Ich bereue meine Entscheidung nicht.",
+            "question": "Am Anfang war für Lena in Hamburg alles vertraut.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Am Anfang war alles fremd …«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie den Blog von Lena. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "Mein neues Leben in Hamburg — Blog von Lena\n\nSeit drei Monaten wohne ich jetzt in Hamburg. Ich habe hier eine Stelle als Krankenschwester gefunden und bin von München hierhergezogen. Am Anfang war alles fremd: Die Stadt ist viel größer als meine Heimatstadt, und das Wetter ist oft grau und regnerisch. Trotzdem fühle ich mich inzwischen sehr wohl. Meine Kollegen sind freundlich und haben mir geholfen, eine kleine Wohnung in der Nähe des Krankenhauses zu finden. Am Wochenende erkunde ich gern den Hafen oder treffe neue Freunde in einem Café. Was mir noch fehlt, ist meine Familie – aber meine Eltern haben versprochen, mich bald zu besuchen. Ich bereue meine Entscheidung nicht.",
+            "question": "Lenas Kollegen haben ihr bei der Wohnungssuche geholfen.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Meine Kollegen … haben mir geholfen, eine kleine Wohnung … zu finden.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie den Blog von Lena. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "Mein neues Leben in Hamburg — Blog von Lena\n\nSeit drei Monaten wohne ich jetzt in Hamburg. Ich habe hier eine Stelle als Krankenschwester gefunden und bin von München hierhergezogen. Am Anfang war alles fremd: Die Stadt ist viel größer als meine Heimatstadt, und das Wetter ist oft grau und regnerisch. Trotzdem fühle ich mich inzwischen sehr wohl. Meine Kollegen sind freundlich und haben mir geholfen, eine kleine Wohnung in der Nähe des Krankenhauses zu finden. Am Wochenende erkunde ich gern den Hafen oder treffe neue Freunde in einem Café. Was mir noch fehlt, ist meine Familie – aber meine Eltern haben versprochen, mich bald zu besuchen. Ich bereue meine Entscheidung nicht.",
+            "question": "Am Wochenende arbeitet Lena meistens.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Am Wochenende erkunde ich gern den Hafen oder treffe neue Freunde …«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie den Blog von Lena. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "Mein neues Leben in Hamburg — Blog von Lena\n\nSeit drei Monaten wohne ich jetzt in Hamburg. Ich habe hier eine Stelle als Krankenschwester gefunden und bin von München hierhergezogen. Am Anfang war alles fremd: Die Stadt ist viel größer als meine Heimatstadt, und das Wetter ist oft grau und regnerisch. Trotzdem fühle ich mich inzwischen sehr wohl. Meine Kollegen sind freundlich und haben mir geholfen, eine kleine Wohnung in der Nähe des Krankenhauses zu finden. Am Wochenende erkunde ich gern den Hafen oder treffe neue Freunde in einem Café. Was mir noch fehlt, ist meine Familie – aber meine Eltern haben versprochen, mich bald zu besuchen. Ich bereue meine Entscheidung nicht.",
+            "question": "Lena ist mit ihrer Entscheidung zufrieden.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Ich bereue meine Entscheidung nicht.«",
+          "difficulty": 3
+        },
+
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie den Zeitungstext und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Lesehunde in der Stadtbibliothek\n\nSeit einem Jahr gibt es in der Stadtbibliothek Freiburg ein besonderes Angebot: Jeden Samstag können Kinder einem Hund vorlesen. Der ausgebildete Hund Rocky sitzt ruhig neben dem Kind und hört geduldig zu. Die Idee kommt aus den USA. Viele Kinder haben Angst, vor anderen Menschen laut zu lesen, weil sie Fehler machen könnten. Ein Hund aber lacht nicht und kritisiert nicht. So verlieren die Kinder ihre Angst und lesen mit mehr Freude. Die Bibliothekarin Frau Sommer berichtet, dass sich die Lesefähigkeiten vieler Kinder deutlich verbessert haben. Das Angebot ist kostenlos, aber man muss sich vorher anmelden, weil die Plätze begrenzt sind.",
+            "question": "Was ist das Besondere an dem Angebot?",
+            "options": ["Kinder lesen einem Hund vor.", "Kinder lernen, Hunde zu erziehen.", "Kinder spielen im Park mit Hunden."]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… können Kinder einem Hund vorlesen.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie den Zeitungstext und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Lesehunde in der Stadtbibliothek\n\nSeit einem Jahr gibt es in der Stadtbibliothek Freiburg ein besonderes Angebot: Jeden Samstag können Kinder einem Hund vorlesen. Der ausgebildete Hund Rocky sitzt ruhig neben dem Kind und hört geduldig zu. Die Idee kommt aus den USA. Viele Kinder haben Angst, vor anderen Menschen laut zu lesen, weil sie Fehler machen könnten. Ein Hund aber lacht nicht und kritisiert nicht. So verlieren die Kinder ihre Angst und lesen mit mehr Freude. Die Bibliothekarin Frau Sommer berichtet, dass sich die Lesefähigkeiten vieler Kinder deutlich verbessert haben. Das Angebot ist kostenlos, aber man muss sich vorher anmelden, weil die Plätze begrenzt sind.",
+            "question": "Warum haben viele Kinder Angst, laut zu lesen?",
+            "options": ["weil der Hund bellt", "weil sie Fehler machen könnten", "weil die Bibliothek zu voll ist"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… weil sie Fehler machen könnten.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie den Zeitungstext und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Lesehunde in der Stadtbibliothek\n\nSeit einem Jahr gibt es in der Stadtbibliothek Freiburg ein besonderes Angebot: Jeden Samstag können Kinder einem Hund vorlesen. Der ausgebildete Hund Rocky sitzt ruhig neben dem Kind und hört geduldig zu. Die Idee kommt aus den USA. Viele Kinder haben Angst, vor anderen Menschen laut zu lesen, weil sie Fehler machen könnten. Ein Hund aber lacht nicht und kritisiert nicht. So verlieren die Kinder ihre Angst und lesen mit mehr Freude. Die Bibliothekarin Frau Sommer berichtet, dass sich die Lesefähigkeiten vieler Kinder deutlich verbessert haben. Das Angebot ist kostenlos, aber man muss sich vorher anmelden, weil die Plätze begrenzt sind.",
+            "question": "Was muss man tun, um teilzunehmen?",
+            "options": ["Man muss Eintritt bezahlen.", "Man muss einen eigenen Hund mitbringen.", "Man muss sich vorher anmelden."]
+          },
+          "solution": { "correctIndex": 2 },
+          "explanation": "»… man muss sich vorher anmelden, weil die Plätze begrenzt sind.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie den Zeitungstext und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Regionale Gemüsekisten\n\nDas junge Unternehmen „Frischekiste“ aus Leipzig liefert jede Woche frisches Obst und Gemüse direkt nach Hause. Das Besondere daran: Alle Produkte kommen von Bauernhöfen aus der Region, höchstens 50 Kilometer entfernt. Die Gründerin Julia Berger wollte, dass die Menschen wieder wissen, woher ihr Essen kommt. Die Kunden können nicht selbst aussuchen, was in der Kiste ist – das hängt von der Jahreszeit ab. Im Winter gibt es also mehr Kohl und Kartoffeln, im Sommer Tomaten und Erdbeeren. Viele Kunden finden das spannend, weil sie so neue Gemüsesorten kennenlernen. Der Preis ist etwas höher als im Supermarkt, aber dafür ist die Qualität sehr gut.",
+            "question": "Woher kommen die Produkte der „Frischekiste“?",
+            "options": ["aus dem Ausland", "aus der Region", "aus großen Supermärkten"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Alle Produkte kommen von Bauernhöfen aus der Region …«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie den Zeitungstext und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Regionale Gemüsekisten\n\nDas junge Unternehmen „Frischekiste“ aus Leipzig liefert jede Woche frisches Obst und Gemüse direkt nach Hause. Das Besondere daran: Alle Produkte kommen von Bauernhöfen aus der Region, höchstens 50 Kilometer entfernt. Die Gründerin Julia Berger wollte, dass die Menschen wieder wissen, woher ihr Essen kommt. Die Kunden können nicht selbst aussuchen, was in der Kiste ist – das hängt von der Jahreszeit ab. Im Winter gibt es also mehr Kohl und Kartoffeln, im Sommer Tomaten und Erdbeeren. Viele Kunden finden das spannend, weil sie so neue Gemüsesorten kennenlernen. Der Preis ist etwas höher als im Supermarkt, aber dafür ist die Qualität sehr gut.",
+            "question": "Warum ändert sich der Inhalt der Kiste?",
+            "options": ["Er hängt von der Jahreszeit ab.", "Die Kunden wählen ihn selbst aus.", "Die Bauern haben oft keine Zeit."]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… das hängt von der Jahreszeit ab.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie den Zeitungstext und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Regionale Gemüsekisten\n\nDas junge Unternehmen „Frischekiste“ aus Leipzig liefert jede Woche frisches Obst und Gemüse direkt nach Hause. Das Besondere daran: Alle Produkte kommen von Bauernhöfen aus der Region, höchstens 50 Kilometer entfernt. Die Gründerin Julia Berger wollte, dass die Menschen wieder wissen, woher ihr Essen kommt. Die Kunden können nicht selbst aussuchen, was in der Kiste ist – das hängt von der Jahreszeit ab. Im Winter gibt es also mehr Kohl und Kartoffeln, im Sommer Tomaten und Erdbeeren. Viele Kunden finden das spannend, weil sie so neue Gemüsesorten kennenlernen. Der Preis ist etwas höher als im Supermarkt, aber dafür ist die Qualität sehr gut.",
+            "question": "Was sagt der Text über den Preis?",
+            "options": ["Er ist niedriger als im Supermarkt.", "Er ist etwas höher, aber die Qualität ist gut.", "Er ist genauso hoch wie im Supermarkt."]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Der Preis ist etwas höher …, aber dafür ist die Qualität sehr gut.«",
+          "difficulty": 3
+        },
+
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Die Volkshochschule bietet Kurse an (a–h). Welches Angebot passt zu der Person?",
+          "content": {
+            "passage": "Kursangebote der Volkshochschule\n\na) Kochkurs „Italienisch kochen“ – dienstagabends, für Anfänger.\nb) Yoga am Morgen – sanfte Übungen für den Rücken, jeden Samstag um 8 Uhr.\nc) Fotografie-Workshop – am Wochenende, draußen in der Natur.\nd) Konversationskurs Spanisch – für Fortgeschrittene, mittwochs.\ne) Nähkurs für Anfänger – eigene Kleidung selbst machen.\nf) Lauftreff im Park – dienstags und donnerstags, für alle Niveaus.\ng) Malkurs für Kinder – samstagnachmittags, ab 6 Jahren.\nh) Computerkurs für Senioren – Grundlagen in ruhigem Tempo.",
+            "question": "Herr Weber (68) möchte lernen, wie man E-Mails schreibt und im Internet surft.",
+            "options": ["a) Kochkurs", "d) Spanisch", "f) Lauftreff", "h) Computerkurs"]
+          },
+          "solution": { "correctIndex": 3 },
+          "explanation": "»h) Computerkurs für Senioren – Grundlagen …«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Die Volkshochschule bietet Kurse an (a–h). Welches Angebot passt zu der Person?",
+          "content": {
+            "passage": "Kursangebote der Volkshochschule\n\na) Kochkurs „Italienisch kochen“ – dienstagabends, für Anfänger.\nb) Yoga am Morgen – sanfte Übungen für den Rücken, jeden Samstag um 8 Uhr.\nc) Fotografie-Workshop – am Wochenende, draußen in der Natur.\nd) Konversationskurs Spanisch – für Fortgeschrittene, mittwochs.\ne) Nähkurs für Anfänger – eigene Kleidung selbst machen.\nf) Lauftreff im Park – dienstags und donnerstags, für alle Niveaus.\ng) Malkurs für Kinder – samstagnachmittags, ab 6 Jahren.\nh) Computerkurs für Senioren – Grundlagen in ruhigem Tempo.",
+            "question": "Anna will am Wochenende kreativ sein und dabei an der frischen Luft.",
+            "options": ["b) Yoga", "c) Fotografie-Workshop", "e) Nähkurs", "h) Computerkurs"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»c) Fotografie-Workshop – am Wochenende, draußen in der Natur.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Die Volkshochschule bietet Kurse an (a–h). Welches Angebot passt zu der Person?",
+          "content": {
+            "passage": "Kursangebote der Volkshochschule\n\na) Kochkurs „Italienisch kochen“ – dienstagabends, für Anfänger.\nb) Yoga am Morgen – sanfte Übungen für den Rücken, jeden Samstag um 8 Uhr.\nc) Fotografie-Workshop – am Wochenende, draußen in der Natur.\nd) Konversationskurs Spanisch – für Fortgeschrittene, mittwochs.\ne) Nähkurs für Anfänger – eigene Kleidung selbst machen.\nf) Lauftreff im Park – dienstags und donnerstags, für alle Niveaus.\ng) Malkurs für Kinder – samstagnachmittags, ab 6 Jahren.\nh) Computerkurs für Senioren – Grundlagen in ruhigem Tempo.",
+            "question": "Familie Klein sucht eine Aktivität für ihren 7-jährigen Sohn am Samstag.",
+            "options": ["a) Kochkurs", "d) Spanisch", "g) Malkurs für Kinder", "h) Computerkurs"]
+          },
+          "solution": { "correctIndex": 2 },
+          "explanation": "»g) Malkurs für Kinder – samstagnachmittags, ab 6 Jahren.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Die Volkshochschule bietet Kurse an (a–h). Welches Angebot passt zu der Person?",
+          "content": {
+            "passage": "Kursangebote der Volkshochschule\n\na) Kochkurs „Italienisch kochen“ – dienstagabends, für Anfänger.\nb) Yoga am Morgen – sanfte Übungen für den Rücken, jeden Samstag um 8 Uhr.\nc) Fotografie-Workshop – am Wochenende, draußen in der Natur.\nd) Konversationskurs Spanisch – für Fortgeschrittene, mittwochs.\ne) Nähkurs für Anfänger – eigene Kleidung selbst machen.\nf) Lauftreff im Park – dienstags und donnerstags, für alle Niveaus.\ng) Malkurs für Kinder – samstagnachmittags, ab 6 Jahren.\nh) Computerkurs für Senioren – Grundlagen in ruhigem Tempo.",
+            "question": "Tom möchte abends nach der Arbeit etwas Neues in der Küche lernen.",
+            "options": ["a) Kochkurs Italienisch", "c) Fotografie-Workshop", "f) Lauftreff", "g) Malkurs"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»a) Kochkurs „Italienisch kochen“ – dienstagabends …«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Die Volkshochschule bietet Kurse an (a–h). Welches Angebot passt zu der Person?",
+          "content": {
+            "passage": "Kursangebote der Volkshochschule\n\na) Kochkurs „Italienisch kochen“ – dienstagabends, für Anfänger.\nb) Yoga am Morgen – sanfte Übungen für den Rücken, jeden Samstag um 8 Uhr.\nc) Fotografie-Workshop – am Wochenende, draußen in der Natur.\nd) Konversationskurs Spanisch – für Fortgeschrittene, mittwochs.\ne) Nähkurs für Anfänger – eigene Kleidung selbst machen.\nf) Lauftreff im Park – dienstags und donnerstags, für alle Niveaus.\ng) Malkurs für Kinder – samstagnachmittags, ab 6 Jahren.\nh) Computerkurs für Senioren – Grundlagen in ruhigem Tempo.",
+            "question": "Petra spricht schon gut Spanisch und möchte es nicht verlernen.",
+            "options": ["b) Yoga", "d) Spanisch für Fortgeschrittene", "e) Nähkurs", "f) Lauftreff"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»d) Konversationskurs Spanisch – für Fortgeschrittene …«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Die Volkshochschule bietet Kurse an (a–h). Welches Angebot passt zu der Person?",
+          "content": {
+            "passage": "Kursangebote der Volkshochschule\n\na) Kochkurs „Italienisch kochen“ – dienstagabends, für Anfänger.\nb) Yoga am Morgen – sanfte Übungen für den Rücken, jeden Samstag um 8 Uhr.\nc) Fotografie-Workshop – am Wochenende, draußen in der Natur.\nd) Konversationskurs Spanisch – für Fortgeschrittene, mittwochs.\ne) Nähkurs für Anfänger – eigene Kleidung selbst machen.\nf) Lauftreff im Park – dienstags und donnerstags, für alle Niveaus.\ng) Malkurs für Kinder – samstagnachmittags, ab 6 Jahren.\nh) Computerkurs für Senioren – Grundlagen in ruhigem Tempo.",
+            "question": "Markus will regelmäßig etwas für seine Fitness tun, auch als Anfänger.",
+            "options": ["a) Kochkurs", "d) Spanisch", "f) Lauftreff im Park", "g) Malkurs"]
+          },
+          "solution": { "correctIndex": 2 },
+          "explanation": "»f) Lauftreff im Park … für alle Niveaus.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Die Volkshochschule bietet Kurse an (a–h). Welches Angebot passt zu der Person?",
+          "content": {
+            "passage": "Kursangebote der Volkshochschule\n\na) Kochkurs „Italienisch kochen“ – dienstagabends, für Anfänger.\nb) Yoga am Morgen – sanfte Übungen für den Rücken, jeden Samstag um 8 Uhr.\nc) Fotografie-Workshop – am Wochenende, draußen in der Natur.\nd) Konversationskurs Spanisch – für Fortgeschrittene, mittwochs.\ne) Nähkurs für Anfänger – eigene Kleidung selbst machen.\nf) Lauftreff im Park – dienstags und donnerstags, für alle Niveaus.\ng) Malkurs für Kinder – samstagnachmittags, ab 6 Jahren.\nh) Computerkurs für Senioren – Grundlagen in ruhigem Tempo.",
+            "question": "Lisa möchte früh am Samstag entspannen und etwas für ihren Rücken tun.",
+            "options": ["b) Yoga am Morgen", "c) Fotografie-Workshop", "e) Nähkurs", "h) Computerkurs"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»b) Yoga am Morgen – sanfte Übungen für den Rücken, jeden Samstag um 8 Uhr.«",
+          "difficulty": 3
+        },
+
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 4 · Thema: „Sollten Handys in der Schule verboten werden?“ Ist die Person dafür oder dagegen?",
+          "content": {
+            "passage": "Lesermeinungen zum Thema: Sollten Handys in der Schule verboten werden?\n\nBernd: „Ich finde ein Verbot richtig. Im Unterricht lenken Handys die Schüler nur ab, und sie können sich nicht mehr konzentrieren.“",
+            "question": "Ist Bernd für oder gegen ein Handyverbot?",
+            "options": ["Dafür", "Dagegen"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Ich finde ein Verbot richtig.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 4 · Thema: „Sollten Handys in der Schule verboten werden?“ Ist die Person dafür oder dagegen?",
+          "content": {
+            "passage": "Lesermeinungen zum Thema: Sollten Handys in der Schule verboten werden?\n\nCarla: „Handys gehören zum modernen Leben. Man kann sie im Unterricht auch sinnvoll nutzen, zum Beispiel, um schnell etwas zu recherchieren.“",
+            "question": "Ist Carla für oder gegen ein Handyverbot?",
+            "options": ["Dafür", "Dagegen"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Man kann sie im Unterricht auch sinnvoll nutzen …«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 4 · Thema: „Sollten Handys in der Schule verboten werden?“ Ist die Person dafür oder dagegen?",
+          "content": {
+            "passage": "Lesermeinungen zum Thema: Sollten Handys in der Schule verboten werden?\n\nDirk: „In den Pausen sollten die Kinder miteinander reden und spielen, statt nur auf den Bildschirm zu starren. Deshalb bin ich für ein Verbot.“",
+            "question": "Ist Dirk für oder gegen ein Handyverbot?",
+            "options": ["Dafür", "Dagegen"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Deshalb bin ich für ein Verbot.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 4 · Thema: „Sollten Handys in der Schule verboten werden?“ Ist die Person dafür oder dagegen?",
+          "content": {
+            "passage": "Lesermeinungen zum Thema: Sollten Handys in der Schule verboten werden?\n\nEva: „Ein komplettes Verbot ist übertrieben. Die Schüler müssen lernen, verantwortungsvoll mit dem Handy umzugehen.“",
+            "question": "Ist Eva für oder gegen ein Handyverbot?",
+            "options": ["Dafür", "Dagegen"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Ein komplettes Verbot ist übertrieben.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 4 · Thema: „Sollten Handys in der Schule verboten werden?“ Ist die Person dafür oder dagegen?",
+          "content": {
+            "passage": "Lesermeinungen zum Thema: Sollten Handys in der Schule verboten werden?\n\nFrank: „Wenn etwas passiert, müssen die Eltern ihre Kinder erreichen können. Ein Verbot wäre da ein echtes Problem.“",
+            "question": "Ist Frank für oder gegen ein Handyverbot?",
+            "options": ["Dafür", "Dagegen"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Ein Verbot wäre da ein echtes Problem.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 4 · Thema: „Sollten Handys in der Schule verboten werden?“ Ist die Person dafür oder dagegen?",
+          "content": {
+            "passage": "Lesermeinungen zum Thema: Sollten Handys in der Schule verboten werden?\n\nGesa: „Viele Schüler machen heimlich Fotos von anderen. Das ist für mich ein guter Grund, Handys in der Schule zu verbieten.“",
+            "question": "Ist Gesa für oder gegen ein Handyverbot?",
+            "options": ["Dafür", "Dagegen"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… ein guter Grund, Handys in der Schule zu verbieten.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 4 · Thema: „Sollten Handys in der Schule verboten werden?“ Ist die Person dafür oder dagegen?",
+          "content": {
+            "passage": "Lesermeinungen zum Thema: Sollten Handys in der Schule verboten werden?\n\nHannes: „Lehrer können Handys doch in den Unterricht einbauen. Verbote lösen das Problem nicht, sondern gute Regeln.“",
+            "question": "Ist Hannes für oder gegen ein Handyverbot?",
+            "options": ["Dafür", "Dagegen"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Verbote lösen das Problem nicht, sondern gute Regeln.«",
+          "difficulty": 3
+        },
+
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 5 · Lesen Sie die Benutzungsordnung und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Benutzungsordnung – Hallenbad Stadtmitte\n\n1. Der Eintritt ist nur mit einem gültigen Ticket erlaubt.\n2. Vor dem Schwimmen müssen alle Gäste duschen.\n3. Kinder unter 7 Jahren dürfen nur in Begleitung eines Erwachsenen ins Wasser.\n4. Essen und Trinken ist nur im Café-Bereich gestattet, nicht am Beckenrand.\n5. Schwimmbrille und Badekleidung sind selbst mitzubringen.\n6. Bei Gewitter wird das Freibecken sofort geschlossen.",
+            "question": "Was müssen die Gäste vor dem Schwimmen tun?",
+            "options": ["etwas essen", "duschen", "ein Ticket verschenken"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Vor dem Schwimmen müssen alle Gäste duschen.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 5 · Lesen Sie die Benutzungsordnung und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Benutzungsordnung – Hallenbad Stadtmitte\n\n1. Der Eintritt ist nur mit einem gültigen Ticket erlaubt.\n2. Vor dem Schwimmen müssen alle Gäste duschen.\n3. Kinder unter 7 Jahren dürfen nur in Begleitung eines Erwachsenen ins Wasser.\n4. Essen und Trinken ist nur im Café-Bereich gestattet, nicht am Beckenrand.\n5. Schwimmbrille und Badekleidung sind selbst mitzubringen.\n6. Bei Gewitter wird das Freibecken sofort geschlossen.",
+            "question": "Ein Kind ist 5 Jahre alt. Was gilt für dieses Kind?",
+            "options": ["Es darf allein schwimmen.", "Es darf nur mit einem Erwachsenen ins Wasser.", "Es darf gar nicht ins Bad."]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Kinder unter 7 Jahren dürfen nur in Begleitung eines Erwachsenen ins Wasser.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 5 · Lesen Sie die Benutzungsordnung und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Benutzungsordnung – Hallenbad Stadtmitte\n\n1. Der Eintritt ist nur mit einem gültigen Ticket erlaubt.\n2. Vor dem Schwimmen müssen alle Gäste duschen.\n3. Kinder unter 7 Jahren dürfen nur in Begleitung eines Erwachsenen ins Wasser.\n4. Essen und Trinken ist nur im Café-Bereich gestattet, nicht am Beckenrand.\n5. Schwimmbrille und Badekleidung sind selbst mitzubringen.\n6. Bei Gewitter wird das Freibecken sofort geschlossen.",
+            "question": "Wo darf man im Hallenbad essen?",
+            "options": ["am Beckenrand", "im Café-Bereich", "überall im Bad"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Essen und Trinken ist nur im Café-Bereich gestattet …«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 5 · Lesen Sie die Benutzungsordnung und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Benutzungsordnung – Hallenbad Stadtmitte\n\n1. Der Eintritt ist nur mit einem gültigen Ticket erlaubt.\n2. Vor dem Schwimmen müssen alle Gäste duschen.\n3. Kinder unter 7 Jahren dürfen nur in Begleitung eines Erwachsenen ins Wasser.\n4. Essen und Trinken ist nur im Café-Bereich gestattet, nicht am Beckenrand.\n5. Schwimmbrille und Badekleidung sind selbst mitzubringen.\n6. Bei Gewitter wird das Freibecken sofort geschlossen.",
+            "question": "Was passiert bei Gewitter?",
+            "options": ["Das Freibecken wird geschlossen.", "Das Bad bleibt normal geöffnet.", "Der Eintritt wird billiger."]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Bei Gewitter wird das Freibecken sofort geschlossen.«",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "title": "Hören",
+      "skill": "Listening",
+      "minutes": 40,
+      "items": [
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie die Durchsage. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Achtung an Gleis 3: Der ICE 592 nach Berlin hat heute etwa 15 Minuten Verspätung. Grund dafür ist eine technische Störung. Reisende nach Berlin bitte ich, die Anzeigetafeln zu beachten.",
+            "question": "Der Zug nach Berlin fällt heute aus.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "Der Zug fällt nicht aus, er hat nur Verspätung.",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie die Durchsage. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Achtung an Gleis 3: Der ICE 592 nach Berlin hat heute etwa 15 Minuten Verspätung. Grund dafür ist eine technische Störung. Reisende nach Berlin bitte ich, die Anzeigetafeln zu beachten.",
+            "question": "Wie viel Verspätung hat der Zug?",
+            "options": ["5 Minuten", "15 Minuten", "50 Minuten"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… etwa 15 Minuten Verspätung.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie die Nachricht. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Hallo Sabine, hier ist Tom. Wir wollten uns ja heute um sieben im Kino treffen. Leider muss ich später kommen, so gegen halb acht, weil mein Meeting länger dauert. Kannst du schon die Tickets kaufen? Ich gebe dir das Geld dann zurück. Bis später!",
+            "question": "Wann kommt Tom ins Kino?",
+            "options": ["um sieben", "um halb acht", "um acht"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… so gegen halb acht …«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie die Nachricht. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Hallo Sabine, hier ist Tom. Wir wollten uns ja heute um sieben im Kino treffen. Leider muss ich später kommen, so gegen halb acht, weil mein Meeting länger dauert. Kannst du schon die Tickets kaufen? Ich gebe dir das Geld dann zurück. Bis später!",
+            "question": "Tom bittet Sabine, die Tickets zu kaufen.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Kannst du schon die Tickets kaufen?«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie den Wetterbericht. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Und nun das Wetter für morgen: Am Vormittag bleibt es meist bewölkt, am Nachmittag kommt dann die Sonne heraus. Es bleibt trocken bei angenehmen 22 Grad. Erst am Abend kann es im Süden vereinzelt regnen.",
+            "question": "Wie wird das Wetter am Nachmittag?",
+            "options": ["Es regnet den ganzen Tag.", "Es bleibt bewölkt.", "Die Sonne kommt heraus."]
+          },
+          "solution": { "correctIndex": 2 },
+          "explanation": "»… am Nachmittag kommt dann die Sonne heraus.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie den Wetterbericht. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Und nun das Wetter für morgen: Am Vormittag bleibt es meist bewölkt, am Nachmittag kommt dann die Sonne heraus. Es bleibt trocken bei angenehmen 22 Grad. Erst am Abend kann es im Süden vereinzelt regnen.",
+            "question": "Am Vormittag scheint die Sonne.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Am Vormittag bleibt es meist bewölkt …«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie die Durchsage im Supermarkt. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Liebe Kundinnen und Kunden, heute finden Sie an unserer Frischetheke ein besonderes Angebot: frischen Fisch zum halben Preis. Außerdem schließt unser Markt heute ausnahmsweise schon um 20 Uhr. Wir wünschen Ihnen einen schönen Einkauf.",
+            "question": "Was ist heute im Angebot?",
+            "options": ["Fisch", "Brot", "Obst"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… frischen Fisch zum halben Preis.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie die Durchsage im Supermarkt. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Liebe Kundinnen und Kunden, heute finden Sie an unserer Frischetheke ein besonderes Angebot: frischen Fisch zum halben Preis. Außerdem schließt unser Markt heute ausnahmsweise schon um 20 Uhr. Wir wünschen Ihnen einen schönen Einkauf.",
+            "question": "Der Markt schließt heute früher als sonst.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… schließt unser Markt heute ausnahmsweise schon um 20 Uhr.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie die Ansage der Arztpraxis. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Guten Tag, Sie sind mit der Praxis Dr. Meier verbunden. Unsere Praxis ist von Montag bis Freitag von 8 bis 12 Uhr geöffnet, am Dienstag auch nachmittags. In dringenden Fällen wählen Sie bitte die Nummer des ärztlichen Notdienstes: 116 117.",
+            "question": "Wann hat die Praxis auch am Nachmittag geöffnet?",
+            "options": ["am Montag", "am Dienstag", "am Freitag"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… am Dienstag auch nachmittags.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie die Ansage der Arztpraxis. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Guten Tag, Sie sind mit der Praxis Dr. Meier verbunden. Unsere Praxis ist von Montag bis Freitag von 8 bis 12 Uhr geöffnet, am Dienstag auch nachmittags. In dringenden Fällen wählen Sie bitte die Nummer des ärztlichen Notdienstes: 116 117.",
+            "question": "In dringenden Fällen soll man den Notdienst anrufen.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»In dringenden Fällen wählen Sie bitte die Nummer des ärztlichen Notdienstes …«",
+          "difficulty": 3
+        },
+
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 2 · Hören Sie die Stadtführung. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Herzlich willkommen zu unserer Stadtführung durch die Altstadt von Regensburg. Mein Name ist Klaus, und ich begleite Sie heute für etwa zwei Stunden. Wir beginnen hier am Rathausplatz. Das alte Rathaus stammt aus dem 13. Jahrhundert. Von hier gehen wir zunächst zur Steinernen Brücke, dem bekanntesten Bauwerk der Stadt. Danach machen wir eine kurze Pause in einem traditionellen Café, wo Sie die berühmte Regensburger Wurst probieren können. Bitte bleiben Sie während der Führung immer zusammen und achten Sie auf den Verkehr. Fotografieren ist überall erlaubt, nur im Dom bitte ohne Blitz. Am Ende der Tour haben Sie noch Zeit zum Einkaufen.",
+            "question": "Wie lange dauert die Führung?",
+            "options": ["etwa zwei Stunden", "einen ganzen Tag", "etwa dreißig Minuten"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… ich begleite Sie heute für etwa zwei Stunden.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 2 · Hören Sie die Stadtführung. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Herzlich willkommen zu unserer Stadtführung durch die Altstadt von Regensburg. Mein Name ist Klaus, und ich begleite Sie heute für etwa zwei Stunden. Wir beginnen hier am Rathausplatz. Das alte Rathaus stammt aus dem 13. Jahrhundert. Von hier gehen wir zunächst zur Steinernen Brücke, dem bekanntesten Bauwerk der Stadt. Danach machen wir eine kurze Pause in einem traditionellen Café, wo Sie die berühmte Regensburger Wurst probieren können. Bitte bleiben Sie während der Führung immer zusammen und achten Sie auf den Verkehr. Fotografieren ist überall erlaubt, nur im Dom bitte ohne Blitz. Am Ende der Tour haben Sie noch Zeit zum Einkaufen.",
+            "question": "Wo beginnt die Tour?",
+            "options": ["an der Steinernen Brücke", "am Rathausplatz", "im Dom"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Wir beginnen hier am Rathausplatz.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 2 · Hören Sie die Stadtführung. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Herzlich willkommen zu unserer Stadtführung durch die Altstadt von Regensburg. Mein Name ist Klaus, und ich begleite Sie heute für etwa zwei Stunden. Wir beginnen hier am Rathausplatz. Das alte Rathaus stammt aus dem 13. Jahrhundert. Von hier gehen wir zunächst zur Steinernen Brücke, dem bekanntesten Bauwerk der Stadt. Danach machen wir eine kurze Pause in einem traditionellen Café, wo Sie die berühmte Regensburger Wurst probieren können. Bitte bleiben Sie während der Führung immer zusammen und achten Sie auf den Verkehr. Fotografieren ist überall erlaubt, nur im Dom bitte ohne Blitz. Am Ende der Tour haben Sie noch Zeit zum Einkaufen.",
+            "question": "Was können die Gäste im Café probieren?",
+            "options": ["einen besonderen Kuchen", "die Regensburger Wurst", "einen regionalen Wein"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… wo Sie die berühmte Regensburger Wurst probieren können.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 2 · Hören Sie die Stadtführung. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Herzlich willkommen zu unserer Stadtführung durch die Altstadt von Regensburg. Mein Name ist Klaus, und ich begleite Sie heute für etwa zwei Stunden. Wir beginnen hier am Rathausplatz. Das alte Rathaus stammt aus dem 13. Jahrhundert. Von hier gehen wir zunächst zur Steinernen Brücke, dem bekanntesten Bauwerk der Stadt. Danach machen wir eine kurze Pause in einem traditionellen Café, wo Sie die berühmte Regensburger Wurst probieren können. Bitte bleiben Sie während der Führung immer zusammen und achten Sie auf den Verkehr. Fotografieren ist überall erlaubt, nur im Dom bitte ohne Blitz. Am Ende der Tour haben Sie noch Zeit zum Einkaufen.",
+            "question": "Was ist im Dom nicht erlaubt?",
+            "options": ["Fotografieren mit Blitz", "leise sprechen", "sich hinsetzen"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… nur im Dom bitte ohne Blitz.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 2 · Hören Sie die Stadtführung. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Herzlich willkommen zu unserer Stadtführung durch die Altstadt von Regensburg. Mein Name ist Klaus, und ich begleite Sie heute für etwa zwei Stunden. Wir beginnen hier am Rathausplatz. Das alte Rathaus stammt aus dem 13. Jahrhundert. Von hier gehen wir zunächst zur Steinernen Brücke, dem bekanntesten Bauwerk der Stadt. Danach machen wir eine kurze Pause in einem traditionellen Café, wo Sie die berühmte Regensburger Wurst probieren können. Bitte bleiben Sie während der Führung immer zusammen und achten Sie auf den Verkehr. Fotografieren ist überall erlaubt, nur im Dom bitte ohne Blitz. Am Ende der Tour haben Sie noch Zeit zum Einkaufen.",
+            "question": "Was können die Gäste am Ende der Tour tun?",
+            "options": ["schwimmen gehen", "einkaufen", "selbst kochen"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Am Ende der Tour haben Sie noch Zeit zum Einkaufen.«",
+          "difficulty": 3
+        },
+
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie das Gespräch zwischen Anna und Markus. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Anna: Du, Markus, wir müssen noch das Sommerfest für unser Team planen. Hast du schon eine Idee? Markus: Ja, ich dachte an ein Grillfest im Park. Das ist einfach und nicht so teuer. Anna: Gute Idee. Aber was machen wir, wenn es regnet? Markus: Dann könnten wir in das Restaurant am See gehen. Die haben auch einen großen Raum drinnen. Anna: Okay. Und wann soll das Fest stattfinden? Ich finde einen Samstag besser als einen Freitag. Markus: Einverstanden. Sagen wir, der 15. Juli. Ich frage die Kollegen, wer mitkommt. Anna: Super. Ich kümmere mich um das Essen und die Getränke. Kannst du die Musik organisieren? Markus: Klar, mache ich. Meine Schwester hat eine gute Musikanlage, die kann ich mir leihen.",
+            "question": "Markus schlägt ein Grillfest im Park vor.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… ich dachte an ein Grillfest im Park.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie das Gespräch zwischen Anna und Markus. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Anna: Du, Markus, wir müssen noch das Sommerfest für unser Team planen. Hast du schon eine Idee? Markus: Ja, ich dachte an ein Grillfest im Park. Das ist einfach und nicht so teuer. Anna: Gute Idee. Aber was machen wir, wenn es regnet? Markus: Dann könnten wir in das Restaurant am See gehen. Die haben auch einen großen Raum drinnen. Anna: Okay. Und wann soll das Fest stattfinden? Ich finde einen Samstag besser als einen Freitag. Markus: Einverstanden. Sagen wir, der 15. Juli. Ich frage die Kollegen, wer mitkommt. Anna: Super. Ich kümmere mich um das Essen und die Getränke. Kannst du die Musik organisieren? Markus: Klar, mache ich. Meine Schwester hat eine gute Musikanlage, die kann ich mir leihen.",
+            "question": "Bei schlechtem Wetter wollen sie zu Hause feiern.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Dann könnten wir in das Restaurant am See gehen.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie das Gespräch zwischen Anna und Markus. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Anna: Du, Markus, wir müssen noch das Sommerfest für unser Team planen. Hast du schon eine Idee? Markus: Ja, ich dachte an ein Grillfest im Park. Das ist einfach und nicht so teuer. Anna: Gute Idee. Aber was machen wir, wenn es regnet? Markus: Dann könnten wir in das Restaurant am See gehen. Die haben auch einen großen Raum drinnen. Anna: Okay. Und wann soll das Fest stattfinden? Ich finde einen Samstag besser als einen Freitag. Markus: Einverstanden. Sagen wir, der 15. Juli. Ich frage die Kollegen, wer mitkommt. Anna: Super. Ich kümmere mich um das Essen und die Getränke. Kannst du die Musik organisieren? Markus: Klar, mache ich. Meine Schwester hat eine gute Musikanlage, die kann ich mir leihen.",
+            "question": "Anna möchte das Fest lieber an einem Freitag machen.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Ich finde einen Samstag besser als einen Freitag.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie das Gespräch zwischen Anna und Markus. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Anna: Du, Markus, wir müssen noch das Sommerfest für unser Team planen. Hast du schon eine Idee? Markus: Ja, ich dachte an ein Grillfest im Park. Das ist einfach und nicht so teuer. Anna: Gute Idee. Aber was machen wir, wenn es regnet? Markus: Dann könnten wir in das Restaurant am See gehen. Die haben auch einen großen Raum drinnen. Anna: Okay. Und wann soll das Fest stattfinden? Ich finde einen Samstag besser als einen Freitag. Markus: Einverstanden. Sagen wir, der 15. Juli. Ich frage die Kollegen, wer mitkommt. Anna: Super. Ich kümmere mich um das Essen und die Getränke. Kannst du die Musik organisieren? Markus: Klar, mache ich. Meine Schwester hat eine gute Musikanlage, die kann ich mir leihen.",
+            "question": "Das Fest soll am 15. Juli stattfinden.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Sagen wir, der 15. Juli.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie das Gespräch zwischen Anna und Markus. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Anna: Du, Markus, wir müssen noch das Sommerfest für unser Team planen. Hast du schon eine Idee? Markus: Ja, ich dachte an ein Grillfest im Park. Das ist einfach und nicht so teuer. Anna: Gute Idee. Aber was machen wir, wenn es regnet? Markus: Dann könnten wir in das Restaurant am See gehen. Die haben auch einen großen Raum drinnen. Anna: Okay. Und wann soll das Fest stattfinden? Ich finde einen Samstag besser als einen Freitag. Markus: Einverstanden. Sagen wir, der 15. Juli. Ich frage die Kollegen, wer mitkommt. Anna: Super. Ich kümmere mich um das Essen und die Getränke. Kannst du die Musik organisieren? Markus: Klar, mache ich. Meine Schwester hat eine gute Musikanlage, die kann ich mir leihen.",
+            "question": "Anna kümmert sich um das Essen und die Getränke.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Ich kümmere mich um das Essen und die Getränke.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie das Gespräch zwischen Anna und Markus. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Anna: Du, Markus, wir müssen noch das Sommerfest für unser Team planen. Hast du schon eine Idee? Markus: Ja, ich dachte an ein Grillfest im Park. Das ist einfach und nicht so teuer. Anna: Gute Idee. Aber was machen wir, wenn es regnet? Markus: Dann könnten wir in das Restaurant am See gehen. Die haben auch einen großen Raum drinnen. Anna: Okay. Und wann soll das Fest stattfinden? Ich finde einen Samstag besser als einen Freitag. Markus: Einverstanden. Sagen wir, der 15. Juli. Ich frage die Kollegen, wer mitkommt. Anna: Super. Ich kümmere mich um das Essen und die Getränke. Kannst du die Musik organisieren? Markus: Klar, mache ich. Meine Schwester hat eine gute Musikanlage, die kann ich mir leihen.",
+            "question": "Markus soll die Musik organisieren.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Kannst du die Musik organisieren? – Klar, mache ich.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie das Gespräch zwischen Anna und Markus. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Anna: Du, Markus, wir müssen noch das Sommerfest für unser Team planen. Hast du schon eine Idee? Markus: Ja, ich dachte an ein Grillfest im Park. Das ist einfach und nicht so teuer. Anna: Gute Idee. Aber was machen wir, wenn es regnet? Markus: Dann könnten wir in das Restaurant am See gehen. Die haben auch einen großen Raum drinnen. Anna: Okay. Und wann soll das Fest stattfinden? Ich finde einen Samstag besser als einen Freitag. Markus: Einverstanden. Sagen wir, der 15. Juli. Ich frage die Kollegen, wer mitkommt. Anna: Super. Ich kümmere mich um das Essen und die Getränke. Kannst du die Musik organisieren? Markus: Klar, mache ich. Meine Schwester hat eine gute Musikanlage, die kann ich mir leihen.",
+            "question": "Markus muss eine Musikanlage kaufen.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Meine Schwester hat eine gute Musikanlage, die kann ich mir leihen.«",
+          "difficulty": 3
+        },
+
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 4 · Hören Sie das Radiogespräch über das Ehrenamt. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Moderatorin: Willkommen zu unserer Sendung. Heute sprechen wir über das Ehrenamt. Bei mir im Studio ist Frau Dr. Wagner, Expertin für Freiwilligenarbeit. Frau Wagner, wie viele Menschen in Deutschland engagieren sich ehrenamtlich? Dr. Wagner: Etwa jeder Dritte, also rund 30 Prozent der Erwachsenen. Das ist eine ganze Menge. Moderatorin: Und in welchen Bereichen sind die Leute aktiv? Dr. Wagner: Am häufigsten im Sport, zum Beispiel als Trainer in Vereinen. Aber auch im sozialen Bereich, in der Kultur und beim Umweltschutz. Moderatorin: Warum machen die Menschen das? Sie bekommen ja meistens kein Geld dafür. Dr. Wagner: Das stimmt. Die meisten sagen, dass ihnen die Arbeit Freude macht und dass sie anderen helfen wollen. Viele lernen auch neue Leute kennen. Moderatorin: Gibt es auch Probleme? Dr. Wagner: Ja, oft fehlt die Zeit. Gerade jüngere Menschen mit Beruf und Familie finden es schwierig, sich regelmäßig zu engagieren. Deshalb suchen heute viele nach flexiblen Angeboten. Moderatorin: Was würden Sie jemandem raten, der anfangen möchte? Dr. Wagner: Einfach ausprobieren! Man sollte etwas wählen, das zu den eigenen Interessen passt. Und man muss nicht gleich viele Stunden pro Woche investieren.",
+            "question": "Wie viele Erwachsene engagieren sich ehrenamtlich?",
+            "options": ["rund 10 Prozent", "rund 30 Prozent", "rund 50 Prozent"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… rund 30 Prozent der Erwachsenen.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 4 · Hören Sie das Radiogespräch über das Ehrenamt. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Moderatorin: Willkommen zu unserer Sendung. Heute sprechen wir über das Ehrenamt. Bei mir im Studio ist Frau Dr. Wagner, Expertin für Freiwilligenarbeit. Frau Wagner, wie viele Menschen in Deutschland engagieren sich ehrenamtlich? Dr. Wagner: Etwa jeder Dritte, also rund 30 Prozent der Erwachsenen. Das ist eine ganze Menge. Moderatorin: Und in welchen Bereichen sind die Leute aktiv? Dr. Wagner: Am häufigsten im Sport, zum Beispiel als Trainer in Vereinen. Aber auch im sozialen Bereich, in der Kultur und beim Umweltschutz. Moderatorin: Warum machen die Menschen das? Sie bekommen ja meistens kein Geld dafür. Dr. Wagner: Das stimmt. Die meisten sagen, dass ihnen die Arbeit Freude macht und dass sie anderen helfen wollen. Viele lernen auch neue Leute kennen. Moderatorin: Gibt es auch Probleme? Dr. Wagner: Ja, oft fehlt die Zeit. Gerade jüngere Menschen mit Beruf und Familie finden es schwierig, sich regelmäßig zu engagieren. Deshalb suchen heute viele nach flexiblen Angeboten. Moderatorin: Was würden Sie jemandem raten, der anfangen möchte? Dr. Wagner: Einfach ausprobieren! Man sollte etwas wählen, das zu den eigenen Interessen passt. Und man muss nicht gleich viele Stunden pro Woche investieren.",
+            "question": "In welchem Bereich sind die meisten Menschen aktiv?",
+            "options": ["im Sport", "in der Politik", "in der Medizin"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Am häufigsten im Sport …«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 4 · Hören Sie das Radiogespräch über das Ehrenamt. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Moderatorin: Willkommen zu unserer Sendung. Heute sprechen wir über das Ehrenamt. Bei mir im Studio ist Frau Dr. Wagner, Expertin für Freiwilligenarbeit. Frau Wagner, wie viele Menschen in Deutschland engagieren sich ehrenamtlich? Dr. Wagner: Etwa jeder Dritte, also rund 30 Prozent der Erwachsenen. Das ist eine ganze Menge. Moderatorin: Und in welchen Bereichen sind die Leute aktiv? Dr. Wagner: Am häufigsten im Sport, zum Beispiel als Trainer in Vereinen. Aber auch im sozialen Bereich, in der Kultur und beim Umweltschutz. Moderatorin: Warum machen die Menschen das? Sie bekommen ja meistens kein Geld dafür. Dr. Wagner: Das stimmt. Die meisten sagen, dass ihnen die Arbeit Freude macht und dass sie anderen helfen wollen. Viele lernen auch neue Leute kennen. Moderatorin: Gibt es auch Probleme? Dr. Wagner: Ja, oft fehlt die Zeit. Gerade jüngere Menschen mit Beruf und Familie finden es schwierig, sich regelmäßig zu engagieren. Deshalb suchen heute viele nach flexiblen Angeboten. Moderatorin: Was würden Sie jemandem raten, der anfangen möchte? Dr. Wagner: Einfach ausprobieren! Man sollte etwas wählen, das zu den eigenen Interessen passt. Und man muss nicht gleich viele Stunden pro Woche investieren.",
+            "question": "Bekommen die Ehrenamtlichen meistens Geld?",
+            "options": ["ja, ziemlich viel", "nein, meistens nicht", "nur im Sport"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Sie bekommen ja meistens kein Geld dafür.« – »Das stimmt.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 4 · Hören Sie das Radiogespräch über das Ehrenamt. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Moderatorin: Willkommen zu unserer Sendung. Heute sprechen wir über das Ehrenamt. Bei mir im Studio ist Frau Dr. Wagner, Expertin für Freiwilligenarbeit. Frau Wagner, wie viele Menschen in Deutschland engagieren sich ehrenamtlich? Dr. Wagner: Etwa jeder Dritte, also rund 30 Prozent der Erwachsenen. Das ist eine ganze Menge. Moderatorin: Und in welchen Bereichen sind die Leute aktiv? Dr. Wagner: Am häufigsten im Sport, zum Beispiel als Trainer in Vereinen. Aber auch im sozialen Bereich, in der Kultur und beim Umweltschutz. Moderatorin: Warum machen die Menschen das? Sie bekommen ja meistens kein Geld dafür. Dr. Wagner: Das stimmt. Die meisten sagen, dass ihnen die Arbeit Freude macht und dass sie anderen helfen wollen. Viele lernen auch neue Leute kennen. Moderatorin: Gibt es auch Probleme? Dr. Wagner: Ja, oft fehlt die Zeit. Gerade jüngere Menschen mit Beruf und Familie finden es schwierig, sich regelmäßig zu engagieren. Deshalb suchen heute viele nach flexiblen Angeboten. Moderatorin: Was würden Sie jemandem raten, der anfangen möchte? Dr. Wagner: Einfach ausprobieren! Man sollte etwas wählen, das zu den eigenen Interessen passt. Und man muss nicht gleich viele Stunden pro Woche investieren.",
+            "question": "Warum engagieren sich die meisten Menschen?",
+            "options": ["Die Arbeit macht ihnen Freude.", "Sie werden dazu gezwungen.", "Sie wollen berühmt werden."]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… dass ihnen die Arbeit Freude macht …«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 4 · Hören Sie das Radiogespräch über das Ehrenamt. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Moderatorin: Willkommen zu unserer Sendung. Heute sprechen wir über das Ehrenamt. Bei mir im Studio ist Frau Dr. Wagner, Expertin für Freiwilligenarbeit. Frau Wagner, wie viele Menschen in Deutschland engagieren sich ehrenamtlich? Dr. Wagner: Etwa jeder Dritte, also rund 30 Prozent der Erwachsenen. Das ist eine ganze Menge. Moderatorin: Und in welchen Bereichen sind die Leute aktiv? Dr. Wagner: Am häufigsten im Sport, zum Beispiel als Trainer in Vereinen. Aber auch im sozialen Bereich, in der Kultur und beim Umweltschutz. Moderatorin: Warum machen die Menschen das? Sie bekommen ja meistens kein Geld dafür. Dr. Wagner: Das stimmt. Die meisten sagen, dass ihnen die Arbeit Freude macht und dass sie anderen helfen wollen. Viele lernen auch neue Leute kennen. Moderatorin: Gibt es auch Probleme? Dr. Wagner: Ja, oft fehlt die Zeit. Gerade jüngere Menschen mit Beruf und Familie finden es schwierig, sich regelmäßig zu engagieren. Deshalb suchen heute viele nach flexiblen Angeboten. Moderatorin: Was würden Sie jemandem raten, der anfangen möchte? Dr. Wagner: Einfach ausprobieren! Man sollte etwas wählen, das zu den eigenen Interessen passt. Und man muss nicht gleich viele Stunden pro Woche investieren.",
+            "question": "Was ist ein Vorteil neben dem Helfen?",
+            "options": ["Man verdient viel Geld.", "Man lernt neue Leute kennen.", "Man bekommt mehr Urlaub."]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Viele lernen auch neue Leute kennen.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 4 · Hören Sie das Radiogespräch über das Ehrenamt. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Moderatorin: Willkommen zu unserer Sendung. Heute sprechen wir über das Ehrenamt. Bei mir im Studio ist Frau Dr. Wagner, Expertin für Freiwilligenarbeit. Frau Wagner, wie viele Menschen in Deutschland engagieren sich ehrenamtlich? Dr. Wagner: Etwa jeder Dritte, also rund 30 Prozent der Erwachsenen. Das ist eine ganze Menge. Moderatorin: Und in welchen Bereichen sind die Leute aktiv? Dr. Wagner: Am häufigsten im Sport, zum Beispiel als Trainer in Vereinen. Aber auch im sozialen Bereich, in der Kultur und beim Umweltschutz. Moderatorin: Warum machen die Menschen das? Sie bekommen ja meistens kein Geld dafür. Dr. Wagner: Das stimmt. Die meisten sagen, dass ihnen die Arbeit Freude macht und dass sie anderen helfen wollen. Viele lernen auch neue Leute kennen. Moderatorin: Gibt es auch Probleme? Dr. Wagner: Ja, oft fehlt die Zeit. Gerade jüngere Menschen mit Beruf und Familie finden es schwierig, sich regelmäßig zu engagieren. Deshalb suchen heute viele nach flexiblen Angeboten. Moderatorin: Was würden Sie jemandem raten, der anfangen möchte? Dr. Wagner: Einfach ausprobieren! Man sollte etwas wählen, das zu den eigenen Interessen passt. Und man muss nicht gleich viele Stunden pro Woche investieren.",
+            "question": "Welches Problem nennt die Expertin?",
+            "options": ["Es fehlt oft die Zeit.", "Es gibt keine Vereine mehr.", "Die Arbeit ist zu langweilig."]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… oft fehlt die Zeit.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 4 · Hören Sie das Radiogespräch über das Ehrenamt. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Moderatorin: Willkommen zu unserer Sendung. Heute sprechen wir über das Ehrenamt. Bei mir im Studio ist Frau Dr. Wagner, Expertin für Freiwilligenarbeit. Frau Wagner, wie viele Menschen in Deutschland engagieren sich ehrenamtlich? Dr. Wagner: Etwa jeder Dritte, also rund 30 Prozent der Erwachsenen. Das ist eine ganze Menge. Moderatorin: Und in welchen Bereichen sind die Leute aktiv? Dr. Wagner: Am häufigsten im Sport, zum Beispiel als Trainer in Vereinen. Aber auch im sozialen Bereich, in der Kultur und beim Umweltschutz. Moderatorin: Warum machen die Menschen das? Sie bekommen ja meistens kein Geld dafür. Dr. Wagner: Das stimmt. Die meisten sagen, dass ihnen die Arbeit Freude macht und dass sie anderen helfen wollen. Viele lernen auch neue Leute kennen. Moderatorin: Gibt es auch Probleme? Dr. Wagner: Ja, oft fehlt die Zeit. Gerade jüngere Menschen mit Beruf und Familie finden es schwierig, sich regelmäßig zu engagieren. Deshalb suchen heute viele nach flexiblen Angeboten. Moderatorin: Was würden Sie jemandem raten, der anfangen möchte? Dr. Wagner: Einfach ausprobieren! Man sollte etwas wählen, das zu den eigenen Interessen passt. Und man muss nicht gleich viele Stunden pro Woche investieren.",
+            "question": "Was suchen heute viele jüngere Menschen?",
+            "options": ["feste, langfristige Aufgaben", "flexible Angebote", "gut bezahlte Stellen"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Deshalb suchen heute viele nach flexiblen Angeboten.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 4 · Hören Sie das Radiogespräch über das Ehrenamt. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Moderatorin: Willkommen zu unserer Sendung. Heute sprechen wir über das Ehrenamt. Bei mir im Studio ist Frau Dr. Wagner, Expertin für Freiwilligenarbeit. Frau Wagner, wie viele Menschen in Deutschland engagieren sich ehrenamtlich? Dr. Wagner: Etwa jeder Dritte, also rund 30 Prozent der Erwachsenen. Das ist eine ganze Menge. Moderatorin: Und in welchen Bereichen sind die Leute aktiv? Dr. Wagner: Am häufigsten im Sport, zum Beispiel als Trainer in Vereinen. Aber auch im sozialen Bereich, in der Kultur und beim Umweltschutz. Moderatorin: Warum machen die Menschen das? Sie bekommen ja meistens kein Geld dafür. Dr. Wagner: Das stimmt. Die meisten sagen, dass ihnen die Arbeit Freude macht und dass sie anderen helfen wollen. Viele lernen auch neue Leute kennen. Moderatorin: Gibt es auch Probleme? Dr. Wagner: Ja, oft fehlt die Zeit. Gerade jüngere Menschen mit Beruf und Familie finden es schwierig, sich regelmäßig zu engagieren. Deshalb suchen heute viele nach flexiblen Angeboten. Moderatorin: Was würden Sie jemandem raten, der anfangen möchte? Dr. Wagner: Einfach ausprobieren! Man sollte etwas wählen, das zu den eigenen Interessen passt. Und man muss nicht gleich viele Stunden pro Woche investieren.",
+            "question": "Was rät die Expertin Anfängern?",
+            "options": ["sofort viele Stunden zu investieren", "etwas nach den eigenen Interessen zu wählen", "zuerst einen teuren Kurs zu machen"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Man sollte etwas wählen, das zu den eigenen Interessen passt.«",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "title": "Schreiben",
+      "skill": "Writing",
+      "minutes": 60,
+      "items": [
+        {
+          "type": "Writing", "skill": "Writing",
+          "prompt": "Aufgabe 1 (ca. 80 Wörter): Ihre Freundin Maria hat Ihnen geschrieben, dass sie in eine neue Wohnung umgezogen ist. Antworten Sie ihr. Schreiben Sie zu allen drei Punkten:\n• Gratulieren Sie Maria zur neuen Wohnung.\n• Erzählen Sie, wie es Ihnen zurzeit geht.\n• Fragen Sie, wann Sie Maria besuchen können.\nVergessen Sie Anrede und Gruß nicht.",
+          "content": { "minWords": 80, "prompt": "Informelle E-Mail an eine Freundin (Umzug)" },
+          "solution": {},
+          "explanation": "Bewertet werden: alle drei Leitpunkte, Anrede/Gruß, Textaufbau und sprachliche Richtigkeit. Ein Beispiel: „Liebe Maria, herzlichen Glückwunsch zu deiner neuen Wohnung! …“",
+          "difficulty": 3
+        },
+        {
+          "type": "Writing", "skill": "Writing",
+          "prompt": "Aufgabe 2 (ca. 80 Wörter): In einem Internetforum diskutieren die Leute über das Thema „Sollte man in der Stadt mehr Fahrrad fahren?“. Schreiben Sie einen Forumsbeitrag: Sagen Sie Ihre Meinung, nennen Sie mindestens zwei Gründe und geben Sie ein Beispiel aus Ihrem Alltag.",
+          "content": { "minWords": 80, "prompt": "Forumsbeitrag: Mehr Fahrrad fahren in der Stadt?" },
+          "solution": {},
+          "explanation": "Bewertet werden: klare Meinung, Begründungen mit Beispiel, sinnvolle Verknüpfung (weil, deshalb, außerdem) und sprachliche Richtigkeit.",
+          "difficulty": 4
+        },
+        {
+          "type": "Writing", "skill": "Writing",
+          "prompt": "Aufgabe 3 (ca. 40 Wörter): Sie haben sich für einen Deutschkurs angemeldet, können aber am ersten Tag nicht kommen. Schreiben Sie eine formelle E-Mail an die Sprachschule: Entschuldigen Sie sich und fragen Sie, wie Sie den verpassten Stoff nachholen können.",
+          "content": { "minWords": 40, "prompt": "Formelle E-Mail an die Sprachschule" },
+          "solution": {},
+          "explanation": "Bewertet werden: passende formelle Anrede/Gruß (Sehr geehrte Damen und Herren / Mit freundlichen Grüßen), höflicher Ton und beide Punkte (Entschuldigung + Frage).",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "title": "Sprechen",
+      "skill": "Speaking",
+      "minutes": 15,
+      "items": [
+        {
+          "type": "Speaking", "skill": "Speaking",
+          "prompt": "Teil 1 · Gemeinsam etwas planen: Ein Kollege geht in Rente. Planen Sie mit Ihrem Partner eine kleine Abschiedsfeier im Büro. Sprechen Sie über: Wann und wo? Was gibt es zu essen und zu trinken? Welches Geschenk? Machen Sie Vorschläge und reagieren Sie auf die Ideen Ihres Partners.",
+          "content": { "prompt": "Eine Abschiedsfeier planen", "targetText": "Ich schlage vor, dass wir die Feier am Freitagnachmittag im Pausenraum machen. Wir könnten Kuchen und Kaffee besorgen. Was hältst du von einem gemeinsamen Geschenk, zum Beispiel einem Gutschein?" },
+          "solution": {},
+          "explanation": "Machen Sie konkrete Vorschläge, begründen Sie sie und gehen Sie auf die Ideen Ihres Partners ein (Das ist eine gute Idee, aber … / Einverstanden.).",
+          "difficulty": 3
+        },
+        {
+          "type": "Speaking", "skill": "Speaking",
+          "prompt": "Teil 2 · Ein Thema präsentieren: Halten Sie einen kurzen Vortrag zum Thema „Urlaub – am Meer oder in den Bergen?“. Beschreiben Sie Ihre persönlichen Erfahrungen, nennen Sie Vor- und Nachteile und sagen Sie am Ende Ihre Meinung.",
+          "content": { "prompt": "Präsentation: Urlaub am Meer oder in den Bergen?", "targetText": "In meiner Präsentation geht es um das Thema Urlaub. Ich fahre am liebsten ans Meer, weil ich gern schwimme und mich entspanne. Ein Nachteil ist, dass es im Sommer sehr voll ist. In den Bergen kann man dagegen wandern und die Natur genießen. Meiner Meinung nach ist der Urlaub am Meer am schönsten." },
+          "solution": {},
+          "explanation": "Strukturieren Sie den Vortrag: Einleitung, persönliche Erfahrung, Vor- und Nachteile, Schluss mit eigener Meinung. Nützliche Redemittel: „In meiner Präsentation geht es um …“, „Ein Vorteil / Nachteil ist …“, „Meiner Meinung nach …“.",
+          "difficulty": 4
+        },
+        {
+          "type": "Speaking", "skill": "Speaking",
+          "prompt": "Teil 3 · Über ein Thema sprechen: Beantworten Sie nach Ihrer Präsentation die Fragen Ihres Partners und stellen Sie selbst eine Frage zur Präsentation Ihres Partners.",
+          "content": { "prompt": "Rückfragen zur Präsentation", "targetText": "Danke für deine Frage. Ich fahre meistens im Sommer in den Urlaub, weil ich dann frei habe. Und ich hätte auch eine Frage an dich: Würdest du lieber allein oder mit Freunden verreisen?" },
+          "solution": {},
+          "explanation": "Reagieren Sie höflich auf Fragen und stellen Sie am Ende selbst eine passende Frage. Redemittel: „Danke für deine Frage.“, „Das ist eine interessante Frage.“, „Und wie ist das bei dir?“.",
+          "difficulty": 3
+        }
+      ]
+    }
+  ]
+}

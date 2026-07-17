@@ -44,7 +44,7 @@ namespace MeineDeutscheLehrerin.Migrations.Postgres.Migrations
                     b.Property<string>("GrammarTopic")
                         .HasColumnType("text");
 
-                    b.Property<int>("LessonId")
+                    b.Property<int?>("LessonId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Order")
@@ -825,8 +825,7 @@ namespace MeineDeutscheLehrerin.Migrations.Postgres.Migrations
                     b.HasOne("MeineDeutscheLehrerin.Domain.Entities.Lesson", "Lesson")
                         .WithMany("Exercises")
                         .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Lesson");
                 });

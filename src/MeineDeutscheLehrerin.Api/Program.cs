@@ -89,8 +89,8 @@ if (builder.Configuration.GetValue<bool>("Seed:ImportContent"))
 {
     await MeineDeutscheLehrerin.Api.Tools.VocabGenerationRunner.ImportAllAsync(app.Services, "content/vocabulary");
     await MeineDeutscheLehrerin.Api.Tools.ExerciseImportRunner.ImportAllAsync(app.Services, "content/exercises");
-    // Assemble authentic Goethe mock exams (Lesen/Hören/Schreiben/Sprechen) from the exercises.
-    await MeineDeutscheLehrerin.Api.Tools.PracticeSetGenerator.GenerateAsync(app.Services);
+    // Import the hand-authored, full-length Goethe mock exams (Lesen/Hören/Schreiben/Sprechen, each timed).
+    await MeineDeutscheLehrerin.Api.Tools.ExamImportRunner.ImportAllAsync(app.Services, "content/exams");
 }
 
 // CLI mode: `dotnet run -- generate-vocab <LEVEL> [count] [theme]` — generate vocab and exit.
@@ -127,12 +127,15 @@ if (args.Length > 0 && args[0].Equals("import-exercises", StringComparison.Ordin
     return;
 }
 
-// CLI mode: `dotnet run -- generate-practice-sets [count] [A1,A2,B1]` — assemble mock exams and exit.
-if (args.Length > 0 && args[0].Equals("generate-practice-sets", StringComparison.OrdinalIgnoreCase))
+// CLI mode: `dotnet run -- import-exams all <dir>` | `import-exams <file.json>` — import mock exams and exit.
+if (args.Length > 0 && args[0].Equals("import-exams", StringComparison.OrdinalIgnoreCase))
 {
-    var count = args.Length > 1 && int.TryParse(args[1], out var c) ? c : 5;
-    var levels = args.Length > 2 ? args[2].Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) : null;
-    await MeineDeutscheLehrerin.Api.Tools.PracticeSetGenerator.GenerateAsync(app.Services, count, levels);
+    if (args.Length > 1 && args[1].Equals("all", StringComparison.OrdinalIgnoreCase))
+        await MeineDeutscheLehrerin.Api.Tools.ExamImportRunner.ImportAllAsync(app.Services, args.Length > 2 ? args[2] : "content/exams");
+    else if (args.Length > 1)
+        await MeineDeutscheLehrerin.Api.Tools.ExamImportRunner.ImportAsync(app.Services, args[1]);
+    else
+        Console.WriteLine("Usage: import-exams all <dir> | import-exams <file.json>");
     return;
 }
 

@@ -96,6 +96,11 @@ function ChoiceWidget({ type, content, response, setResponse, disabled, result }
   const correct = result?.correctAnswer
   return (
     <div className="space-y-3">
+      {content?.passage && (
+        <div className="max-h-72 overflow-y-auto whitespace-pre-line rounded-lg bg-slate-50 p-4 text-sm leading-relaxed text-slate-700 ring-1 ring-slate-200">
+          {content.passage}
+        </div>
+      )}
       {type === 'ListeningComprehension' && content?.audioText && (
         <div className="flex items-center gap-3 rounded-lg bg-emerald-50 p-3">
           <AudioButton text={content.audioText} label="Hörtext abspielen" />

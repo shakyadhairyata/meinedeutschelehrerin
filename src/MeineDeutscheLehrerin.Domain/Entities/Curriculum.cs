@@ -73,7 +73,8 @@ public class Lesson
 public class Exercise
 {
     public int Id { get; set; }
-    public int LessonId { get; set; }
+    /// <summary>Owning lesson, or null for standalone exam items that live only in a <see cref="PracticeSetModule"/>.</summary>
+    public int? LessonId { get; set; }
     public Lesson? Lesson { get; set; }
 
     public ExerciseType Type { get; set; }
