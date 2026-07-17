@@ -15,6 +15,8 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Exercise> Exercises => Set<Exercise>();
     public DbSet<PracticeSet> PracticeSets => Set<PracticeSet>();
     public DbSet<PracticeSetItem> PracticeSetItems => Set<PracticeSetItem>();
+    public DbSet<PracticeSetModule> PracticeSetModules => Set<PracticeSetModule>();
+    public DbSet<PracticeSetModuleItem> PracticeSetModuleItems => Set<PracticeSetModuleItem>();
     public DbSet<VocabularyItem> VocabularyItems => Set<VocabularyItem>();
 
     public DbSet<UserLessonProgress> UserLessonProgress => Set<UserLessonProgress>();
@@ -69,6 +71,22 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
             e.HasOne(x => x.Exercise).WithMany(x => x.PracticeSetItems)
                 .HasForeignKey(x => x.ExerciseId).OnDelete(DeleteBehavior.Cascade);
             e.HasIndex(x => new { x.PracticeSetId, x.Order });
+        });
+
+        b.Entity<PracticeSetModule>(e =>
+        {
+            e.HasOne(x => x.PracticeSet).WithMany(x => x.Modules)
+                .HasForeignKey(x => x.PracticeSetId).OnDelete(DeleteBehavior.Cascade);
+            e.HasIndex(x => new { x.PracticeSetId, x.Order });
+        });
+
+        b.Entity<PracticeSetModuleItem>(e =>
+        {
+            e.HasOne(x => x.Module).WithMany(x => x.Items)
+                .HasForeignKey(x => x.ModuleId).OnDelete(DeleteBehavior.Cascade);
+            e.HasOne(x => x.Exercise).WithMany()
+                .HasForeignKey(x => x.ExerciseId).OnDelete(DeleteBehavior.NoAction);
+            e.HasIndex(x => new { x.ModuleId, x.Order });
         });
 
         b.Entity<VocabularyItem>(e =>

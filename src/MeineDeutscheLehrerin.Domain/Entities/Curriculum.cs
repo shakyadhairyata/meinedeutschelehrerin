@@ -117,7 +117,10 @@ public class PracticeSet
     public int? TimeLimitMinutes { get; set; }
     public int Order { get; set; }
 
+    /// <summary>Flat exercises — used by simple drills.</summary>
     public List<PracticeSetItem> Items { get; set; } = new();
+    /// <summary>Timed modules — used by full Goethe mock exams (Lesen/Hören/Schreiben/Sprechen).</summary>
+    public List<PracticeSetModule> Modules { get; set; } = new();
 }
 
 public class PracticeSetItem
@@ -125,6 +128,29 @@ public class PracticeSetItem
     public int Id { get; set; }
     public int PracticeSetId { get; set; }
     public PracticeSet? PracticeSet { get; set; }
+    public int ExerciseId { get; set; }
+    public Exercise? Exercise { get; set; }
+    public int Order { get; set; }
+}
+
+/// <summary>A separately-timed exam section — the Goethe modules Lesen, Hören, Schreiben, Sprechen.</summary>
+public class PracticeSetModule
+{
+    public int Id { get; set; }
+    public int PracticeSetId { get; set; }
+    public PracticeSet? PracticeSet { get; set; }
+    public string Title { get; set; } = "";
+    public SkillType Skill { get; set; }
+    public int TimeLimitMinutes { get; set; }
+    public int Order { get; set; }
+    public List<PracticeSetModuleItem> Items { get; set; } = new();
+}
+
+public class PracticeSetModuleItem
+{
+    public int Id { get; set; }
+    public int ModuleId { get; set; }
+    public PracticeSetModule? Module { get; set; }
     public int ExerciseId { get; set; }
     public Exercise? Exercise { get; set; }
     public int Order { get; set; }

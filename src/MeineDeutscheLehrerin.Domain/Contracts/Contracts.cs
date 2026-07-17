@@ -42,7 +42,14 @@ public record PracticeSetDto(
     int Id, string Title, string Description, SkillType? Skill, string Kind,
     bool IsExam, int? TimeLimitMinutes, int ExerciseCount);
 
-public record PracticeSetDetailDto(PracticeSetDto Set, IReadOnlyList<ExerciseDto> Exercises);
+/// <summary>A separately-timed exam module (Goethe: Lesen/Hören/Schreiben/Sprechen).</summary>
+public record PracticeSetModuleDto(
+    int Id, string Title, SkillType Skill, int TimeLimitMinutes, int Order,
+    IReadOnlyList<ExerciseDto> Exercises);
+
+/// <summary>Flat drills use <see cref="Exercises"/>; full mock exams use <see cref="Modules"/>.</summary>
+public record PracticeSetDetailDto(PracticeSetDto Set, IReadOnlyList<ExerciseDto> Exercises,
+    IReadOnlyList<PracticeSetModuleDto> Modules);
 
 // ---------- Grading & attempts ----------
 
