@@ -1,0 +1,561 @@
+{
+  "level": "A2",
+  "title": "A2 Modellsatz 1",
+  "description": "Vollständige Modellprüfung im Format des Goethe-Zertifikats A2: Lesen (30 Min.), Hören (30 Min.), Schreiben (30 Min.) und Sprechen (15 Min.) — jedes Modul mit eigenem Zeitlimit.",
+  "modules": [
+    {
+      "title": "Lesen",
+      "skill": "Reading",
+      "minutes": 30,
+      "items": [
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie den Text und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Ein Tag im Zoo\n\nAm Sonntag war ich mit meiner Familie im Zoo. Wir sind früh um neun Uhr angekommen, weil es dann noch nicht so voll ist. Am besten hat mir das Affenhaus gefallen. Meine kleine Schwester wollte unbedingt die Elefanten sehen. Zu Mittag haben wir ein Picknick auf einer Wiese gemacht. Am Nachmittag hat es leider angefangen zu regnen, deshalb sind wir früher nach Hause gefahren.",
+            "question": "Wann ist die Familie im Zoo angekommen?",
+            "options": ["um neun Uhr", "um zwölf Uhr", "erst am Nachmittag"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Wir sind früh um neun Uhr angekommen …«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie den Text und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Ein Tag im Zoo\n\nAm Sonntag war ich mit meiner Familie im Zoo. Wir sind früh um neun Uhr angekommen, weil es dann noch nicht so voll ist. Am besten hat mir das Affenhaus gefallen. Meine kleine Schwester wollte unbedingt die Elefanten sehen. Zu Mittag haben wir ein Picknick auf einer Wiese gemacht. Am Nachmittag hat es leider angefangen zu regnen, deshalb sind wir früher nach Hause gefahren.",
+            "question": "Warum sind sie so früh gekommen?",
+            "options": ["Der Zoo schließt früh.", "Dann ist es noch nicht so voll.", "Der Eintritt war billiger."]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… weil es dann noch nicht so voll ist.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie den Text und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Ein Tag im Zoo\n\nAm Sonntag war ich mit meiner Familie im Zoo. Wir sind früh um neun Uhr angekommen, weil es dann noch nicht so voll ist. Am besten hat mir das Affenhaus gefallen. Meine kleine Schwester wollte unbedingt die Elefanten sehen. Zu Mittag haben wir ein Picknick auf einer Wiese gemacht. Am Nachmittag hat es leider angefangen zu regnen, deshalb sind wir früher nach Hause gefahren.",
+            "question": "Was hat dem Autor am besten gefallen?",
+            "options": ["das Affenhaus", "die Elefanten", "das Picknick"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Am besten hat mir das Affenhaus gefallen.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie den Text und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Ein Tag im Zoo\n\nAm Sonntag war ich mit meiner Familie im Zoo. Wir sind früh um neun Uhr angekommen, weil es dann noch nicht so voll ist. Am besten hat mir das Affenhaus gefallen. Meine kleine Schwester wollte unbedingt die Elefanten sehen. Zu Mittag haben wir ein Picknick auf einer Wiese gemacht. Am Nachmittag hat es leider angefangen zu regnen, deshalb sind wir früher nach Hause gefahren.",
+            "question": "Was wollte die kleine Schwester sehen?",
+            "options": ["die Affen", "die Elefanten", "die Löwen"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Meine kleine Schwester wollte unbedingt die Elefanten sehen.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie den Text und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Ein Tag im Zoo\n\nAm Sonntag war ich mit meiner Familie im Zoo. Wir sind früh um neun Uhr angekommen, weil es dann noch nicht so voll ist. Am besten hat mir das Affenhaus gefallen. Meine kleine Schwester wollte unbedingt die Elefanten sehen. Zu Mittag haben wir ein Picknick auf einer Wiese gemacht. Am Nachmittag hat es leider angefangen zu regnen, deshalb sind wir früher nach Hause gefahren.",
+            "question": "Warum sind sie früher nach Hause gefahren?",
+            "options": ["Es hat angefangen zu regnen.", "Sie hatten Hunger.", "Der Zoo hat geschlossen."]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Am Nachmittag hat es leider angefangen zu regnen …«",
+          "difficulty": 2
+        },
+
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie die Reiseangebote (a–h). Welches Angebot passt zu der Person?",
+          "content": {
+            "passage": "Reiseangebote\n\na) Städtereise Wien – 3 Tage mit dem Bus.\nb) Wanderwoche in den Alpen – für sportliche Leute.\nc) Strandurlaub am Meer – Hotel mit großem Pool.\nd) Fahrradtour am Fluss – leicht, für Familien mit Kindern.\ne) Sprachreise nach Spanien – vormittags Spanisch lernen.\nf) Kochkurs-Wochenende auf dem Bauernhof.\ng) Museumsführung in Berlin – Kunst und Geschichte.\nh) Kreuzfahrt auf dem Rhein – mit Abendessen an Bord.",
+            "question": "Herr und Frau Lang wollen mit ihren zwei Kindern eine leichte Radtour machen.",
+            "options": ["b) Wanderwoche", "d) Fahrradtour am Fluss", "g) Museumsführung", "h) Kreuzfahrt"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»d) Fahrradtour am Fluss – leicht, für Familien mit Kindern.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie die Reiseangebote (a–h). Welches Angebot passt zu der Person?",
+          "content": {
+            "passage": "Reiseangebote\n\na) Städtereise Wien – 3 Tage mit dem Bus.\nb) Wanderwoche in den Alpen – für sportliche Leute.\nc) Strandurlaub am Meer – Hotel mit großem Pool.\nd) Fahrradtour am Fluss – leicht, für Familien mit Kindern.\ne) Sprachreise nach Spanien – vormittags Spanisch lernen.\nf) Kochkurs-Wochenende auf dem Bauernhof.\ng) Museumsführung in Berlin – Kunst und Geschichte.\nh) Kreuzfahrt auf dem Rhein – mit Abendessen an Bord.",
+            "question": "Sofia möchte im Urlaub eine Fremdsprache lernen.",
+            "options": ["a) Städtereise Wien", "e) Sprachreise nach Spanien", "f) Kochkurs", "h) Kreuzfahrt"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»e) Sprachreise nach Spanien – vormittags Spanisch lernen.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie die Reiseangebote (a–h). Welches Angebot passt zu der Person?",
+          "content": {
+            "passage": "Reiseangebote\n\na) Städtereise Wien – 3 Tage mit dem Bus.\nb) Wanderwoche in den Alpen – für sportliche Leute.\nc) Strandurlaub am Meer – Hotel mit großem Pool.\nd) Fahrradtour am Fluss – leicht, für Familien mit Kindern.\ne) Sprachreise nach Spanien – vormittags Spanisch lernen.\nf) Kochkurs-Wochenende auf dem Bauernhof.\ng) Museumsführung in Berlin – Kunst und Geschichte.\nh) Kreuzfahrt auf dem Rhein – mit Abendessen an Bord.",
+            "question": "Tom liebt die Berge und wandert gern und viel.",
+            "options": ["b) Wanderwoche in den Alpen", "c) Strandurlaub", "e) Sprachreise", "h) Kreuzfahrt"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»b) Wanderwoche in den Alpen – für sportliche Leute.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie die Reiseangebote (a–h). Welches Angebot passt zu der Person?",
+          "content": {
+            "passage": "Reiseangebote\n\na) Städtereise Wien – 3 Tage mit dem Bus.\nb) Wanderwoche in den Alpen – für sportliche Leute.\nc) Strandurlaub am Meer – Hotel mit großem Pool.\nd) Fahrradtour am Fluss – leicht, für Familien mit Kindern.\ne) Sprachreise nach Spanien – vormittags Spanisch lernen.\nf) Kochkurs-Wochenende auf dem Bauernhof.\ng) Museumsführung in Berlin – Kunst und Geschichte.\nh) Kreuzfahrt auf dem Rhein – mit Abendessen an Bord.",
+            "question": "Familie Adam möchte am Strand baden und im Pool schwimmen.",
+            "options": ["a) Städtereise Wien", "c) Strandurlaub am Meer", "f) Kochkurs", "g) Museumsführung"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»c) Strandurlaub am Meer – Hotel mit großem Pool.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie die Reiseangebote (a–h). Welches Angebot passt zu der Person?",
+          "content": {
+            "passage": "Reiseangebote\n\na) Städtereise Wien – 3 Tage mit dem Bus.\nb) Wanderwoche in den Alpen – für sportliche Leute.\nc) Strandurlaub am Meer – Hotel mit großem Pool.\nd) Fahrradtour am Fluss – leicht, für Familien mit Kindern.\ne) Sprachreise nach Spanien – vormittags Spanisch lernen.\nf) Kochkurs-Wochenende auf dem Bauernhof.\ng) Museumsführung in Berlin – Kunst und Geschichte.\nh) Kreuzfahrt auf dem Rhein – mit Abendessen an Bord.",
+            "question": "Herr Vogel interessiert sich sehr für Kunst und Geschichte.",
+            "options": ["b) Wanderwoche", "d) Fahrradtour", "g) Museumsführung in Berlin", "c) Strandurlaub"]
+          },
+          "solution": { "correctIndex": 2 },
+          "explanation": "»g) Museumsführung in Berlin – Kunst und Geschichte.«",
+          "difficulty": 2
+        },
+
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Lesen Sie die kurze Nachricht. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "SMS von Tom:\n„Hallo, ich hole dich um 18 Uhr vom Bahnhof ab. Warte einfach am Ausgang. LG Tom“",
+            "question": "Tom holt die Person vom Bahnhof ab.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… ich hole dich um 18 Uhr vom Bahnhof ab.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Lesen Sie die kurze Nachricht. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "E-Mail von Nina:\n„Leider muss ich unser Treffen am Freitag absagen. Ich bin krank und liege im Bett. Vielleicht klappt es nächste Woche?“",
+            "question": "Das Treffen am Freitag findet statt.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… ich muss unser Treffen am Freitag absagen.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Lesen Sie die kurze Nachricht. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "SMS:\n„Kannst du bitte auf dem Weg nach Hause Brot und Milch mitbringen? Danke dir!“",
+            "question": "Die Person soll etwas einkaufen.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Kannst du bitte … Brot und Milch mitbringen?«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Lesen Sie die kurze Nachricht. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "E-Mail von der Sprachschule:\n„Der Kurs am Montag fällt leider aus. Der nächste Termin ist am Mittwoch um 18 Uhr.“",
+            "question": "Am Montag findet der Kurs statt.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Der Kurs am Montag fällt leider aus.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Lesen Sie die kurze Nachricht. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "SMS von Ben:\n„Das Konzert gestern war super! Schade, dass du nicht dabei warst. Nächstes Mal kommst du mit, okay?“",
+            "question": "Ben war gestern nicht beim Konzert.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "Ben war beim Konzert – die andere Person nicht: »Schade, dass du nicht dabei warst.«",
+          "difficulty": 3
+        },
+
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 4 · Lesen Sie den Text und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Interview mit einer Straßenmusikerin\n\nLena spielt seit fünf Jahren Gitarre in der Fußgängerzone. Eigentlich ist sie Studentin, aber am Wochenende verdient sie mit Musik etwas Geld. Am liebsten spielt sie eigene Lieder. Manche Leute bleiben stehen und hören zu, andere gehen schnell vorbei. Lena sagt, das Schönste sei, wenn Kinder anfangen zu tanzen. Im Winter macht sie eine Pause, weil es dann zu kalt ist.",
+            "question": "Wie lange spielt Lena schon in der Fußgängerzone?",
+            "options": ["seit einem Jahr", "seit fünf Jahren", "seit zehn Jahren"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Lena spielt seit fünf Jahren Gitarre …«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 4 · Lesen Sie den Text und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Interview mit einer Straßenmusikerin\n\nLena spielt seit fünf Jahren Gitarre in der Fußgängerzone. Eigentlich ist sie Studentin, aber am Wochenende verdient sie mit Musik etwas Geld. Am liebsten spielt sie eigene Lieder. Manche Leute bleiben stehen und hören zu, andere gehen schnell vorbei. Lena sagt, das Schönste sei, wenn Kinder anfangen zu tanzen. Im Winter macht sie eine Pause, weil es dann zu kalt ist.",
+            "question": "Was ist Lena eigentlich von Beruf?",
+            "options": ["Musikerin", "Studentin", "Lehrerin"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Eigentlich ist sie Studentin …«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 4 · Lesen Sie den Text und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Interview mit einer Straßenmusikerin\n\nLena spielt seit fünf Jahren Gitarre in der Fußgängerzone. Eigentlich ist sie Studentin, aber am Wochenende verdient sie mit Musik etwas Geld. Am liebsten spielt sie eigene Lieder. Manche Leute bleiben stehen und hören zu, andere gehen schnell vorbei. Lena sagt, das Schönste sei, wenn Kinder anfangen zu tanzen. Im Winter macht sie eine Pause, weil es dann zu kalt ist.",
+            "question": "Was spielt Lena am liebsten?",
+            "options": ["eigene Lieder", "bekannte Hits", "klassische Musik"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Am liebsten spielt sie eigene Lieder.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 4 · Lesen Sie den Text und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Interview mit einer Straßenmusikerin\n\nLena spielt seit fünf Jahren Gitarre in der Fußgängerzone. Eigentlich ist sie Studentin, aber am Wochenende verdient sie mit Musik etwas Geld. Am liebsten spielt sie eigene Lieder. Manche Leute bleiben stehen und hören zu, andere gehen schnell vorbei. Lena sagt, das Schönste sei, wenn Kinder anfangen zu tanzen. Im Winter macht sie eine Pause, weil es dann zu kalt ist.",
+            "question": "Was findet Lena am schönsten?",
+            "options": ["wenn Kinder anfangen zu tanzen", "wenn sie viel Geld verdient", "wenn es regnet"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… das Schönste sei, wenn Kinder anfangen zu tanzen.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 4 · Lesen Sie den Text und wählen Sie die richtige Antwort.",
+          "content": {
+            "passage": "Interview mit einer Straßenmusikerin\n\nLena spielt seit fünf Jahren Gitarre in der Fußgängerzone. Eigentlich ist sie Studentin, aber am Wochenende verdient sie mit Musik etwas Geld. Am liebsten spielt sie eigene Lieder. Manche Leute bleiben stehen und hören zu, andere gehen schnell vorbei. Lena sagt, das Schönste sei, wenn Kinder anfangen zu tanzen. Im Winter macht sie eine Pause, weil es dann zu kalt ist.",
+            "question": "Was macht Lena im Winter?",
+            "options": ["Sie spielt noch mehr.", "Sie macht eine Pause.", "Sie reist ins Ausland."]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Im Winter macht sie eine Pause …«",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "title": "Hören",
+      "skill": "Listening",
+      "minutes": 30,
+      "items": [
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie und wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Der nächste Zug nach Frankfurt fährt um 14:20 Uhr von Gleis 7. Bitte beeilen Sie sich.",
+            "question": "Wann fährt der Zug nach Frankfurt?",
+            "options": ["um 14:02 Uhr", "um 14:20 Uhr", "um 14:12 Uhr"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… fährt um 14:20 Uhr von Gleis 7.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie und wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Guten Tag, ich möchte für heute Abend einen Tisch für zwei Personen reservieren, bitte um acht Uhr.",
+            "question": "Für wie viele Personen ist der Tisch?",
+            "options": ["für zwei", "für drei", "für vier"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… einen Tisch für zwei Personen …«",
+          "difficulty": 2
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie und wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Für dieses Rezept brauchen Sie Mehl, Eier, Zucker und Butter. Milch ist nicht nötig.",
+            "question": "Was braucht man für das Rezept NICHT?",
+            "options": ["Mehl", "Milch", "Zucker"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Milch ist nicht nötig.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie und wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Der Film beginnt um 20 Uhr. Kommen Sie aber bitte schon zehn Minuten früher, damit Sie einen guten Platz bekommen.",
+            "question": "Wann soll man da sein?",
+            "options": ["um 19:50 Uhr", "um 20:10 Uhr", "um 21 Uhr"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "20 Uhr minus zehn Minuten = 19:50 Uhr.",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie und wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Heute Abend ist das Museum bis 22 Uhr geöffnet. Und das Beste: Der Eintritt ist heute Abend frei.",
+            "question": "Was ist heute Abend besonders?",
+            "options": ["Der Eintritt ist frei.", "Das Museum ist geschlossen.", "Es gibt ein Konzert."]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Der Eintritt ist heute Abend frei.«",
+          "difficulty": 2
+        },
+
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 2 · Hören Sie den Tipp im Radio. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Und jetzt ein Tipp für das Wochenende: Am Samstag findet auf dem Marktplatz ein großes Straßenfest statt. Es beginnt um zehn Uhr morgens. Es gibt Musik, Essen aus vielen Ländern und Spiele für Kinder. Der Eintritt ist frei. Bitte kommen Sie mit dem Bus, denn es gibt nur wenige Parkplätze. Bei Regen wird das Fest auf Sonntag verschoben.",
+            "question": "Wo findet das Straßenfest statt?",
+            "options": ["im Park", "auf dem Marktplatz", "im Rathaus"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… auf dem Marktplatz ein großes Straßenfest …«",
+          "difficulty": 2
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 2 · Hören Sie den Tipp im Radio. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Und jetzt ein Tipp für das Wochenende: Am Samstag findet auf dem Marktplatz ein großes Straßenfest statt. Es beginnt um zehn Uhr morgens. Es gibt Musik, Essen aus vielen Ländern und Spiele für Kinder. Der Eintritt ist frei. Bitte kommen Sie mit dem Bus, denn es gibt nur wenige Parkplätze. Bei Regen wird das Fest auf Sonntag verschoben.",
+            "question": "Wann beginnt das Fest?",
+            "options": ["um zehn Uhr morgens", "um zwölf Uhr", "erst am Abend"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Es beginnt um zehn Uhr morgens.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 2 · Hören Sie den Tipp im Radio. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Und jetzt ein Tipp für das Wochenende: Am Samstag findet auf dem Marktplatz ein großes Straßenfest statt. Es beginnt um zehn Uhr morgens. Es gibt Musik, Essen aus vielen Ländern und Spiele für Kinder. Der Eintritt ist frei. Bitte kommen Sie mit dem Bus, denn es gibt nur wenige Parkplätze. Bei Regen wird das Fest auf Sonntag verschoben.",
+            "question": "Was gibt es speziell für Kinder?",
+            "options": ["Spiele", "einen Film", "einen Zoo"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… und Spiele für Kinder.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 2 · Hören Sie den Tipp im Radio. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Und jetzt ein Tipp für das Wochenende: Am Samstag findet auf dem Marktplatz ein großes Straßenfest statt. Es beginnt um zehn Uhr morgens. Es gibt Musik, Essen aus vielen Ländern und Spiele für Kinder. Der Eintritt ist frei. Bitte kommen Sie mit dem Bus, denn es gibt nur wenige Parkplätze. Bei Regen wird das Fest auf Sonntag verschoben.",
+            "question": "Wie soll man zum Fest kommen?",
+            "options": ["mit dem Auto", "mit dem Bus", "mit dem Fahrrad"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Bitte kommen Sie mit dem Bus …«",
+          "difficulty": 2
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 2 · Hören Sie den Tipp im Radio. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Und jetzt ein Tipp für das Wochenende: Am Samstag findet auf dem Marktplatz ein großes Straßenfest statt. Es beginnt um zehn Uhr morgens. Es gibt Musik, Essen aus vielen Ländern und Spiele für Kinder. Der Eintritt ist frei. Bitte kommen Sie mit dem Bus, denn es gibt nur wenige Parkplätze. Bei Regen wird das Fest auf Sonntag verschoben.",
+            "question": "Was passiert bei Regen?",
+            "options": ["Das Fest fällt ganz aus.", "Das Fest wird auf Sonntag verschoben.", "Nichts ändert sich."]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Bei Regen wird das Fest auf Sonntag verschoben.«",
+          "difficulty": 3
+        },
+
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie das Gespräch im Geschäft. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Verkäufer: Guten Tag, kann ich Ihnen helfen? Kundin: Ja, ich suche eine Jacke für den Herbst. Verkäufer: Welche Farbe möchten Sie denn? Kundin: Am liebsten blau oder grau. Verkäufer: Und welche Größe haben Sie? Kundin: Größe 38. Verkäufer: Hier habe ich eine blaue Jacke in Größe 38. Sie kostet 60 Euro. Kundin: Die gefällt mir. Kann ich sie anprobieren? Verkäufer: Natürlich, die Umkleidekabine ist dort hinten.",
+            "question": "Was sucht die Kundin?",
+            "options": ["eine Jacke", "eine Hose", "Schuhe"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… ich suche eine Jacke für den Herbst.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie das Gespräch im Geschäft. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Verkäufer: Guten Tag, kann ich Ihnen helfen? Kundin: Ja, ich suche eine Jacke für den Herbst. Verkäufer: Welche Farbe möchten Sie denn? Kundin: Am liebsten blau oder grau. Verkäufer: Und welche Größe haben Sie? Kundin: Größe 38. Verkäufer: Hier habe ich eine blaue Jacke in Größe 38. Sie kostet 60 Euro. Kundin: Die gefällt mir. Kann ich sie anprobieren? Verkäufer: Natürlich, die Umkleidekabine ist dort hinten.",
+            "question": "Für welche Jahreszeit sucht sie die Jacke?",
+            "options": ["für den Sommer", "für den Herbst", "für den Winter"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… eine Jacke für den Herbst.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie das Gespräch im Geschäft. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Verkäufer: Guten Tag, kann ich Ihnen helfen? Kundin: Ja, ich suche eine Jacke für den Herbst. Verkäufer: Welche Farbe möchten Sie denn? Kundin: Am liebsten blau oder grau. Verkäufer: Und welche Größe haben Sie? Kundin: Größe 38. Verkäufer: Hier habe ich eine blaue Jacke in Größe 38. Sie kostet 60 Euro. Kundin: Die gefällt mir. Kann ich sie anprobieren? Verkäufer: Natürlich, die Umkleidekabine ist dort hinten.",
+            "question": "Welche Farbe möchte die Kundin?",
+            "options": ["rot oder grün", "blau oder grau", "nur schwarz"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Am liebsten blau oder grau.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie das Gespräch im Geschäft. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Verkäufer: Guten Tag, kann ich Ihnen helfen? Kundin: Ja, ich suche eine Jacke für den Herbst. Verkäufer: Welche Farbe möchten Sie denn? Kundin: Am liebsten blau oder grau. Verkäufer: Und welche Größe haben Sie? Kundin: Größe 38. Verkäufer: Hier habe ich eine blaue Jacke in Größe 38. Sie kostet 60 Euro. Kundin: Die gefällt mir. Kann ich sie anprobieren? Verkäufer: Natürlich, die Umkleidekabine ist dort hinten.",
+            "question": "Welche Größe hat die Kundin?",
+            "options": ["Größe 36", "Größe 38", "Größe 40"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Größe 38.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie das Gespräch im Geschäft. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Verkäufer: Guten Tag, kann ich Ihnen helfen? Kundin: Ja, ich suche eine Jacke für den Herbst. Verkäufer: Welche Farbe möchten Sie denn? Kundin: Am liebsten blau oder grau. Verkäufer: Und welche Größe haben Sie? Kundin: Größe 38. Verkäufer: Hier habe ich eine blaue Jacke in Größe 38. Sie kostet 60 Euro. Kundin: Die gefällt mir. Kann ich sie anprobieren? Verkäufer: Natürlich, die Umkleidekabine ist dort hinten.",
+            "question": "Was kostet die Jacke?",
+            "options": ["16 Euro", "60 Euro", "66 Euro"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Sie kostet 60 Euro.«",
+          "difficulty": 2
+        },
+
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 4 · Hören Sie das Interview. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Reporter: Frau Klein, Sie fahren jeden Tag mit dem Fahrrad zur Arbeit. Warum? Frau Klein: Das ist gesund und macht Spaß. Außerdem spare ich Geld und stehe nicht im Stau. Reporter: Wie weit ist der Weg? Frau Klein: Etwa acht Kilometer. Ich brauche eine halbe Stunde. Reporter: Und wenn das Wetter schlecht ist? Frau Klein: Dann ziehe ich eine Regenjacke an. Nur bei Schnee im Winter nehme ich den Bus. Reporter: Würden Sie es anderen empfehlen? Frau Klein: Auf jeden Fall! Man fühlt sich danach viel wacher.",
+            "question": "Frau Klein fährt mit dem Fahrrad zur Arbeit.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Sie fahren jeden Tag mit dem Fahrrad zur Arbeit.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 4 · Hören Sie das Interview. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Reporter: Frau Klein, Sie fahren jeden Tag mit dem Fahrrad zur Arbeit. Warum? Frau Klein: Das ist gesund und macht Spaß. Außerdem spare ich Geld und stehe nicht im Stau. Reporter: Wie weit ist der Weg? Frau Klein: Etwa acht Kilometer. Ich brauche eine halbe Stunde. Reporter: Und wenn das Wetter schlecht ist? Frau Klein: Dann ziehe ich eine Regenjacke an. Nur bei Schnee im Winter nehme ich den Bus. Reporter: Würden Sie es anderen empfehlen? Frau Klein: Auf jeden Fall! Man fühlt sich danach viel wacher.",
+            "question": "Der Weg zur Arbeit ist zwanzig Kilometer lang.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Etwa acht Kilometer.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 4 · Hören Sie das Interview. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Reporter: Frau Klein, Sie fahren jeden Tag mit dem Fahrrad zur Arbeit. Warum? Frau Klein: Das ist gesund und macht Spaß. Außerdem spare ich Geld und stehe nicht im Stau. Reporter: Wie weit ist der Weg? Frau Klein: Etwa acht Kilometer. Ich brauche eine halbe Stunde. Reporter: Und wenn das Wetter schlecht ist? Frau Klein: Dann ziehe ich eine Regenjacke an. Nur bei Schnee im Winter nehme ich den Bus. Reporter: Würden Sie es anderen empfehlen? Frau Klein: Auf jeden Fall! Man fühlt sich danach viel wacher.",
+            "question": "Sie braucht eine halbe Stunde für den Weg.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Ich brauche eine halbe Stunde.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 4 · Hören Sie das Interview. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Reporter: Frau Klein, Sie fahren jeden Tag mit dem Fahrrad zur Arbeit. Warum? Frau Klein: Das ist gesund und macht Spaß. Außerdem spare ich Geld und stehe nicht im Stau. Reporter: Wie weit ist der Weg? Frau Klein: Etwa acht Kilometer. Ich brauche eine halbe Stunde. Reporter: Und wenn das Wetter schlecht ist? Frau Klein: Dann ziehe ich eine Regenjacke an. Nur bei Schnee im Winter nehme ich den Bus. Reporter: Würden Sie es anderen empfehlen? Frau Klein: Auf jeden Fall! Man fühlt sich danach viel wacher.",
+            "question": "Bei Schnee fährt sie auch mit dem Fahrrad.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Nur bei Schnee im Winter nehme ich den Bus.«",
+          "difficulty": 3
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 4 · Hören Sie das Interview. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Reporter: Frau Klein, Sie fahren jeden Tag mit dem Fahrrad zur Arbeit. Warum? Frau Klein: Das ist gesund und macht Spaß. Außerdem spare ich Geld und stehe nicht im Stau. Reporter: Wie weit ist der Weg? Frau Klein: Etwa acht Kilometer. Ich brauche eine halbe Stunde. Reporter: Und wenn das Wetter schlecht ist? Frau Klein: Dann ziehe ich eine Regenjacke an. Nur bei Schnee im Winter nehme ich den Bus. Reporter: Würden Sie es anderen empfehlen? Frau Klein: Auf jeden Fall! Man fühlt sich danach viel wacher.",
+            "question": "Frau Klein empfiehlt das Radfahren anderen Menschen.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Auf jeden Fall!« (auf die Frage nach der Empfehlung)",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "title": "Schreiben",
+      "skill": "Writing",
+      "minutes": 30,
+      "items": [
+        {
+          "type": "Writing", "skill": "Writing",
+          "prompt": "Aufgabe 1 (ca. 25 Wörter): Sie sind mit einer Freundin verabredet, kommen aber 20 Minuten später. Schreiben Sie ihr eine kurze Nachricht: Entschuldigen Sie sich, sagen Sie, warum Sie später kommen, und schlagen Sie einen Treffpunkt vor.",
+          "content": { "minWords": 25, "prompt": "Kurze Nachricht (Verspätung)" },
+          "solution": {},
+          "explanation": "Bewertet werden: Anrede/Gruß und alle drei Punkte (Entschuldigung, Grund, Treffpunkt).",
+          "difficulty": 2
+        },
+        {
+          "type": "Writing", "skill": "Writing",
+          "prompt": "Aufgabe 2 (ca. 40 Wörter): Ein Freund hat Sie zu seiner Geburtstagsparty eingeladen. Antworten Sie ihm: Bedanken Sie sich für die Einladung, sagen Sie, dass Sie kommen, und fragen Sie, ob Sie etwas mitbringen sollen.",
+          "content": { "minWords": 40, "prompt": "Antwort auf eine Einladung" },
+          "solution": {},
+          "explanation": "Bewertet werden: passende Anrede/Gruß, alle drei Punkte und einfache, verbundene Sätze (und, aber, weil).",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "title": "Sprechen",
+      "skill": "Speaking",
+      "minutes": 15,
+      "items": [
+        {
+          "type": "Speaking", "skill": "Speaking",
+          "prompt": "Teil 1 · Fragen zu einem Thema (Thema: Freizeit): Stellen Sie zwei Fragen zum Thema Freizeit und beantworten Sie zwei Fragen Ihres Partners (z. B. Hobbys, Wochenende, Sport).",
+          "content": { "prompt": "Fragen und Antworten: Freizeit", "targetText": "Was machst du gern in deiner Freizeit? — Ich treffe gern Freunde und spiele Fußball. Und du, was machst du am Wochenende?" },
+          "solution": {},
+          "explanation": "Stellen Sie einfache W-Fragen und antworten Sie in vollständigen Sätzen.",
+          "difficulty": 2
+        },
+        {
+          "type": "Speaking", "skill": "Speaking",
+          "prompt": "Teil 2 · Von sich erzählen (Thema: Mein letzter Urlaub): Erzählen Sie: Wohin sind Sie gefahren? Mit wem? Was haben Sie gemacht?",
+          "content": { "prompt": "Von sich erzählen: der letzte Urlaub", "targetText": "Letztes Jahr bin ich mit meiner Familie nach Italien gefahren. Wir waren zwei Wochen am Meer, sind viel geschwommen und haben leckeres Eis gegessen." },
+          "solution": {},
+          "explanation": "Benutzen Sie die Vergangenheit (Perfekt): „Ich bin … gefahren“, „Wir haben … gemacht“.",
+          "difficulty": 2
+        },
+        {
+          "type": "Speaking", "skill": "Speaking",
+          "prompt": "Teil 3 · Etwas gemeinsam planen: Planen Sie mit Ihrem Partner einen gemeinsamen Kinoabend. Sprechen Sie über: Welcher Film? Wann? Wo treffen Sie sich?",
+          "content": { "prompt": "Einen Kinoabend planen", "targetText": "Wollen wir am Samstag ins Kino gehen? Es läuft ein neuer Actionfilm. Wir könnten uns um sieben Uhr vor dem Kino treffen." },
+          "solution": {},
+          "explanation": "Machen Sie Vorschläge und reagieren Sie: „Wollen wir …?“, „Gute Idee!“, „Lieber um acht?“.",
+          "difficulty": 2
+        }
+      ]
+    }
+  ]
+}
