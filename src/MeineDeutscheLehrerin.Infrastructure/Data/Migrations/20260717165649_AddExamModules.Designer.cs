@@ -3,6 +3,7 @@ using System;
 using MeineDeutscheLehrerin.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeineDeutscheLehrerin.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260717165649_AddExamModules")]
+    partial class AddExamModules
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.9");
@@ -37,7 +40,7 @@ namespace MeineDeutscheLehrerin.Infrastructure.Data.Migrations
                     b.Property<string>("GrammarTopic")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("LessonId")
+                    b.Property<int>("LessonId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Order")
@@ -788,7 +791,8 @@ namespace MeineDeutscheLehrerin.Infrastructure.Data.Migrations
                     b.HasOne("MeineDeutscheLehrerin.Domain.Entities.Lesson", "Lesson")
                         .WithMany("Exercises")
                         .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Lesson");
                 });

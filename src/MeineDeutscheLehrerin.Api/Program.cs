@@ -89,6 +89,8 @@ if (builder.Configuration.GetValue<bool>("Seed:ImportContent"))
 {
     await MeineDeutscheLehrerin.Api.Tools.VocabGenerationRunner.ImportAllAsync(app.Services, "content/vocabulary");
     await MeineDeutscheLehrerin.Api.Tools.ExerciseImportRunner.ImportAllAsync(app.Services, "content/exercises");
+    // Import the hand-authored, full-length Goethe mock exams (Lesen/Hören/Schreiben/Sprechen, each timed).
+    await MeineDeutscheLehrerin.Api.Tools.ExamImportRunner.ImportAllAsync(app.Services, "content/exams");
 }
 
 // CLI mode: `dotnet run -- generate-vocab <LEVEL> [count] [theme]` — generate vocab and exit.
@@ -122,6 +124,18 @@ if (args.Length > 0 && args[0].Equals("import-exercises", StringComparison.Ordin
         await MeineDeutscheLehrerin.Api.Tools.ExerciseImportRunner.ImportAsync(app.Services, args[1]);
     else
         Console.WriteLine("Usage: import-exercises all <dir> | import-exercises <file.json>");
+    return;
+}
+
+// CLI mode: `dotnet run -- import-exams all <dir>` | `import-exams <file.json>` — import mock exams and exit.
+if (args.Length > 0 && args[0].Equals("import-exams", StringComparison.OrdinalIgnoreCase))
+{
+    if (args.Length > 1 && args[1].Equals("all", StringComparison.OrdinalIgnoreCase))
+        await MeineDeutscheLehrerin.Api.Tools.ExamImportRunner.ImportAllAsync(app.Services, args.Length > 2 ? args[2] : "content/exams");
+    else if (args.Length > 1)
+        await MeineDeutscheLehrerin.Api.Tools.ExamImportRunner.ImportAsync(app.Services, args[1]);
+    else
+        Console.WriteLine("Usage: import-exams all <dir> | import-exams <file.json>");
     return;
 }
 

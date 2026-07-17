@@ -92,7 +92,7 @@ public class CurriculumService : ICurriculumService
     {
         return await _db.PracticeSets.AsNoTracking().Where(s => s.LevelId == levelId).OrderBy(s => s.Order)
             .Select(s => new PracticeSetDto(s.Id, s.Title, s.Description, s.Skill, s.Kind, s.IsExam,
-                s.TimeLimitMinutes, s.Items.Count))
+                s.TimeLimitMinutes, s.Items.Count + s.Modules.Sum(m => m.Items.Count)))
             .ToListAsync(ct);
     }
 
@@ -105,8 +105,20 @@ public class CurriculumService : ICurriculumService
             .Where(i => i.PracticeSetId == setId).OrderBy(i => i.Order)
             .Select(i => i.Exercise!).ToListAsync(ct);
 
-        var dto = set.ToDto(exercises.Count);
-        return new PracticeSetDetailDto(dto, exercises.Select(e => e.ToDto()).ToList());
+        var moduleRows = await _db.PracticeSetModules.AsNoTracking()
+            .Where(m => m.PracticeSetId == setId).OrderBy(m => m.Order)
+            .Select(m => new
+            {
+                m.Id, m.Title, m.Skill, m.TimeLimitMinutes, m.Order,
+                Exercises = m.Items.OrderBy(i => i.Order).Select(i => i.Exercise!).ToList()
+            }).ToListAsync(ct);
+
+        var modules = moduleRows.Select(m => new PracticeSetModuleDto(
+            m.Id, m.Title, m.Skill, m.TimeLimitMinutes, m.Order,
+            m.Exercises.Select(e => e.ToDto()).ToList())).ToList();
+
+        var total = exercises.Count + modules.Sum(m => m.Exercises.Count);
+        return new PracticeSetDetailDto(set.ToDto(total), exercises.Select(e => e.ToDto()).ToList(), modules);
     }
 
     private async Task<Dictionary<int, int>> CompletedLessonsByLevelAsync(string userId, CancellationToken ct) =>

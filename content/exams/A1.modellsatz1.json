@@ -1,0 +1,442 @@
+{
+  "level": "A1",
+  "title": "A1 Modellsatz 1",
+  "description": "Vollständige Modellprüfung im Format des Goethe-Zertifikats A1 (Start Deutsch 1): Lesen (25 Min.), Hören (20 Min.), Schreiben (20 Min.) und Sprechen (15 Min.) — jedes Modul mit eigenem Zeitlimit.",
+  "modules": [
+    {
+      "title": "Lesen",
+      "skill": "Reading",
+      "minutes": 25,
+      "items": [
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie die E-Mail. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "Hallo Julia,\n\nwie geht es dir? Ich bin jetzt in Berlin. Ich wohne in einer kleinen Wohnung im Zentrum. Meine Arbeit beginnt jeden Tag um neun Uhr. Am Wochenende gehe ich gern in den Park. Kommst du mich bald besuchen?\n\nViele Grüße\nAnna",
+            "question": "Anna wohnt in Berlin.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Ich bin jetzt in Berlin.«",
+          "difficulty": 1
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie die E-Mail. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "Hallo Julia,\n\nwie geht es dir? Ich bin jetzt in Berlin. Ich wohne in einer kleinen Wohnung im Zentrum. Meine Arbeit beginnt jeden Tag um neun Uhr. Am Wochenende gehe ich gern in den Park. Kommst du mich bald besuchen?\n\nViele Grüße\nAnna",
+            "question": "Annas Wohnung ist groß.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… in einer kleinen Wohnung …«",
+          "difficulty": 1
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie die E-Mail. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "Hallo Julia,\n\nwie geht es dir? Ich bin jetzt in Berlin. Ich wohne in einer kleinen Wohnung im Zentrum. Meine Arbeit beginnt jeden Tag um neun Uhr. Am Wochenende gehe ich gern in den Park. Kommst du mich bald besuchen?\n\nViele Grüße\nAnna",
+            "question": "Annas Arbeit beginnt um neun Uhr.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Meine Arbeit beginnt jeden Tag um neun Uhr.«",
+          "difficulty": 1
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie die E-Mail. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "Hallo Julia,\n\nwie geht es dir? Ich bin jetzt in Berlin. Ich wohne in einer kleinen Wohnung im Zentrum. Meine Arbeit beginnt jeden Tag um neun Uhr. Am Wochenende gehe ich gern in den Park. Kommst du mich bald besuchen?\n\nViele Grüße\nAnna",
+            "question": "Am Wochenende geht Anna gern in den Park.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Am Wochenende gehe ich gern in den Park.«",
+          "difficulty": 1
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 1 · Lesen Sie die E-Mail. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "Hallo Julia,\n\nwie geht es dir? Ich bin jetzt in Berlin. Ich wohne in einer kleinen Wohnung im Zentrum. Meine Arbeit beginnt jeden Tag um neun Uhr. Am Wochenende gehe ich gern in den Park. Kommst du mich bald besuchen?\n\nViele Grüße\nAnna",
+            "question": "Anna wohnt weit außerhalb vom Zentrum.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… im Zentrum.«",
+          "difficulty": 1
+        },
+
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie die Situation und die zwei Anzeigen. Welche Anzeige passt?",
+          "content": {
+            "passage": "Situation: Sie möchten am Samstag Deutsch lernen.\n\nAnzeige a) Deutschkurs – nur montags und mittwochs am Abend.\nAnzeige b) Deutschkurs am Wochenende – auch samstags von 10 bis 13 Uhr.",
+            "question": "Welche Anzeige passt?",
+            "options": ["Anzeige a", "Anzeige b"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… auch samstags …«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie die Situation und die zwei Anzeigen. Welche Anzeige passt?",
+          "content": {
+            "passage": "Situation: Sie suchen ein günstiges, gebrauchtes Fahrrad.\n\nAnzeige a) Gebrauchte Fahrräder ab 40 Euro – gut und günstig.\nAnzeige b) Neue Sporträder ab 500 Euro – beste Qualität.",
+            "question": "Welche Anzeige passt?",
+            "options": ["Anzeige a", "Anzeige b"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Gebrauchte Fahrräder ab 40 Euro …«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie die Situation und die zwei Anzeigen. Welche Anzeige passt?",
+          "content": {
+            "passage": "Situation: Sie möchten mit Ihrem Hund spazieren gehen.\n\nAnzeige a) Stadtpark – Hunde sind herzlich willkommen.\nAnzeige b) Freibad – Hunde sind leider nicht erlaubt.",
+            "question": "Welche Anzeige passt?",
+            "options": ["Anzeige a", "Anzeige b"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Stadtpark – Hunde sind herzlich willkommen.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie die Situation und die zwei Anzeigen. Welche Anzeige passt?",
+          "content": {
+            "passage": "Situation: Sie brauchen abends um 22 Uhr noch Medikamente.\n\nAnzeige a) Apotheke am Markt – geöffnet Mo–Fr von 8 bis 18 Uhr.\nAnzeige b) Notdienst-Apotheke – Tag und Nacht geöffnet.",
+            "question": "Welche Anzeige passt?",
+            "options": ["Anzeige a", "Anzeige b"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Notdienst-Apotheke – Tag und Nacht geöffnet.«",
+          "difficulty": 2
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 2 · Lesen Sie die Situation und die zwei Anzeigen. Welche Anzeige passt?",
+          "content": {
+            "passage": "Situation: Sie möchten mittags günstig essen.\n\nAnzeige a) Restaurant Sonne – Mittagsmenü schon für 8 Euro.\nAnzeige b) Restaurant Mond – nur am Abend geöffnet.",
+            "question": "Welche Anzeige passt?",
+            "options": ["Anzeige a", "Anzeige b"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Mittagsmenü schon für 8 Euro.«",
+          "difficulty": 2
+        },
+
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Lesen Sie das Schild. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "SCHILD:\n\nStadtbibliothek\nGeöffnet: Dienstag bis Samstag\nMontag geschlossen",
+            "question": "Am Montag ist die Bibliothek geschlossen.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Montag geschlossen«",
+          "difficulty": 1
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Lesen Sie das Schild. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "SCHILD:\n\nBitte hier nicht parken!\nEinfahrt Tag und Nacht freihalten.",
+            "question": "Hier darf man parken.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Bitte hier nicht parken!«",
+          "difficulty": 1
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Lesen Sie das Schild. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "SCHILD:\n\nBäckerei Müller\nÖffnungszeiten: 9 bis 20 Uhr",
+            "question": "Die Bäckerei öffnet um 9 Uhr.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Öffnungszeiten: 9 bis 20 Uhr«",
+          "difficulty": 1
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Lesen Sie das Schild. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "SCHILD im Zug:\n\nRauchen verboten\nIn allen Wagen",
+            "question": "Im Zug darf man rauchen.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Rauchen verboten«",
+          "difficulty": 1
+        },
+        {
+          "type": "ReadingComprehension", "skill": "Reading",
+          "prompt": "Teil 3 · Lesen Sie das Schild. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "passage": "SCHILD:\n\nAufzug außer Betrieb.\nBitte benutzen Sie die Treppe.",
+            "question": "Der Aufzug funktioniert im Moment nicht.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Aufzug außer Betrieb.«",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "title": "Hören",
+      "skill": "Listening",
+      "minutes": 20,
+      "items": [
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie und wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Entschuldigung, wie spät ist es? – Es ist Viertel nach drei.",
+            "question": "Wie spät ist es?",
+            "options": ["Viertel nach drei", "Viertel vor drei", "halb vier"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Es ist Viertel nach drei.«",
+          "difficulty": 1
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie und wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Ein Kaffee und ein Stück Kuchen, bitte. – Das macht vier Euro fünfzig.",
+            "question": "Was kostet es zusammen?",
+            "options": ["4,15 Euro", "4,50 Euro", "14,50 Euro"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Das macht vier Euro fünfzig.«",
+          "difficulty": 1
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie und wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Achtung: Der Bus zur Stadtmitte fährt heute von der Haltestelle B ab, nicht von Haltestelle A.",
+            "question": "Von welcher Haltestelle fährt der Bus?",
+            "options": ["Haltestelle A", "Haltestelle B", "Haltestelle C"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… fährt heute von der Haltestelle B ab …«",
+          "difficulty": 1
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie und wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Ich hätte gern zwei Kilo Äpfel. – Gern, sonst noch etwas? – Nein danke, das ist alles.",
+            "question": "Was kauft die Person?",
+            "options": ["Äpfel", "Bananen", "Kartoffeln"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Ich hätte gern zwei Kilo Äpfel.«",
+          "difficulty": 1
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie und wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Treffen wir uns um sieben vor dem Kino? – Lieber um halb acht, ich habe noch zu tun.",
+            "question": "Wann treffen sie sich?",
+            "options": ["um sieben", "um halb acht", "um acht"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Lieber um halb acht …«",
+          "difficulty": 1
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 1 · Hören Sie und wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Und hier das Wetter für morgen: Es regnet leider den ganzen Tag. Nehmen Sie einen Regenschirm mit.",
+            "question": "Wie ist das Wetter morgen?",
+            "options": ["sonnig", "es regnet", "es schneit"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Es regnet leider den ganzen Tag.«",
+          "difficulty": 1
+        },
+
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 2 · Hören Sie die Durchsage. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Liebe Fahrgäste, der Zug nach Köln fährt heute von Gleis 5. Bitte beachten Sie die Anzeigetafeln.",
+            "question": "Der Zug fährt von Gleis 5.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… fährt heute von Gleis 5.«",
+          "difficulty": 1
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 2 · Hören Sie die Durchsage. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Liebe Kundinnen und Kunden, die Kasse Nummer 3 ist jetzt für Sie geöffnet.",
+            "question": "Die Kasse Nummer 3 ist geschlossen.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… die Kasse Nummer 3 ist jetzt … geöffnet.«",
+          "difficulty": 1
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 2 · Hören Sie die Durchsage. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Achtung, eine Information für unsere Gäste: Das Schwimmbad schließt heute schon um 18 Uhr.",
+            "question": "Das Schwimmbad schließt heute um 18 Uhr.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»Das Schwimmbad schließt heute schon um 18 Uhr.«",
+          "difficulty": 1
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 2 · Hören Sie die Durchsage. Ist die Aussage richtig oder falsch?",
+          "content": {
+            "audioText": "Meine Damen und Herren, herzlich willkommen. Das Konzert beginnt in zehn Minuten. Bitte nehmen Sie Ihre Plätze ein.",
+            "question": "Das Konzert ist schon zu Ende.",
+            "options": ["Richtig", "Falsch"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Das Konzert beginnt in zehn Minuten.«",
+          "difficulty": 1
+        },
+
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie die Nachricht. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Hallo, hier ist Peter. Wir treffen uns morgen um zehn Uhr am Bahnhof. Bring bitte die Tickets mit! Bis morgen.",
+            "question": "Wo treffen sie sich?",
+            "options": ["am Bahnhof", "im Kino", "zu Hause"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»… morgen um zehn Uhr am Bahnhof.«",
+          "difficulty": 1
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie die Nachricht. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Guten Tag, hier ist der Paketdienst. Ihr Paket liegt bei Ihrem Nachbarn, Herrn Klein. Einen schönen Tag noch.",
+            "question": "Wo ist das Paket?",
+            "options": ["bei der Post", "beim Nachbarn", "im Auto"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»Ihr Paket liegt bei Ihrem Nachbarn …«",
+          "difficulty": 1
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie die Nachricht. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Hi Lisa, ich bin es. Ich komme heute leider etwas später, so gegen acht Uhr. Warte bitte nicht mit dem Essen.",
+            "question": "Wann kommt die Person?",
+            "options": ["um sechs Uhr", "um acht Uhr", "um zehn Uhr"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… so gegen acht Uhr.«",
+          "difficulty": 1
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie die Nachricht. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Guten Tag. Unsere Praxis ist heute geschlossen. In dringenden Notfällen rufen Sie bitte die 112 an.",
+            "question": "Was soll man in Notfällen tun?",
+            "options": ["die 112 anrufen", "einfach warten", "eine E-Mail schreiben"]
+          },
+          "solution": { "correctIndex": 0 },
+          "explanation": "»In dringenden Notfällen rufen Sie bitte die 112 an.«",
+          "difficulty": 1
+        },
+        {
+          "type": "ListeningComprehension", "skill": "Listening",
+          "prompt": "Teil 3 · Hören Sie die Nachricht. Wählen Sie die richtige Antwort.",
+          "content": {
+            "audioText": "Achtung, eine wichtige Information: Der Deutschkurs findet heute nicht im Raum 5, sondern im Raum 8 statt.",
+            "question": "In welchem Raum ist der Kurs heute?",
+            "options": ["Raum 5", "Raum 8", "Raum 10"]
+          },
+          "solution": { "correctIndex": 1 },
+          "explanation": "»… sondern im Raum 8 statt.«",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "title": "Schreiben",
+      "skill": "Writing",
+      "minutes": 20,
+      "items": [
+        {
+          "type": "FillInBlank", "skill": "Writing",
+          "prompt": "Aufgabe 1 · Ihre Freundin Marta Rossi (25 Jahre) kommt aus Italien und wohnt in München. Sie möchte einen Anfängerkurs machen. Füllen Sie das Anmeldeformular aus.",
+          "content": {
+            "text": "Anmeldung Deutschkurs — Familienname: ___ · Land: ___ · Alter: ___ · Wohnort: ___ · Kurs: ___-kurs",
+            "blanks": [{ "hint": "Name" }, { "hint": "Land" }, { "hint": "Jahre" }, { "hint": "Stadt" }, { "hint": "Niveau" }]
+          },
+          "solution": { "answers": [["Rossi", "Marta Rossi"], ["Italien"], ["25"], ["München"], ["Anfänger"]] },
+          "explanation": "Familienname: Rossi · Land: Italien · Alter: 25 · Wohnort: München · Kurs: Anfängerkurs.",
+          "difficulty": 2
+        },
+        {
+          "type": "Writing", "skill": "Writing",
+          "prompt": "Aufgabe 2 (ca. 30 Wörter): Sie sind krank und können heute nicht zum Deutschkurs kommen. Schreiben Sie eine kurze Nachricht an Ihre Lehrerin, Frau Berg: Entschuldigen Sie sich, sagen Sie, warum Sie nicht kommen, und fragen Sie nach den Hausaufgaben.",
+          "content": { "minWords": 30, "prompt": "Kurze Nachricht an die Lehrerin" },
+          "solution": {},
+          "explanation": "Bewertet werden: Anrede/Gruß, alle drei Punkte (Entschuldigung, Grund, Frage nach den Hausaufgaben) und einfache, verständliche Sätze.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "title": "Sprechen",
+      "skill": "Speaking",
+      "minutes": 15,
+      "items": [
+        {
+          "type": "Speaking", "skill": "Speaking",
+          "prompt": "Teil 1 · Sich vorstellen: Stellen Sie sich vor. Sagen Sie etwas zu: Name, Alter, Land, Wohnort, Sprachen und Beruf oder Hobby.",
+          "content": { "prompt": "Sich vorstellen", "targetText": "Ich heiße Ana und bin 28 Jahre alt. Ich komme aus Spanien und wohne jetzt in Frankfurt. Ich spreche Spanisch, Englisch und ein bisschen Deutsch. Ich arbeite als Verkäuferin." },
+          "solution": {},
+          "explanation": "Nennen Sie alle Informationen in einfachen Sätzen: „Ich heiße …“, „Ich bin … Jahre alt“, „Ich komme aus …“, „Ich wohne in …“.",
+          "difficulty": 1
+        },
+        {
+          "type": "Speaking", "skill": "Speaking",
+          "prompt": "Teil 2 · Um Informationen bitten (Thema: Einkaufen): Bilden Sie eine Frage und eine Antwort mit dem Wort „Supermarkt“.",
+          "content": { "prompt": "Fragen zum Thema Einkaufen", "targetText": "Wo ist der nächste Supermarkt? — Der Supermarkt ist gleich um die Ecke, neben der Apotheke." },
+          "solution": {},
+          "explanation": "Stellen Sie eine einfache W-Frage und geben Sie eine passende Antwort.",
+          "difficulty": 1
+        },
+        {
+          "type": "Speaking", "skill": "Speaking",
+          "prompt": "Teil 3 · Bitten formulieren: Sie sehen ein Bild von einer Lampe. Bitten Sie Ihren Partner höflich um die Lampe und reagieren Sie auf eine Bitte.",
+          "content": { "prompt": "Höflich um etwas bitten", "targetText": "Kannst du mir bitte die Lampe geben? — Ja, gern. Hier ist sie." },
+          "solution": {},
+          "explanation": "Verwenden Sie höfliche Formen: „Kannst du bitte …?“ / „Können Sie mir bitte …?“ und antworten Sie freundlich.",
+          "difficulty": 1
+        }
+      ]
+    }
+  ]
+}

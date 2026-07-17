@@ -44,7 +44,7 @@ namespace MeineDeutscheLehrerin.Migrations.Postgres.Migrations
                     b.Property<string>("GrammarTopic")
                         .HasColumnType("text");
 
-                    b.Property<int>("LessonId")
+                    b.Property<int?>("LessonId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Order")
@@ -297,6 +297,63 @@ namespace MeineDeutscheLehrerin.Migrations.Postgres.Migrations
                     b.HasIndex("PracticeSetId", "Order");
 
                     b.ToTable("PracticeSetItems");
+                });
+
+            modelBuilder.Entity("MeineDeutscheLehrerin.Domain.Entities.PracticeSetModule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PracticeSetId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Skill")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TimeLimitMinutes")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PracticeSetId", "Order");
+
+                    b.ToTable("PracticeSetModules");
+                });
+
+            modelBuilder.Entity("MeineDeutscheLehrerin.Domain.Entities.PracticeSetModuleItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.HasIndex("ModuleId", "Order");
+
+                    b.ToTable("PracticeSetModuleItems");
                 });
 
             modelBuilder.Entity("MeineDeutscheLehrerin.Domain.Entities.StudyPlanDay", b =>
@@ -768,8 +825,7 @@ namespace MeineDeutscheLehrerin.Migrations.Postgres.Migrations
                     b.HasOne("MeineDeutscheLehrerin.Domain.Entities.Lesson", "Lesson")
                         .WithMany("Exercises")
                         .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Lesson");
                 });
@@ -824,6 +880,36 @@ namespace MeineDeutscheLehrerin.Migrations.Postgres.Migrations
                     b.Navigation("Exercise");
 
                     b.Navigation("PracticeSet");
+                });
+
+            modelBuilder.Entity("MeineDeutscheLehrerin.Domain.Entities.PracticeSetModule", b =>
+                {
+                    b.HasOne("MeineDeutscheLehrerin.Domain.Entities.PracticeSet", "PracticeSet")
+                        .WithMany("Modules")
+                        .HasForeignKey("PracticeSetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PracticeSet");
+                });
+
+            modelBuilder.Entity("MeineDeutscheLehrerin.Domain.Entities.PracticeSetModuleItem", b =>
+                {
+                    b.HasOne("MeineDeutscheLehrerin.Domain.Entities.Exercise", "Exercise")
+                        .WithMany()
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("MeineDeutscheLehrerin.Domain.Entities.PracticeSetModule", "Module")
+                        .WithMany("Items")
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("Module");
                 });
 
             modelBuilder.Entity("MeineDeutscheLehrerin.Domain.Entities.StudyPlanDay", b =>
@@ -971,6 +1057,13 @@ namespace MeineDeutscheLehrerin.Migrations.Postgres.Migrations
                 });
 
             modelBuilder.Entity("MeineDeutscheLehrerin.Domain.Entities.PracticeSet", b =>
+                {
+                    b.Navigation("Items");
+
+                    b.Navigation("Modules");
+                });
+
+            modelBuilder.Entity("MeineDeutscheLehrerin.Domain.Entities.PracticeSetModule", b =>
                 {
                     b.Navigation("Items");
                 });
