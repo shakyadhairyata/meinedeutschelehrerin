@@ -41,25 +41,34 @@ public static class ExamImportRunner
     public static async Task ImportAllAsync(IServiceProvider services, string dir)
     {
         if (!Directory.Exists(dir)) { Console.WriteLine($"Directory not found: {dir}"); return; }
-        await RemoveLegacyGeneratedExamsAsync(services);
         foreach (var file in Directory.GetFiles(dir, "*.json").OrderBy(f => f, StringComparer.Ordinal))
             await ImportAsync(services, file);
+        await RetireSupersededExamsAsync(services);
     }
 
     /// <summary>
-    /// Drops the shallow, auto-assembled mock exams the old generator produced (title marker
-    /// "Prüfungssimulation"), now superseded by the hand-authored Modellsätze. Runs once — after
-    /// removal there is nothing left to match.
+    /// Retires exams the authored Modellsätze replace: the shallow auto-generated sets (title
+    /// "Prüfungssimulation"), and the seeded starter demo ("… Modellprüfung") for any level that
+    /// now has an authored "Modellsatz". Runs after import so the replacement already exists;
+    /// idempotent — after removal there is nothing left to match.
     /// </summary>
-    private static async Task RemoveLegacyGeneratedExamsAsync(IServiceProvider services)
+    private static async Task RetireSupersededExamsAsync(IServiceProvider services)
     {
         using var scope = services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        var legacy = await db.PracticeSets.Where(p => p.Title.Contains("Prüfungssimulation")).ToListAsync();
-        if (legacy.Count == 0) return;
-        db.PracticeSets.RemoveRange(legacy);
+
+        var authoredLevels = await db.PracticeSets
+            .Where(p => p.Title.Contains("Modellsatz"))
+            .Select(p => p.LevelId).Distinct().ToListAsync();
+
+        var stale = await db.PracticeSets
+            .Where(p => p.Title.Contains("Prüfungssimulation")
+                     || (p.Title.Contains("Modellprüfung") && authoredLevels.Contains(p.LevelId)))
+            .ToListAsync();
+        if (stale.Count == 0) return;
+        db.PracticeSets.RemoveRange(stale);
         await db.SaveChangesAsync();
-        Console.WriteLine($"Removed {legacy.Count} legacy auto-generated exam(s).");
+        Console.WriteLine($"Retired {stale.Count} superseded exam(s).");
     }
 
     public static async Task ImportAsync(IServiceProvider services, string path)
