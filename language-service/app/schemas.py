@@ -29,3 +29,24 @@ class GenerateVocabRequest(BaseModel):
     theme: str | None = None
     count: int = 30
     exclude: list[str] = []
+
+
+class RagDoc(BaseModel):
+    """One curriculum document pushed in by the .NET API for indexing."""
+    level: str = "A1"
+    source: str = "lesson"
+    title: str = ""
+    grammarTopic: str | None = None
+    text: str = ""
+
+
+class RagIndexRequest(BaseModel):
+    docs: list[RagDoc] = []
+
+
+class RagQueryRequest(BaseModel):
+    query: str = ""
+    level: str | None = None
+    k: int = 4
+    # Retrieval is always free; the grounded Claude answer is opt-in and quota-gated upstream.
+    with_answer: bool = Field(default=False, alias="with_answer")

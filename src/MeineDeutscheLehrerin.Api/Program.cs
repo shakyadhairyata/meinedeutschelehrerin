@@ -91,6 +91,21 @@ if (builder.Configuration.GetValue<bool>("Seed:ImportContent"))
     await MeineDeutscheLehrerin.Api.Tools.ExerciseImportRunner.ImportAllAsync(app.Services, "content/exercises");
     // Import the hand-authored, full-length Goethe mock exams (Lesen/Hören/Schreiben/Sprechen, each timed).
     await MeineDeutscheLehrerin.Api.Tools.ExamImportRunner.ImportAllAsync(app.Services, "content/exams");
+
+    // Build the grammar retrieval index from the freshly-imported curriculum. Best-effort: the
+    // language-service may still be starting on a cold deploy, and an admin can re-trigger it
+    // from /api/grammar-help/reindex.
+    try
+    {
+        using var ragScope = app.Services.CreateScope();
+        var grammar = ragScope.ServiceProvider.GetRequiredService<IGrammarHelpService>();
+        var indexed = await grammar.ReindexAsync();
+        Console.WriteLine($"Grammar index: {indexed.Indexed} chunks ({indexed.Store}, {indexed.Model}).");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Grammar index not built at startup ({ex.Message}). Use POST /api/grammar-help/reindex.");
+    }
 }
 
 // CLI mode: `dotnet run -- generate-vocab <LEVEL> [count] [theme]` — generate vocab and exit.

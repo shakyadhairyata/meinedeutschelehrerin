@@ -27,6 +27,7 @@ public static class FeatureKeys
     public const string StudyPlan = "study_plan";
     public const string AiFeedback = "ai_feedback";
     public const string Registration = "registration";
+    public const string GrammarHelp = "grammar_help";
 
     /// <summary>The default set seeded on first run (idempotent — existing flags are left alone).</summary>
     public static readonly IReadOnlyList<(string Key, string Description)> Defaults = new[]
@@ -36,5 +37,6 @@ public static class FeatureKeys
         (StudyPlan, "The 2-week Lernplan"),
         (AiFeedback, "AI-graded Writing & Speaking feedback (falls back to the offline scorer when off)"),
         (Registration, "Allow new users to sign up"),
+        (GrammarHelp, "Grammatik-Hilfe: explanations retrieved from the app's own lessons"),
     };
 }

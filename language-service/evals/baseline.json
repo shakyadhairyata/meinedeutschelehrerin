@@ -1,0 +1,23 @@
+{
+  "mode": "offline",
+  "model": "offline-heuristic",
+  "summary": {
+    "writing": {
+      "cases": 14,
+      "contract_valid": 1.0,
+      "score_in_band": 0.5,
+      "score_mae": 23.9286,
+      "cefr_exact": 0.8571,
+      "cefr_adjacent": 0.8571,
+      "category_recall": 0.25,
+      "error_flag_recall": 0.0,
+      "false_alarm_rate": 0.0
+    },
+    "speaking": {
+      "cases": 6,
+      "contract_valid": 1.0,
+      "score_in_band": 1.0,
+      "score_mae": 8.5833
+    }
+  }
+}

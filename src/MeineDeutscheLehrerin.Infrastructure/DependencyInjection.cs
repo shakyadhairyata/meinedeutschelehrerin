@@ -32,6 +32,14 @@ public static class DependencyInjection
             http.Timeout = TimeSpan.FromSeconds(o.TimeoutSeconds);
         });
 
+        // Shares the language-service host: retrieval and the grader live in the same Python app.
+        services.AddHttpClient<IGrammarHelpService, GrammarHelpService>((sp, http) =>
+        {
+            var o = sp.GetRequiredService<IOptions<LanguageServiceOptions>>().Value;
+            http.BaseAddress = new Uri(o.BaseUrl);
+            http.Timeout = TimeSpan.FromSeconds(o.TimeoutSeconds);
+        });
+
         services.AddSingleton<IExerciseGrader, ExerciseGrader>();
         services.AddScoped<ICurriculumService, CurriculumService>();
         services.AddScoped<IProgressService, ProgressService>();

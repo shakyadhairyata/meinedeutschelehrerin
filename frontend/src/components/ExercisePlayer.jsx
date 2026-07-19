@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from 'react'
 import { post } from '../api/client'
 import { AudioButton, SkillBadge, Alert, RichText } from './ui'
 import { getRecognition, recognitionSupported } from '../lib/speech'
+import GrammarHelp from './GrammarHelp'
 
 const CHOICE_TYPES = ['MultipleChoice', 'ReadingComprehension', 'ListeningComprehension']
 
@@ -47,7 +48,7 @@ export default function ExercisePlayer({ exercise, index, total, onResult, onNex
 
       {error && <div className="mt-3"><Alert kind="error">{error}</Alert></div>}
 
-      {graded && <Feedback type={type} result={result} />}
+      {graded && <Feedback type={type} result={result} exercise={exercise} />}
 
       <div className="mt-4 flex justify-end gap-2">
         {!graded && (
@@ -346,7 +347,7 @@ function recognitionErrorMessage(code) {
 
 // ---------------- feedback ----------------
 
-function Feedback({ type, result }) {
+function Feedback({ type, result, exercise }) {
   const isAi = type === 'Writing' || type === 'Speaking'
   const fb = result.feedback
   return (
@@ -384,6 +385,9 @@ function Feedback({ type, result }) {
               <ul className="list-disc pl-5 text-slate-600">{fb.pronunciationTips.map((t, i) => <li key={i}>{t}</li>)}</ul></div>
           )}
         </div>
+      )}
+      {!result.isCorrect && (
+        <GrammarHelp query={exercise?.grammarTopic || exercise?.prompt} />
       )}
     </div>
   )

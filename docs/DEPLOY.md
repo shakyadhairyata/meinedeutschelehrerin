@@ -59,3 +59,35 @@ feature flags and the admin on first boot. After that, schema changes apply clea
 - API health: `https://<api-url>/api/health` → `{"status":"ok"}`
 - Language service: `https://<ai-url>/health` → `{"status":"ok"}`
 - App: open the static site URL, register, and work through a lesson.
+
+## Grammar RAG & grader evals
+
+**Grammar help** (`/api/grammar-help`) answers "why is this wrong?" from the app's *own*
+lessons rather than the model's general knowledge, so every explanation is traceable to
+material the learner has been taught.
+
+- The vector index lives in the Python language-service. The .NET API owns the corpus (it has
+  the curriculum DB) and pushes it over on startup; an admin can rebuild it any time via
+  `POST /api/grammar-help/reindex`.
+- Storage is **pgvector** in the existing Postgres (`RAG_DATABASE_URL`), so the index survives
+  free-tier restarts. Without a database URL it falls back to an in-memory index.
+- Embeddings use **Voyage** when `VOYAGE_API_KEY` is set, otherwise a deterministic
+  TF-IDF hashing embedder — so retrieval works with no keys at all (CI, local dev).
+- Retrieval is free and ungated. Only the optional Claude summary spends tokens, and it goes
+  through the same `IAiAccessService` quota as the other AI features.
+- Level is a ranking *preference*, not a filter: the rule a learner needs is often taught at a
+  different level than the exercise they are stuck on.
+
+**Grader evals** measure the writing/speaking grader against a labelled German golden set:
+
+```bash
+cd language-service
+python -m evals.run                 # report
+python -m evals.run --check         # fail on regression vs baseline
+python -m evals.run --save-baseline # re-record the baseline
+```
+
+Contract validity (well-formed, bindable responses) is enforced in CI with no API key.
+Quality metrics are only compared against a baseline recorded in the **same mode**, because
+the offline fallback is legitimately far weaker than Claude — quantifying that gap is the
+point of the suite.

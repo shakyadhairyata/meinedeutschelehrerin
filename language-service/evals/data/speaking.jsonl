@@ -1,0 +1,6 @@
+{"id": "s-01", "level": "A1", "target_text": "Ich möchte einen Kaffee bestellen", "transcript": "Ich möchte einen Kaffee bestellen", "expected": {"score_band": [85, 100], "note": "Exakte Wiedergabe."}}
+{"id": "s-02", "level": "A1", "target_text": "Ich möchte einen Kaffee bestellen", "transcript": "Ich möchte ein Kaffee bestellen", "expected": {"score_band": [60, 95], "note": "Kleiner Kasusfehler, sonst korrekt."}}
+{"id": "s-03", "level": "A1", "target_text": "Ich möchte einen Kaffee bestellen", "transcript": "Das Wetter ist heute sehr schön", "expected": {"score_band": [0, 40], "note": "Völlig anderer Inhalt."}}
+{"id": "s-04", "level": "A2", "target_text": "Können Sie mir bitte den Weg zum Bahnhof zeigen", "transcript": "Können Sie mir den Weg zum Bahnhof zeigen", "expected": {"score_band": [65, 100], "note": "Ein Wort ausgelassen (bitte)."}}
+{"id": "s-05", "level": "A2", "target_text": "Können Sie mir bitte den Weg zum Bahnhof zeigen", "transcript": "", "expected": {"score_band": [0, 15], "note": "Leere Transkription - Robustheit."}}
+{"id": "s-06", "level": "B1", "target_text": "Ich hätte gern einen Termin für nächste Woche", "transcript": "Ich hätte gerne einen Termin für die nächste Woche", "expected": {"score_band": [60, 100], "note": "Leichte Variation, inhaltlich gleich."}}
