@@ -25,7 +25,10 @@ DATA = ROOT / "data"
 RESULTS = ROOT / "results"
 BASELINE = ROOT / "baseline.json"
 
-# Quality may drift a little run-to-run with a live model; contract validity may not.
+# Quality may drift a little run-to-run with a live model; contract validity may not. Rates are
+# on a 0-1 scale; score_mae is on a 0-100 scale, so its tolerance is in points, not the 0.10
+# default (which would fail CI on sub-percent MAE noise or a one-word dataset tweak).
+DEFAULT_TOLERANCE = 0.10
 TOLERANCE = {
     "contract_valid": 0.0,
     "score_in_band": 0.10,
@@ -33,6 +36,8 @@ TOLERANCE = {
     "cefr_adjacent": 0.10,
     "category_recall": 0.10,
     "error_flag_recall": 0.10,
+    "false_alarm_rate": 0.10,
+    "score_mae": 3.0,
 }
 # Metrics where lower is better.
 LOWER_IS_BETTER = {"score_mae", "false_alarm_rate"}
@@ -113,7 +118,7 @@ def check(result: dict) -> int:
             before = baseline["summary"].get(section, {}).get(key)
             if not isinstance(now, float) or not isinstance(before, float):
                 continue
-            tol = TOLERANCE.get(key, 0.10)
+            tol = TOLERANCE.get(key, DEFAULT_TOLERANCE)
             worse = (now > before + tol) if key in LOWER_IS_BETTER else (now < before - tol)
             if worse:
                 regressions.append(f"{section}.{key}: {before:.3f} -> {now:.3f}")

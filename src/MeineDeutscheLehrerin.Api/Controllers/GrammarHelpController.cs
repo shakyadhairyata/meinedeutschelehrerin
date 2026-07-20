@@ -42,9 +42,16 @@ public class GrammarHelpController : ApiControllerBase
         if (!await _flags.IsEnabledAsync(FeatureKeys.GrammarHelp, ct))
             return NotFound(new { error = "Grammatik-Hilfe ist derzeit deaktiviert." });
 
-        // Only charge the quota when a generated answer was actually asked for.
-        var withAnswer = answer && await _ai.TryConsumeAsync(UserId, ct);
-        return Ok(await _grammar.AskAsync(q, level, Math.Clamp(k, 1, 10), withAnswer, ct));
+        k = Math.Clamp(k, 1, 10);
+
+        // Retrieve first — it costs no tokens. Only spend an AI credit once we know there is
+        // something to summarise; otherwise a no-match query would burn a credit for nothing,
+        // and consuming before the Claude call is also what actually enforces the quota.
+        var help = await _grammar.AskAsync(q, level, k, withAnswer: false, ct);
+        if (answer && help.Sources.Count > 0 && await _ai.TryConsumeAsync(UserId, ct))
+            help = await _grammar.AskAsync(q, level, k, withAnswer: true, ct);
+
+        return Ok(help);
     }
 
     /// <summary>Rebuilds the vector index from the current curriculum. Admin-only: it re-embeds

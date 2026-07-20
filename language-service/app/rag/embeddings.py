@@ -18,6 +18,8 @@ logger = logging.getLogger("language-service")
 DIM = 512
 VOYAGE_MODEL = os.getenv("VOYAGE_MODEL", "voyage-3-lite")
 VOYAGE_URL = "https://api.voyageai.com/v1/embeddings"
+# Voyage limits how many texts one request may carry; the corpus is embedded in batches.
+VOYAGE_BATCH = int(os.getenv("VOYAGE_BATCH", "100"))
 
 _TOKEN_RE = re.compile(r"[\wäöüßÄÖÜ]+", re.UNICODE)
 
@@ -109,12 +111,24 @@ def _voyage_embed(texts: list[str], input_type: str) -> list[list[float]] | None
 # ---------------- public API ----------------
 
 def embed_documents(texts: list[str]) -> list[list[float]]:
+    """Embeds the whole corpus. Voyage caps how many texts one request may carry, so the
+    corpus is sent in batches; if any batch fails the *entire* corpus falls back to the
+    hashing embedder, because mixing two vector spaces in one index makes every similarity
+    score meaningless."""
     if not texts:
         return []
     if voyage_enabled():
-        vecs = _voyage_embed(texts, "document")
-        if vecs:
-            return vecs
+        out: list[list[float]] = []
+        for i in range(0, len(texts), VOYAGE_BATCH):
+            vecs = _voyage_embed(texts[i:i + VOYAGE_BATCH], "document")
+            if not vecs:
+                out = []
+                break
+            out.extend(vecs)
+        if len(out) == len(texts):
+            return out
+        logger.warning("Voyage embedding incomplete — indexing the whole corpus with the "
+                       "offline embedder instead so the vector space stays consistent.")
     return [_hash_embed(t) for t in texts]
 
 

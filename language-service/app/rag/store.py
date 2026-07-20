@@ -58,6 +58,9 @@ class MemoryStore:
     def load_idf(self) -> list[float] | None:
         return self._idf
 
+    def current_model(self) -> str:
+        return self._model
+
     def search(self, query_vec: list[float], level: str | None, k: int) -> list[Hit]:
         pool = [c for c in self._chunks if not level or c.level == level]
         scored = [Hit(c, embeddings.cosine(query_vec, c.embedding)) for c in pool]
@@ -75,6 +78,7 @@ class PgVectorStore:
 
     def __init__(self, url: str) -> None:
         self._url = url
+        self._model: str | None = None  # cached so the query path never counts the table
 
     def _connect(self):
         import psycopg
@@ -133,6 +137,7 @@ class PgVectorStore:
                 ],
             )
             conn.commit()
+        self._model = model
         return len(chunks)
 
     def search(self, query_vec: list[float], level: str | None, k: int) -> list[Hit]:
@@ -164,6 +169,16 @@ class PgVectorStore:
         except Exception:  # noqa: BLE001 — not indexed yet
             return None
 
+    def current_model(self) -> str:
+        if self._model is None:
+            try:
+                with self._connect() as conn, conn.cursor() as cur:
+                    cur.execute(f"SELECT coalesce(max(model), '') FROM {TABLE}")
+                    self._model = cur.fetchone()[0]
+            except Exception:  # noqa: BLE001 — not indexed yet
+                self._model = ""
+        return self._model
+
     def stats(self) -> dict:
         try:
             with self._connect() as conn, conn.cursor() as cur:
@@ -180,7 +195,14 @@ _store = None
 
 
 def get_store():
-    """pgvector when a database is configured and reachable, else in-memory."""
+    """pgvector when a database is configured and reachable, else in-memory.
+
+    A successful pgvector connection is cached for the process. A *transient* failure while a
+    database IS configured is deliberately NOT cached: caching it would pin the process to the
+    in-memory store, so a later reindex would write to volatile memory and report success while
+    pgvector stayed empty. In that case we return an uncached memory store and retry pgvector
+    on the next call.
+    """
     global _store
     if _store is not None:
         return _store
@@ -196,7 +218,9 @@ def get_store():
             logger.info("rag: using pgvector store")
             return _store
         except Exception as exc:  # noqa: BLE001
-            logger.warning("rag: pgvector unavailable (%s), using in-memory store", exc)
+            logger.warning("rag: pgvector configured but unavailable (%s); using a temporary "
+                           "in-memory store and will retry the database next time", exc)
+            return MemoryStore()  # uncached — retry pgvector on the next call
     _store = MemoryStore()
     return _store
 

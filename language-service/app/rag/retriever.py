@@ -24,8 +24,10 @@ LEVEL_BOOST = float(os.getenv("RAG_LEVEL_BOOST", "0.05"))
 SOURCE_BOOST = float(os.getenv("RAG_SOURCE_BOOST", "0.05"))
 
 
-def _chunk_id(source: str, title: str, ordinal: int, text: str) -> str:
-    digest = hashlib.blake2b(f"{source}|{title}|{ordinal}|{text}".encode("utf-8"), digest_size=8)
+def _chunk_id(level: str, source: str, title: str, ordinal: int, text: str) -> str:
+    # Level is part of the identity: the same explanation can legitimately appear at two levels,
+    # and they must stay distinct chunks (each carries its own level for ranking and display).
+    digest = hashlib.blake2b(f"{level}|{source}|{title}|{ordinal}|{text}".encode("utf-8"), digest_size=8)
     return digest.hexdigest()
 
 
@@ -65,7 +67,7 @@ def build_chunks(docs: list[dict]) -> list[store.Chunk]:
             # Prefix the heading so the topic itself is part of what gets embedded.
             body = f"{title}" + (f" ({topic})" if topic else "") + f"\n{piece}"
             out.append(store.Chunk(
-                id=_chunk_id(source, title, i, piece),
+                id=_chunk_id(level, source, title, i, piece),
                 level=level, source=source, title=title,
                 grammar_topic=topic, text=body,
             ))
@@ -121,6 +123,17 @@ def search(query: str, level: str | None = None, k: int = 4) -> list[store.Hit]:
     if not (query or "").strip():
         return []
     st = store.get_store()
+
+    # The index and the query must be embedded in the same vector space. If VOYAGE_API_KEY was
+    # added or removed after indexing, comparing the two spaces yields confident nonsense
+    # (voyage-3-lite is also 512-dim, so a shape check wouldn't catch it) — refuse instead, and
+    # surface an empty result so the caller shows "no explanation found" until a re-index.
+    indexed_model = st.current_model()
+    if indexed_model and indexed_model != embeddings.model_name():
+        logger.warning("rag: index built with %r but active embedder is %r — reindex required; "
+                       "returning no results", indexed_model, embeddings.model_name())
+        return []
+
     _ensure_idf(st)
     qv = embeddings.embed_query(query)
 
@@ -161,7 +174,8 @@ def answer(query: str, level: str | None = None, k: int = 4, with_answer: bool =
         "sources": _sources(hits),
         "answer": None,
         "grounded": False,
-        "retrieval": store.get_store().stats().get("store", "memory"),
+        # The store's kind is a constant on the instance; don't count the table on every request.
+        "retrieval": store.get_store().kind,
     }
     if not with_answer or not hits:
         return result
@@ -178,8 +192,7 @@ def answer(query: str, level: str | None = None, k: int = 4, with_answer: bool =
     if data and data.get("answer"):
         result["answer"] = data["answer"]
         result["grounded"] = bool(data.get("grounded", True))
-    else:
-        # No key or the call failed: fall back to the best retrieved explanation verbatim.
-        result["answer"] = hits[0].chunk.text
-        result["grounded"] = True
+    # No key or the call failed: leave answer null. The retrieved explanations are already in
+    # `sources`, so the UI shows them without a fabricated summary that would just duplicate
+    # sources[0] and misleadingly read as a grounded, generated answer.
     return result

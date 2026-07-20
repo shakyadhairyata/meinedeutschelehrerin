@@ -128,13 +128,14 @@ def test_answer_returns_sources_without_calling_claude():
     assert 0 <= res["sources"][0]["score"] <= 1
 
 
-def test_answer_falls_back_to_retrieved_text_without_api_key():
+def test_answer_is_null_without_api_key_but_sources_are_returned():
     retriever.index(DOCS)
     res = retriever.answer("Was ist der Akkusativ?", level="A1", with_answer=True)
-    # No ANTHROPIC_API_KEY in CI: the top retrieved explanation is returned verbatim.
-    assert res["answer"]
-    assert "Akkusativ" in res["answer"]
-    assert res["grounded"] is True
+    # No ANTHROPIC_API_KEY in CI: no generated summary, but the retrieved explanation is present
+    # in sources (not duplicated into a fabricated "answer").
+    assert res["answer"] is None
+    assert res["grounded"] is False
+    assert any("Akkusativ" in s["text"] for s in res["sources"])
 
 
 def test_long_text_is_split_into_multiple_chunks():
