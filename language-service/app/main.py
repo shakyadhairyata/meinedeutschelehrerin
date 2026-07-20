@@ -7,7 +7,15 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from . import claude_client, evaluator
-from .schemas import GenerateRequest, GenerateVocabRequest, SpeakingRequest, WritingRequest
+from .rag import retriever, store
+from .schemas import (
+    GenerateRequest,
+    GenerateVocabRequest,
+    RagIndexRequest,
+    RagQueryRequest,
+    SpeakingRequest,
+    WritingRequest,
+)
 
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
@@ -44,3 +52,24 @@ def generate_exercises(req: GenerateRequest):
 @app.post("/generate/vocabulary")
 def generate_vocabulary(req: GenerateVocabRequest):
     return evaluator.generate_vocabulary(req)
+
+
+# ---------------- Grammar RAG ----------------
+
+
+@app.post("/rag/index")
+def rag_index(req: RagIndexRequest):
+    """Rebuild the grammar index from curriculum documents pushed by the .NET API."""
+    return retriever.index([d.model_dump() for d in req.docs])
+
+
+@app.post("/rag/grammar")
+def rag_grammar(req: RagQueryRequest):
+    """Retrieve grammar explanations from the app's own content; optionally add a
+    Claude answer grounded strictly in what was retrieved."""
+    return retriever.answer(req.query, req.level, req.k, req.with_answer)
+
+
+@app.get("/rag/stats")
+def rag_stats():
+    return store.get_store().stats()

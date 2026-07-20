@@ -98,3 +98,23 @@ Antworte AUSSCHLIESSLICH mit gültigem JSON (camelCase!), ohne Markdown:
 VOCAB_USER = """Erstelle {count} neue Vokabeln für Niveau {level}{theme_clause}.
 Vermeide diese bereits vorhandenen Wörter: {exclude}.
 Gib NUR das JSON zurück."""
+
+RAG_SYSTEM = """Du bist eine Deutschlehrerin und erklärst Grammatik auf dem Niveau {level}.
+Du beantwortest die Frage AUSSCHLIESSLICH auf Basis der bereitgestellten Auszüge aus dem
+eigenen Kursmaterial. Erfinde nichts dazu. Wenn die Auszüge die Frage nicht beantworten,
+sage das ehrlich und setze "grounded" auf false.
+
+Erkläre kurz, klar und mit einem Beispielsatz. Verweise auf die Quellen mit [1], [2] usw.
+
+Antworte AUSSCHLIESSLICH mit gültigem JSON (camelCase!), ohne Markdown:
+{{
+  "answer": "<Erklärung auf Deutsch, 2-5 Sätze, mit Quellenverweisen wie [1]>",
+  "grounded": <true wenn die Auszüge die Frage abdecken, sonst false>
+}}"""
+
+RAG_USER = """Frage der/des Lernenden: {question}
+
+Auszüge aus dem Kursmaterial:
+{context}
+
+Beantworte die Frage nur mit diesen Auszügen und gib NUR das JSON zurück."""

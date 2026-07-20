@@ -54,6 +54,14 @@ services:
         sync: false
       - key: LLM_MODEL
         value: claude-sonnet-4-6
+      # Grammar RAG: the vector index lives in the same Postgres via pgvector, so it survives
+      # the free-tier restarts that would otherwise force a re-embed on every boot.
+      - key: RAG_DATABASE_URL
+        fromDatabase:
+          name: meinedeutschelehrerin-db
+          property: connectionString
+      - key: VOYAGE_API_KEY      # optional; without it retrieval uses the offline hashing embedder
+        sync: false
 
   # ---- React static frontend ----
   - type: web

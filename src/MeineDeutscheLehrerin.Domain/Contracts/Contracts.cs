@@ -124,3 +124,14 @@ public record GeneratedVocabItemDto(
 public record GeneratedExerciseDto(
     ExerciseType Type, SkillType Skill, string Prompt, JsonNode? Content,
     JsonNode? Solution, string Explanation, string? GrammarTopic, int Difficulty);
+
+// ---------- Grammar help (RAG over the app's own content) ----------
+
+public record GrammarSourceDto(
+    string Title, string? GrammarTopic, string Level, string Source, string Text, double Score);
+
+public record GrammarHelpDto(
+    string Query, IReadOnlyList<GrammarSourceDto> Sources,
+    string? Answer, bool Grounded, string Retrieval, bool AiUsed);
+
+public record RagIndexResultDto(int Indexed, string Store, int Chunks, string Model);
