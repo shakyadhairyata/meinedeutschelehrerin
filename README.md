@@ -18,29 +18,43 @@ structured syllabus with real exercise grading and progress tracking, so I built
 
 - Email accounts with isolated per-user progress (ASP.NET Identity, bearer tokens).
 - A full A1–C1 syllabus modelled as Level → Unit (a study day) → Lesson (per skill) → Exercise,
-  plus practice sets and mock exams.
+  plus themed practice sets.
 - 12 exercise types, all graded server-side: multiple choice, fill-in-the-blank, cloze, reorder,
   matching, reading and listening comprehension, dictation, conjugation, translation, and
   AI-scored writing and speaking.
+- Full-length Goethe mock exams (A1–B1) built as the four official modules — Lesen, Hören,
+  Schreiben and Sprechen — each separately timed and auto-advancing when its clock runs out,
+  with a per-module score at the end.
+- Grammar help that answers "why is this wrong?" from the app's *own* lessons rather than the
+  model's general knowledge: a small vector index over the lesson explanations and exercise
+  rationales, so every answer cites the material it came from.
 - Listening and speaking work in the browser: text-to-speech reads the listening clips, and the
   Web Speech API transcribes spoken answers on the device.
 - Spaced-repetition vocabulary (Leitner boxes) with 1,100+ words across the five levels.
 - A dashboard with streaks, per-skill accuracy, weakest grammar topics, and level completion.
 - A generated two-week study plan per level.
+- An admin panel to toggle features on and off and switch users between Free and Paid tiers.
+  AI-graded feedback and the grammar summary are gated by tier and a daily quota, so the
+  Anthropic budget can't be drained — everyone still gets deterministic scoring and the cited
+  explanations for free.
 
 ## Stack
 
 - **Frontend** — React 19, Vite, Tailwind.
 - **API** — ASP.NET Core (.NET 10) with EF Core and ASP.NET Identity. SQLite for local dev,
   PostgreSQL in production.
-- **Language service** — Python/FastAPI backed by Claude for writing and speaking feedback. If
-  no API key is set it falls back to deterministic scoring, so the app stays usable offline.
+- **Language service** — Python/FastAPI backed by Claude for writing and speaking feedback, and
+  for the grammar retrieval index. If no API key is set it falls back to deterministic scoring
+  and an offline embedder, so the app stays fully usable offline.
+- **Retrieval** — the grammar index lives in the language service: pgvector in production (in the
+  same Postgres, so it survives restarts), an in-memory index in dev. Embeddings use Voyage when
+  `VOYAGE_API_KEY` is set, otherwise a deterministic TF-IDF hashing embedder.
 
 ```
 React (Vite)  ->  ASP.NET Core API  ->  FastAPI language service  ->  Claude
-                        |
-                        v
-                 SQLite / PostgreSQL
+                        |                        |
+                        v                        v
+                 SQLite / PostgreSQL      grammar index (pgvector)
 ```
 
 The .NET solution is split into three projects: `Domain` (entities, enums and DTO contracts),
@@ -84,10 +98,12 @@ editable JSON under `content/` and are imported through the CLI:
 ```bash
 dotnet run --project src/MeineDeutscheLehrerin.Api -- import-vocab all ./content/vocabulary
 dotnet run --project src/MeineDeutscheLehrerin.Api -- import-exercises all ./content/exercises
+dotnet run --project src/MeineDeutscheLehrerin.Api -- import-exams all ./content/exams
 ```
 
-The exercise importer is self-validating: it grades each answer key before inserting it, so a
-wrong key is skipped instead of being stored.
+The importers are self-validating: they grade each auto-gradable answer key before inserting it,
+so a wrong key is skipped instead of being stored. The Goethe mock exams under `content/exams`
+are hand-authored at the official item counts and per-module durations.
 
 ## Deployment
 
@@ -107,6 +123,19 @@ cd language-service && pytest -q    # language service (pytest)
 The backend suite includes a seed-consistency test that grades every authored exercise's own
 answer key, so a broken key anywhere in the A1–C1 content fails the build. GitHub Actions runs
 all three suites on every push.
+
+The AI grader has its own eval suite against a labelled German golden set — score accuracy, CEFR
+estimation and planted-error recall — with a committed baseline so quality can't silently
+regress:
+
+```bash
+cd language-service
+python -m evals.run            # report the current numbers
+python -m evals.run --check    # fail if metrics regress past the baseline
+```
+
+Response-shape checks run keyless in CI; the live-Claude checks are skipped unless an API key is
+present. See [docs/DEPLOY.md](docs/DEPLOY.md) for the grammar-help and eval details.
 
 ## License
 
