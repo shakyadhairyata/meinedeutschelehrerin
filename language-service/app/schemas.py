@@ -50,3 +50,13 @@ class RagQueryRequest(BaseModel):
     k: int = 4
     # Retrieval is always free; the grounded Claude answer is opt-in and quota-gated upstream.
     with_answer: bool = Field(default=False, alias="with_answer")
+
+
+class CoachRequest(BaseModel):
+    """One turn for the multi-agent Study Coach. `user_id`/`thread_id` come from the .NET API."""
+    user_id: str = Field(default="anon", alias="user_id")
+    message: str = ""
+    level: str | None = None
+    goal: str | None = None
+    submission: dict | None = None
+    thread_id: str | None = Field(default=None, alias="thread_id")

@@ -7,8 +7,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from . import claude_client, evaluator
+from .agent import graph as coach_graph
 from .rag import retriever, store
 from .schemas import (
+    CoachRequest,
     GenerateRequest,
     GenerateVocabRequest,
     RagIndexRequest,
@@ -73,3 +75,14 @@ def rag_grammar(req: RagQueryRequest):
 @app.get("/rag/stats")
 def rag_stats():
     return store.get_store().stats()
+
+
+# ---------------- Multi-agent Study Coach ----------------
+
+
+@app.post("/coach/turn")
+def coach_turn(req: CoachRequest):
+    """Run one turn of the LangGraph multi-agent coach (planner + grammar/exercise/evaluator
+    agents over the RAG, generation and grading tools), with per-thread memory."""
+    return coach_graph.run_turn(
+        req.user_id, req.message, req.level, req.goal, req.submission, req.thread_id)
