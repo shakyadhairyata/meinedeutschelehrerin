@@ -85,7 +85,7 @@ def coach_turn(req: CoachRequest):
     """Run one turn of the LangGraph multi-agent coach (planner + grammar/exercise/evaluator
     agents over the RAG, generation and grading tools), with per-thread memory."""
     return coach_graph.run_turn(
-        req.user_id, req.message, req.level, req.goal, req.submission, req.thread_id)
+        req.user_id, req.message, req.level, req.goal, req.submission, req.thread_id, req.allow_ai)
 
 
 @app.get("/coach/health")

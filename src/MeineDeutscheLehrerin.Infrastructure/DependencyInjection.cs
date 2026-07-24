@@ -40,6 +40,15 @@ public static class DependencyInjection
             http.Timeout = TimeSpan.FromSeconds(o.TimeoutSeconds);
         });
 
+        // The multi-agent Study Coach also lives in the language-service. Its graph can chain
+        // several agents per turn, so give it a longer timeout than the other calls.
+        services.AddHttpClient<ICoachService, CoachService>((sp, http) =>
+        {
+            var o = sp.GetRequiredService<IOptions<LanguageServiceOptions>>().Value;
+            http.BaseAddress = new Uri(o.BaseUrl);
+            http.Timeout = TimeSpan.FromSeconds(Math.Max(o.TimeoutSeconds, 60));
+        });
+
         services.AddSingleton<IExerciseGrader, ExerciseGrader>();
         services.AddScoped<ICurriculumService, CurriculumService>();
         services.AddScoped<IProgressService, ProgressService>();

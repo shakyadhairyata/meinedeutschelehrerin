@@ -4,6 +4,7 @@ import { useAuth } from '../auth/AuthContext'
 const NAV = [
   { to: '/', label: 'Dashboard', end: true, icon: '🏠' },
   { to: '/levels', label: 'Kurse', icon: '📚' },
+  { to: '/coach', label: 'Lern-Coach', icon: '🧭', flag: 'study_coach' },
   { to: '/vocabulary', label: 'Vokabeln', icon: '🗂️', flag: 'vocabulary' },
   { to: '/study-plan', label: 'Lernplan', icon: '🗓️', flag: 'study_plan' },
 ]

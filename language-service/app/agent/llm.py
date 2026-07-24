@@ -5,6 +5,7 @@ framework LangGraph runs on and are picked up by LangSmith tracing — and degra
 heuristics when there is no key, so the graph (and its tests) run offline. Every model call records
 token usage and its prompt version through the observability layer.
 """
+import contextvars
 import logging
 import os
 import re
@@ -14,12 +15,20 @@ from .prompts import get as get_prompt
 
 logger = logging.getLogger("language-service")
 
+# Per-run switch: the .NET layer sets this false for a Free/over-quota user, so the coach still
+# runs (retrieval, exercises, grading are deterministic) but spends no tokens on LLM enhancement.
+_allow_ai: contextvars.ContextVar[bool] = contextvars.ContextVar("coach_allow_ai", default=True)
+
+
+def set_allow_ai(allowed: bool) -> None:
+    _allow_ai.set(allowed)
+
 _QUESTION_WORDS = ("warum", "wieso", "weshalb", "wie", "wann", "was", "welche", "wo")
 _PRACTICE_WORDS = ("üben", "übung", "practice", "practise", "aufgabe", "exercise", "quiz", "test mich")
 
 
 def chat_enabled() -> bool:
-    return bool(os.getenv("ANTHROPIC_API_KEY"))
+    return bool(os.getenv("ANTHROPIC_API_KEY")) and _allow_ai.get()
 
 
 def _model(temperature: float = 0.0, max_tokens: int = 512):

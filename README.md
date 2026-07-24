@@ -28,6 +28,9 @@ structured syllabus with real exercise grading and progress tracking, so I built
 - Grammar help that answers "why is this wrong?" from the app's *own* lessons rather than the
   model's general knowledge: a small vector index over the lesson explanations and exercise
   rationales, so every answer cites the material it came from.
+- A multi-agent **Study Coach** (built with LangGraph): a planner plus grammar/exercise/evaluator
+  agents that coordinate over the app's own tools, remember the session per learner (it grades
+  the exercise it set last turn), and report per-turn latency/token/prompt-version metrics.
 - Listening and speaking work in the browser: text-to-speech reads the listening clips, and the
   Web Speech API transcribes spoken answers on the device.
 - Spaced-repetition vocabulary (Leitner boxes) with 1,100+ words across the five levels.
@@ -43,9 +46,9 @@ structured syllabus with real exercise grading and progress tracking, so I built
 - **Frontend** — React 19, Vite, Tailwind.
 - **API** — ASP.NET Core (.NET 10) with EF Core and ASP.NET Identity. SQLite for local dev,
   PostgreSQL in production.
-- **Language service** — Python/FastAPI backed by Claude for writing and speaking feedback, and
-  for the grammar retrieval index. If no API key is set it falls back to deterministic scoring
-  and an offline embedder, so the app stays fully usable offline.
+- **Language service** — Python/FastAPI backed by Claude for writing and speaking feedback, the
+  grammar retrieval index, and the LangGraph multi-agent coach. If no API key is set it falls
+  back to deterministic scoring and an offline embedder, so the app stays fully usable offline.
 - **Retrieval** — the grammar index lives in the language service: pgvector in production (in the
   same Postgres, so it survives restarts), an in-memory index in dev. Embeddings use Voyage when
   `VOYAGE_API_KEY` is set, otherwise a deterministic TF-IDF hashing embedder.

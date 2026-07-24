@@ -42,6 +42,10 @@ def planner(state: CoachState) -> dict:
     plan = plans.get(intent, ["grammar"])
     return {
         "turn": turn, "plan": plan, "step_index": 0, "hops": 0, "route": "",
+        # grammar/evaluation are per-turn working artifacts — clear them so an agent this turn
+        # never picks up a stale topic from a previous turn. The pending `exercise` and
+        # `weak_topics` are the actual cross-turn memory and are left intact.
+        "grammar": None, "evaluation": None,
         "steps": [{"agent": "planner", "turn": turn, "intent": intent, "plan": plan}],
     }
 
@@ -89,7 +93,13 @@ def exercise_generator(state: CoachState) -> dict:
     turn = state.get("turn")
     grammar = state.get("grammar") or {}
     src = (grammar.get("sources") or [{}])[0]
-    topic = src.get("grammarTopic") or state.get("goal") or state.get("user_message") or "Grammatik"
+    graded = state.get("exercise") or {}
+    topic = (
+        src.get("grammarTopic")                                             # explained this turn
+        or (graded.get("grammarTopic") if state.get("evaluation") else None)  # keep drilling after grading
+        or state.get("user_message")                                        # the learner's request
+        or state.get("goal") or "Grammatik"
+    )
     ex = tools.make_exercise(topic, state.get("level") or "A1", "Grammar")
 
     message = f"Übung ({topic}): {ex.get('prompt', '')}" if ex else "Ich konnte gerade keine Übung erstellen."
@@ -197,8 +207,11 @@ def reset_for_tests(checkpointer=None) -> None:
 
 
 def run_turn(user_id: str, message: str, level: str | None = None, goal: str | None = None,
-             submission: dict | None = None, thread_id: str | None = None) -> dict:
-    """One coaching turn. `thread_id` selects the memory; defaults to the user id."""
+             submission: dict | None = None, thread_id: str | None = None,
+             allow_ai: bool = True) -> dict:
+    """One coaching turn. `thread_id` selects the memory; defaults to the user id. `allow_ai`
+    lets the caller (the .NET API) withhold LLM enhancement for a Free/over-quota user while the
+    deterministic coach still works."""
     app = get_app()
     thread_id = thread_id or user_id or "anon"
     config = {"configurable": {"thread_id": thread_id}, "recursion_limit": 25}
@@ -209,6 +222,7 @@ def run_turn(user_id: str, message: str, level: str | None = None, goal: str | N
     if goal:
         input_state["goal"] = goal
 
+    llm.set_allow_ai(allow_ai)
     obs.start_run()
     try:
         final = app.invoke(input_state, config=config)

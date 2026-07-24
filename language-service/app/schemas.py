@@ -60,3 +60,5 @@ class CoachRequest(BaseModel):
     goal: str | None = None
     submission: dict | None = None
     thread_id: str | None = Field(default=None, alias="thread_id")
+    # The .NET API sets this false for Free/over-quota users; the deterministic coach still runs.
+    allow_ai: bool = Field(default=True, alias="allow_ai")
