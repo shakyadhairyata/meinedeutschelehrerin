@@ -4,4 +4,10 @@ anthropic==0.69.0
 pydantic==2.10.4
 python-dotenv==1.0.1
 httpx==0.28.1
-psycopg[binary]==3.2.3
+psycopg[binary]==3.3.4
+psycopg-pool==3.3.1
+# Multi-agent Study Coach (LangGraph supervisor + LangChain model + Postgres checkpointer)
+langgraph==1.2.9
+langgraph-checkpoint-postgres==3.1.0
+langchain-core==1.5.1
+langchain-anthropic==1.5.1

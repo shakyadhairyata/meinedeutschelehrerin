@@ -14,6 +14,7 @@ import Lesson from './pages/Lesson'
 import Vocabulary from './pages/Vocabulary'
 import PracticeSet from './pages/PracticeSet'
 import StudyPlan from './pages/StudyPlan'
+import StudyCoach from './pages/StudyCoach'
 import Profile from './pages/Profile'
 import AdminRoute from './components/AdminRoute'
 import AdminLayout from './components/AdminLayout'
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="vocabulary" element={<FeatureRoute flag="vocabulary"><Vocabulary /></FeatureRoute>} />
         <Route path="practice-sets/:id" element={<PracticeSet />} />
         <Route path="study-plan" element={<FeatureRoute flag="study_plan"><StudyPlan /></FeatureRoute>} />
+        <Route path="coach" element={<FeatureRoute flag="study_coach"><StudyCoach /></FeatureRoute>} />
         <Route path="profile" element={<Profile />} />
         <Route path="admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
           <Route index element={<AdminFeatures />} />

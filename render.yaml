@@ -62,6 +62,20 @@ services:
           property: connectionString
       - key: VOYAGE_API_KEY      # optional; without it retrieval uses the offline hashing embedder
         sync: false
+      # Study Coach (multi-agent) uses the same DB for its LangGraph checkpointer (per-thread
+      # memory that survives restarts).
+      - key: COACH_DATABASE_URL
+        fromDatabase:
+          name: meinedeutschelehrerin-db
+          property: connectionString
+      # LLMOps: set both to stream agent traces to LangSmith. Left unset, the coach still runs
+      # and reports per-turn latency/token/prompt-version metrics locally.
+      - key: LANGSMITH_TRACING    # set to "true" in the dashboard to enable tracing
+        sync: false
+      - key: LANGSMITH_API_KEY
+        sync: false
+      - key: LANGSMITH_PROJECT
+        value: meinedeutschelehrerin-coach
 
   # ---- React static frontend ----
   - type: web

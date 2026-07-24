@@ -135,3 +135,19 @@ public record GrammarHelpDto(
     string? Answer, bool Grounded, string Retrieval, bool AiUsed);
 
 public record RagIndexResultDto(int Indexed, string Store, int Chunks, string Model);
+
+// ---------- Study Coach (multi-agent) ----------
+
+public record CoachTurnRequest(string Message, CefrLevel? Level, string? Goal, JsonNode? Submission, string? ThreadId);
+
+public record CoachStepDto(string Agent, string? Tool, string? Topic, string? Message);
+
+public record CoachMetricsDto(double LatencyMs, int LlmCalls, int TotalTokens,
+    IReadOnlyList<string> PromptVersions, bool Tracing);
+
+// Exercise is the raw generated item with the answer key stripped (the coach grades server-side
+// from its own memory, so the client never needs — and must not see — the solution).
+public record CoachTurnDto(
+    string Reply, IReadOnlyList<string> Plan, IReadOnlyList<CoachStepDto> Steps,
+    JsonNode? Exercise, JsonNode? Evaluation, IReadOnlyList<string> WeakTopics,
+    string ThreadId, bool AiUsed, CoachMetricsDto? Metrics);

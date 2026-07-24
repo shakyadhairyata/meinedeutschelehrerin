@@ -91,3 +91,25 @@ Contract validity (well-formed, bindable responses) is enforced in CI with no AP
 Quality metrics are only compared against a baseline recorded in the **same mode**, because
 the offline fallback is legitimately far weaker than Claude — quantifying that gap is the
 point of the suite.
+
+## Study Coach (multi-agent, LangGraph)
+
+`POST /api/coach/turn` runs a multi-agent tutor built with **LangGraph** (supervisor pattern):
+a `planner` turns the learner's message into a plan; a `supervisor` routes to specialist agents
+— `grammar_explainer` (calls the RAG tool), `exercise_generator`, `evaluator` (grades) — that
+coordinate over shared state.
+
+- **Memory**: a LangGraph checkpointer keyed by user id. Postgres in production
+  (`COACH_DATABASE_URL`, same DB) so memory survives restarts; in-memory otherwise. The coach
+  grades the exercise it set on a previous turn and remembers weak topics.
+- **Feature flag**: `study_coach`. **Cost control**: LLM enhancement is billed through
+  `IAiAccessService` (Paid + daily quota); Free/over-quota users still get the fully functional
+  deterministic coach (retrieval, exercises, grading cost no tokens).
+- **Observability (LLMOps)**: every turn reports latency, LLM call count, token usage and the
+  prompt versions used (from a versioned prompt registry). Set `LANGSMITH_TRACING=true` and
+  `LANGSMITH_API_KEY` to stream full run traces to LangSmith, grouped by prompt version.
+  `GET /coach/health` reports whether tracing is on.
+
+```bash
+cd language-service && pytest tests/test_agent.py -q   # keyless: 12 tests
+```
