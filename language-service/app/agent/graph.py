@@ -19,7 +19,7 @@ import os
 
 from langgraph.graph import END, START, StateGraph
 
-from . import llm, tools
+from . import llm, observability as obs, tools
 from .state import MAX_HOPS, CoachState
 
 logger = logging.getLogger("language-service")
@@ -209,12 +209,14 @@ def run_turn(user_id: str, message: str, level: str | None = None, goal: str | N
     if goal:
         input_state["goal"] = goal
 
+    obs.start_run()
     try:
         final = app.invoke(input_state, config=config)
     except Exception as exc:  # noqa: BLE001 — never 500 the coach; return a usable turn
         logger.exception("coach run failed")
         return {"reply": "Es gab ein Problem. Versuche es bitte noch einmal.",
-                "error": str(exc), "steps": [], "done": True, "threadId": thread_id}
+                "error": str(exc), "steps": [], "done": True, "threadId": thread_id,
+                "metrics": obs.metrics_dict()}
 
     turn = final.get("turn")
     return {
@@ -227,4 +229,5 @@ def run_turn(user_id: str, message: str, level: str | None = None, goal: str | N
         "weakTopics": final.get("weak_topics", []),
         "threadId": thread_id,
         "done": final.get("done", True),
+        "metrics": obs.metrics_dict(),
     }

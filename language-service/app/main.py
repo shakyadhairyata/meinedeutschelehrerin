@@ -86,3 +86,10 @@ def coach_turn(req: CoachRequest):
     agents over the RAG, generation and grading tools), with per-thread memory."""
     return coach_graph.run_turn(
         req.user_id, req.message, req.level, req.goal, req.submission, req.thread_id)
+
+
+@app.get("/coach/health")
+def coach_health():
+    from .agent import observability as obs
+
+    return {"status": "ok", "claude": claude_client.is_enabled(), "tracing": obs.tracing_enabled()}

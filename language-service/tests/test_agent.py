@@ -7,7 +7,8 @@ use, and cross-turn memory — not the quality of a live model's prose.
 import pytest
 from langgraph.checkpoint.memory import MemorySaver
 
-from app.agent import graph
+from app.agent import graph, llm
+from app.agent import observability as obs
 from app.rag import retriever, store
 
 CORPUS = [
@@ -113,3 +114,40 @@ def test_empty_message_still_returns_a_reply():
     r = graph.run_turn("u", "", level="A1", thread_id="empty")
     assert isinstance(r["reply"], str) and r["reply"]
     assert r["done"] is True
+
+
+def test_turn_reports_observability_metrics():
+    r = graph.run_turn("u", "Erklär mir den Akkusativ", level="A1", thread_id="obs")
+    m = r["metrics"]
+    assert m["latencyMs"] >= 0
+    assert "llmCalls" in m and "totalTokens" in m
+    # keyless: no model calls, so no tokens spent
+    assert m["llmCalls"] == 0
+    assert m["totalTokens"] == 0
+    assert m["tracing"] is False
+
+
+def test_llm_path_records_tokens_and_prompt_version(monkeypatch):
+    """The with-key path: a model call records token usage and stamps the trace config with the
+    prompt version. Uses a fake model so no real API call is made."""
+    class FakeResp:
+        content = "grammar"
+        usage_metadata = {"input_tokens": 12, "output_tokens": 3}
+
+    class FakeModel:
+        def invoke(self, prompt, config=None):
+            tags = (config or {}).get("tags", [])
+            assert any("prompt:coach.intent@" in t for t in tags), "prompt version must tag the call"
+            return FakeResp()
+
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    monkeypatch.setattr(llm, "_model", lambda **kw: FakeModel())
+
+    obs.start_run()
+    intent = llm.classify_intent("Sag mir bitte etwas dazu", has_submission=False)  # ambiguous → LLM
+    assert intent == "grammar"
+
+    m = obs.metrics_dict()
+    assert m["llmCalls"] == 1
+    assert m["totalTokens"] == 15
+    assert any("coach.intent@" in v for v in m["promptVersions"])
