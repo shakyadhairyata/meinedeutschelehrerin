@@ -127,27 +127,33 @@ def test_turn_reports_observability_metrics():
     assert m["tracing"] is False
 
 
-def test_llm_path_records_tokens_and_prompt_version(monkeypatch):
-    """The with-key path: a model call records token usage and stamps the trace config with the
-    prompt version. Uses a fake model so no real API call is made."""
-    class FakeResp:
-        content = "grammar"
-        usage_metadata = {"input_tokens": 12, "output_tokens": 3}
+def test_llm_path_routes_through_gateway_and_records(monkeypatch):
+    """The with-key path: the LLM helper routes through the provider gateway, which records
+    tokens/cost and stamps the trace config with the prompt version. Uses a fake gateway."""
+    from app.gateway import router
+    from app.gateway.providers import ProviderResult
 
-    class FakeModel:
-        def invoke(self, prompt, config=None):
+    class FakeGateway:
+        def complete(self, prompt, *, temperature, max_tokens, config=None):
             tags = (config or {}).get("tags", [])
             assert any("prompt:coach.intent@" in t for t in tags), "prompt version must tag the call"
-            return FakeResp()
+            res = ProviderResult("grammar", "anthropic", "claude-sonnet-4-6", 12, 3, 5.0)
+            obs.record_provider_call(res, 0.001)
+            return res
 
-    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
-    monkeypatch.setattr(llm, "_model", lambda **kw: FakeModel())
+        def describe(self):
+            return [{"name": "anthropic", "model": "claude-sonnet-4-6", "available": True}]
 
-    obs.start_run()
-    intent = llm.classify_intent("Sag mir bitte etwas dazu", has_submission=False)  # ambiguous → LLM
-    assert intent == "grammar"
-
-    m = obs.metrics_dict()
-    assert m["llmCalls"] == 1
-    assert m["totalTokens"] == 15
-    assert any("coach.intent@" in v for v in m["promptVersions"])
+    router.set_gateway_for_tests(FakeGateway())
+    try:
+        obs.start_run()
+        intent = llm.classify_intent("Sag mir bitte etwas dazu", has_submission=False)  # ambiguous → LLM
+        assert intent == "grammar"
+        m = obs.metrics_dict()
+        assert m["llmCalls"] == 1
+        assert m["totalTokens"] == 15
+        assert m["costUsd"] > 0
+        assert any("anthropic:" in p for p in m["providers"])
+        assert any("coach.intent@" in v for v in m["promptVersions"])
+    finally:
+        router.set_gateway_for_tests(None)

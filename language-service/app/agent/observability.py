@@ -32,7 +32,10 @@ class RunMetrics:
     llm_calls: int = 0
     input_tokens: int = 0
     output_tokens: int = 0
+    cost_usd: float = 0.0
     prompt_versions: list[str] = field(default_factory=list)
+    providers: list[str] = field(default_factory=list)          # providers that served a call
+    provider_errors: list[dict] = field(default_factory=list)   # providers that failed and fell back
 
     def as_dict(self) -> dict:
         return {
@@ -41,7 +44,10 @@ class RunMetrics:
             "inputTokens": self.input_tokens,
             "outputTokens": self.output_tokens,
             "totalTokens": self.input_tokens + self.output_tokens,
+            "costUsd": round(self.cost_usd, 6),
             "promptVersions": self.prompt_versions,
+            "providers": self.providers,
+            "fallbacks": self.provider_errors,
             "tracing": tracing_enabled(),
         }
 
@@ -54,18 +60,36 @@ def current() -> "RunMetrics | None":
     return _run.get()
 
 
-def record_llm(usage_metadata: dict | None, prompt: Prompt) -> None:
-    """Called by the LLM helper after each model invocation."""
+def note_prompt(prompt: Prompt) -> None:
+    """Record which prompt version a turn used (the LLM helper calls this)."""
+    m = _run.get()
+    if m is None:
+        return
+    tag = f"{prompt.name}@{prompt.version}"
+    if tag not in m.prompt_versions:
+        m.prompt_versions.append(tag)
+
+
+def record_provider_call(result, cost_usd: float) -> None:
+    """Record a successful gateway call: tokens, latency, cost and which provider served it."""
     m = _run.get()
     if m is None:
         return
     m.llm_calls += 1
-    tag = f"{prompt.name}@{prompt.version}"
-    if tag not in m.prompt_versions:
-        m.prompt_versions.append(tag)
-    usage = usage_metadata or {}
-    m.input_tokens += int(usage.get("input_tokens", 0) or 0)
-    m.output_tokens += int(usage.get("output_tokens", 0) or 0)
+    m.input_tokens += int(result.input_tokens or 0)
+    m.output_tokens += int(result.output_tokens or 0)
+    m.cost_usd += float(cost_usd or 0.0)
+    tag = f"{result.provider}:{result.model}"
+    if tag not in m.providers:
+        m.providers.append(tag)
+
+
+def record_provider_error(provider: str, error: str) -> None:
+    """Record a provider that failed and triggered a fallback."""
+    m = _run.get()
+    if m is None:
+        return
+    m.provider_errors.append({"provider": provider, "error": error[:200]})
 
 
 def metrics_dict() -> dict:

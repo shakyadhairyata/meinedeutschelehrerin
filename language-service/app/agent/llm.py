@@ -28,26 +28,24 @@ _PRACTICE_WORDS = ("üben", "übung", "practice", "practise", "aufgabe", "exerci
 
 
 def chat_enabled() -> bool:
-    return bool(os.getenv("ANTHROPIC_API_KEY")) and _allow_ai.get()
+    """True when LLM enhancement is permitted this run and at least one provider is configured."""
+    if not _allow_ai.get():
+        return False
+    from ..gateway import router
 
-
-def _model(temperature: float = 0.0, max_tokens: int = 512):
-    from langchain_anthropic import ChatAnthropic
-
-    return ChatAnthropic(
-        model=os.getenv("LLM_MODEL", "claude-sonnet-4-6"),
-        temperature=temperature,
-        max_tokens=max_tokens,
-    )
+    return router.any_available()
 
 
 def _invoke(prompt_name: str, rendered: str, *, temperature: float, max_tokens: int) -> str:
-    """Invoke the model, stamping the call with its prompt version and recording usage."""
+    """Route the call through the multi-provider gateway (fallback + cost accounting), stamping
+    it with its prompt version for tracing and metrics."""
+    from ..gateway import router
+
     prompt = get_prompt(prompt_name)
-    resp = _model(temperature=temperature, max_tokens=max_tokens).invoke(
-        rendered, config=obs.langchain_config(prompt))
-    obs.record_llm(getattr(resp, "usage_metadata", None), prompt)
-    return (resp.content or "").strip()
+    obs.note_prompt(prompt)
+    result = router.get_gateway().complete(
+        rendered, temperature=temperature, max_tokens=max_tokens, config=obs.langchain_config(prompt))
+    return result.text
 
 
 def classify_intent(message: str, has_submission: bool) -> str:

@@ -93,3 +93,11 @@ def coach_health():
     from .agent import observability as obs
 
     return {"status": "ok", "claude": claude_client.is_enabled(), "tracing": obs.tracing_enabled()}
+
+
+@app.get("/gateway/providers")
+def gateway_providers():
+    """The configured LLM providers in fallback order and whether each is currently available."""
+    from .gateway import router
+
+    return {"order": [p.name for p in router.get_gateway().providers], "providers": router.get_gateway().describe()}
