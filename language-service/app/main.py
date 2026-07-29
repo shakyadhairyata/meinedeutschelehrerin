@@ -7,7 +7,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from . import claude_client, evaluator
-from .agent import graph as coach_graph
 from .rag import retriever, store
 from .schemas import (
     CoachRequest,
@@ -83,7 +82,13 @@ def rag_stats():
 @app.post("/coach/turn")
 def coach_turn(req: CoachRequest):
     """Run one turn of the LangGraph multi-agent coach (planner + grammar/exercise/evaluator
-    agents over the RAG, generation and grading tools), with per-thread memory."""
+    agents over the RAG, generation and grading tools), with per-thread memory.
+
+    LangGraph/LangChain are imported here, not at module load, so the service starts light on a
+    memory-constrained host — retrieval and grading stay available even if the agent stack is
+    heavy, and only the first coach turn pays the import cost."""
+    from .agent import graph as coach_graph
+
     return coach_graph.run_turn(
         req.user_id, req.message, req.level, req.goal, req.submission, req.thread_id, req.allow_ai)
 
