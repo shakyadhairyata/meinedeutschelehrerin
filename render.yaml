@@ -76,6 +76,17 @@ services:
         sync: false
       - key: LANGSMITH_PROJECT
         value: meinedeutschelehrerin-coach
+      # LLM provider gateway: fallback order and per-provider keys. Anthropic is primary; add an
+      # OpenAI key (and/or an OLLAMA_BASE_URL) to enable fallback routing. Unset providers are
+      # skipped, so this is safe with only ANTHROPIC_API_KEY set.
+      - key: LLM_PROVIDERS
+        value: anthropic,openai,ollama
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: OLLAMA_BASE_URL   # optional; point at a self-hosted open-source model
+        sync: false
 
   # ---- React static frontend ----
   - type: web
