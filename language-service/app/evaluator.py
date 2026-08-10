@@ -1,12 +1,24 @@
-"""Evaluation logic: try Claude first, fall back to heuristics. Responses use
-camelCase keys so they bind straight to the .NET DTOs."""
+"""Evaluation logic: try an LLM first, fall back to heuristics. Responses use
+camelCase keys so they bind straight to the .NET DTOs.
+
+Every LLM call goes through the multi-provider gateway (fallback routing across Anthropic /
+OpenAI / Ollama, with cost/latency/token accounting), so writing/speaking grading and content
+generation share the same provider abstraction as the coach — not a separate direct client."""
 import difflib
 import re
 
-from . import claude_client, prompts
+from . import prompts
 from .schemas import GenerateRequest, GenerateVocabRequest, SpeakingRequest, WritingRequest
 
 WORD_RE = re.compile(r"\b\w+\b", re.UNICODE)
+
+
+def _llm_json(system: str, user: str, *, max_tokens: int = 1600) -> dict | None:
+    """Route a JSON call through the gateway. None (→ offline fallback) if no provider is
+    configured or the call fails, matching the previous direct-client behaviour."""
+    from .gateway import router
+
+    return router.get_gateway().complete_json(system, user, max_tokens=max_tokens)
 
 
 def _words(text: str) -> list[str]:
@@ -16,7 +28,7 @@ def _words(text: str) -> list[str]:
 # ---------------- Writing ----------------
 
 def evaluate_writing(req: WritingRequest) -> dict:
-    data = claude_client.call_json(
+    data = _llm_json(
         prompts.WRITING_SYSTEM.format(level=req.level),
         prompts.WRITING_USER.format(prompt=req.prompt, min_words=req.min_words, text=req.text),
     )
@@ -70,7 +82,7 @@ def _offline_writing(req: WritingRequest) -> dict:
 # ---------------- Speaking ----------------
 
 def evaluate_speaking(req: SpeakingRequest) -> dict:
-    data = claude_client.call_json(
+    data = _llm_json(
         prompts.SPEAKING_SYSTEM.format(level=req.level),
         prompts.SPEAKING_USER.format(target_text=req.target_text, transcript=req.transcript),
     )
@@ -189,7 +201,7 @@ OFFLINE_VOCAB: dict[str, list[dict]] = {
 
 
 def generate_vocabulary(req: GenerateVocabRequest) -> dict:
-    data = claude_client.call_json(
+    data = _llm_json(
         prompts.VOCAB_SYSTEM.format(level=req.level),
         prompts.VOCAB_USER.format(
             count=req.count, level=req.level,
@@ -211,7 +223,7 @@ def _offline_vocab(req: GenerateVocabRequest) -> dict:
 
 
 def generate_exercises(req: GenerateRequest) -> dict:
-    data = claude_client.call_json(
+    data = _llm_json(
         prompts.GENERATE_SYSTEM.format(
             level=req.level, skill=req.skill, grammar_topic=req.grammar_topic or ""
         ),

@@ -152,11 +152,30 @@ def test_answer_returns_sources_without_calling_claude():
 def test_answer_is_null_without_api_key_but_sources_are_returned():
     retriever.index(DOCS)
     res = retriever.answer("Was ist der Akkusativ?", level="A1", with_answer=True)
-    # No ANTHROPIC_API_KEY in CI: no generated summary, but the retrieved explanation is present
+    # No provider configured in CI: no generated summary, but the retrieved explanation is present
     # in sources (not duplicated into a fabricated "answer").
     assert res["answer"] is None
     assert res["grounded"] is False
     assert any("Akkusativ" in s["text"] for s in res["sources"])
+
+
+def test_grounded_answer_routes_through_the_gateway():
+    """The grounded RAG summary must go through the gateway, not a separate direct client."""
+    from app.gateway import router
+
+    retriever.index(DOCS)
+
+    class StubGateway:
+        def complete_json(self, system, user, **kw):
+            return {"answer": "Gateway-Erklärung [1]", "grounded": True}
+
+    router.set_gateway_for_tests(StubGateway())
+    try:
+        res = retriever.answer("Was ist der Akkusativ?", level="A1", with_answer=True)
+        assert res["answer"] == "Gateway-Erklärung [1]"
+        assert res["grounded"] is True
+    finally:
+        router.set_gateway_for_tests(None)
 
 
 def test_long_text_is_split_into_multiple_chunks():
