@@ -110,34 +110,50 @@ def _voyage_embed(texts: list[str], input_type: str) -> list[list[float]] | None
 
 # ---------------- public API ----------------
 
-def embed_documents(texts: list[str]) -> list[list[float]]:
-    """Embeds the whole corpus. Voyage caps how many texts one request may carry, so the
-    corpus is sent in batches; if any batch fails the *entire* corpus falls back to the
-    hashing embedder, because mixing two vector spaces in one index makes every similarity
-    score meaningless."""
+def embed_corpus(texts: list[str]) -> tuple[list[list[float]], str, list[float] | None]:
+    """Embed the whole corpus and report the embedder ACTUALLY used, as (vectors, model, idf).
+
+    Voyage is used only if every batch succeeds; on any failure the whole corpus is embedded
+    offline instead, because mixing two vector spaces in one index makes similarity meaningless.
+    The returned model name reflects what was really used — so the index is never labeled
+    'voyage' while it actually holds hashing vectors (that mislabel let queries embed in a
+    different space than the documents and return confident nonsense). IDF is fitted only for
+    the offline path, and only after any Voyage attempt, so the fallback vectors are weighted.
+    """
     if not texts:
-        return []
+        return [], model_name(), None
     if voyage_enabled():
         out: list[list[float]] = []
+        ok = True
         for i in range(0, len(texts), VOYAGE_BATCH):
             vecs = _voyage_embed(texts[i:i + VOYAGE_BATCH], "document")
             if not vecs:
-                out = []
+                ok = False
                 break
             out.extend(vecs)
-        if len(out) == len(texts):
-            return out
-        logger.warning("Voyage embedding incomplete — indexing the whole corpus with the "
-                       "offline embedder instead so the vector space stays consistent.")
-    return [_hash_embed(t) for t in texts]
+        if ok and len(out) == len(texts):
+            set_idf(None)
+            return out, VOYAGE_MODEL, None
+        logger.warning("Voyage embedding failed for the corpus — indexing with the offline "
+                       "embedder and labeling the index accordingly so queries match it.")
+    idf = fit_idf(texts)
+    set_idf(idf)
+    return [_hash_embed(t) for t in texts], f"hashing-{DIM}", idf
 
 
-def embed_query(text: str) -> list[float]:
-    if voyage_enabled():
-        vecs = _voyage_embed([text], "query")
-        if vecs:
-            return vecs[0]
-    return _hash_embed(text)
+def embed_query_for(index_model: str, text: str) -> list[float] | None:
+    """Embed a query in the SAME space the index was built in.
+
+    Returns None when that space can't be reproduced right now (e.g. the index is Voyage but
+    the key is gone), so the caller returns no results rather than comparing across spaces.
+    """
+    if index_model.startswith("voyage"):
+        if voyage_enabled():
+            vecs = _voyage_embed([text], "query")
+            if vecs:
+                return vecs[0]
+        return None
+    return _hash_embed(text)  # hashing index — caller must have loaded the matching IDF
 
 
 def cosine(a: list[float], b: list[float]) -> float:
