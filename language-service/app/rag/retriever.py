@@ -10,7 +10,7 @@ import logging
 import os
 import re
 
-from .. import claude_client, prompts
+from .. import prompts
 from . import embeddings, store
 
 logger = logging.getLogger("language-service")
@@ -186,7 +186,11 @@ def answer(query: str, level: str | None = None, k: int = 4, with_answer: bool =
         + f"\n{h.chunk.text}"
         for i, h in enumerate(hits)
     )
-    data = claude_client.call_json(
+    # The grounded answer routes through the same multi-provider gateway as the coach, so it
+    # gets fallback routing and cost/latency accounting rather than a separate direct client.
+    from ..gateway import router
+
+    data = router.get_gateway().complete_json(
         prompts.RAG_SYSTEM.format(level=level or "B1"),
         prompts.RAG_USER.format(question=query, context=context),
     )

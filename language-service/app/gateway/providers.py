@@ -56,11 +56,14 @@ class LangChainProvider:
     def _build(self, temperature: float, max_tokens: int):  # pragma: no cover - overridden
         raise NotImplementedError
 
-    def complete(self, prompt: str, *, temperature: float, max_tokens: int,
+    def complete(self, prompt: str, *, system: str | None = None, temperature: float, max_tokens: int,
                  config: dict | None = None) -> ProviderResult:
+        from langchain_core.messages import HumanMessage, SystemMessage
+
         client = self._build(temperature, max_tokens)
+        messages = ([SystemMessage(content=system)] if system else []) + [HumanMessage(content=prompt)]
         t0 = time.perf_counter()
-        resp = client.invoke(prompt, config=config or {})
+        resp = client.invoke(messages, config=config or {})
         latency = (time.perf_counter() - t0) * 1000
         usage = getattr(resp, "usage_metadata", None) or {}
         content = resp.content if isinstance(resp.content, str) else str(resp.content)
