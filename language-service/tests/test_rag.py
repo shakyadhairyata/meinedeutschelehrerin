@@ -114,6 +114,27 @@ def test_irrelevant_query_returns_no_sources_rather_than_noise():
     assert retriever.search("Bundesliga Ergebnisse vom Wochenende", k=3) == []
 
 
+def test_voyage_failure_labels_index_hashing_and_keeps_queries_consistent(monkeypatch):
+    """Regression for the prod incident: Voyage was configured but its bulk embed silently
+    fell back to hashing while the index was still labeled 'voyage-3-lite'. Voyage-embedded
+    queries then compared against hashing vectors and returned confident nonsense (~0.08 scores,
+    wrong lessons). The index must be labeled with the embedder actually used, and queries must
+    embed in that same space."""
+    from app.rag import embeddings
+
+    monkeypatch.setenv("VOYAGE_API_KEY", "test-key")            # voyage_enabled() -> True
+    monkeypatch.setattr(embeddings, "_voyage_embed", lambda texts, kind: None)  # Voyage always fails
+
+    res = retriever.index(DOCS)
+    assert res["model"].startswith("hashing-"), "index mislabeled as Voyage while holding hashing vectors"
+
+    # Query while Voyage is still 'enabled' — must follow the index (hashing), not re-embed via Voyage.
+    hits = retriever.search("Wann benutzt man den Akkusativ?", level="A1", k=3)
+    assert hits, "query must still match the hashing index"
+    assert hits[0].chunk.grammar_topic == "Akkusativ"
+    assert hits[0].score > 0.2, "self-consistent space should score well above the noise floor"
+
+
 def test_empty_query_returns_nothing():
     retriever.index(DOCS)
     assert retriever.search("   ") == []

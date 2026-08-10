@@ -87,28 +87,27 @@ def index(docs: list[dict]) -> dict:
     if not chunks:
         return {"indexed": 0, **store.get_store().stats()}
 
-    # Fit IDF over the corpus *before* embedding, so documents and later queries share weights.
-    idf = None
-    if not embeddings.voyage_enabled():
-        idf = embeddings.fit_idf([c.text for c in chunks])
-    embeddings.set_idf(idf)
-
-    vectors = embeddings.embed_documents([c.text for c in chunks])
+    # Embed the corpus and record the embedder actually used, so the index is labeled honestly
+    # (Voyage only if it fully succeeded, otherwise the offline embedder + its IDF).
+    vectors, model, idf = embeddings.embed_corpus([c.text for c in chunks])
     for c, v in zip(chunks, vectors):
         c.embedding = v
     st = store.get_store()
-    n = st.replace_all(chunks, embeddings.model_name(), idf)
-    logger.info("rag: indexed %s chunks with %s", n, embeddings.model_name())
+    n = st.replace_all(chunks, model, idf)
+    logger.info("rag: indexed %s chunks with %s", n, model)
     return {"indexed": n, **st.stats()}
 
 
-def _ensure_idf(st) -> None:
-    """After a restart the process has no IDF in memory; reload what the index was built with."""
-    if embeddings.voyage_enabled() or embeddings.get_idf() is not None:
+def _ensure_idf(st, index_model: str) -> None:
+    """Load the hashing IDF for a hashing index so queries use the same weights the index was
+    built with. A Voyage index uses no IDF."""
+    if index_model.startswith("voyage"):
+        embeddings.set_idf(None)
         return
-    loader = getattr(st, "load_idf", None)
-    if loader:
-        embeddings.set_idf(loader())
+    if embeddings.get_idf() is None:
+        loader = getattr(st, "load_idf", None)
+        if loader:
+            embeddings.set_idf(loader())
 
 
 def search(query: str, level: str | None = None, k: int = 4) -> list[store.Hit]:
@@ -124,18 +123,20 @@ def search(query: str, level: str | None = None, k: int = 4) -> list[store.Hit]:
         return []
     st = store.get_store()
 
-    # The index and the query must be embedded in the same vector space. If VOYAGE_API_KEY was
-    # added or removed after indexing, comparing the two spaces yields confident nonsense
-    # (voyage-3-lite is also 512-dim, so a shape check wouldn't catch it) — refuse instead, and
-    # surface an empty result so the caller shows "no explanation found" until a re-index.
-    indexed_model = st.current_model()
-    if indexed_model and indexed_model != embeddings.model_name():
-        logger.warning("rag: index built with %r but active embedder is %r — reindex required; "
-                       "returning no results", indexed_model, embeddings.model_name())
+    # Embed the query in the SAME space the index was built in. This is what prevents the
+    # "confident nonsense" failure: if the index holds hashing vectors (Voyage fell back at
+    # index time), the query is hashed too — even when a Voyage key is present now. If the index
+    # is Voyage but we can't reach Voyage, embed_query_for returns None and we surface nothing
+    # rather than comparing across spaces.
+    index_model = st.current_model()
+    if not index_model:
         return []
-
-    _ensure_idf(st)
-    qv = embeddings.embed_query(query)
+    _ensure_idf(st, index_model)
+    qv = embeddings.embed_query_for(index_model, query)
+    if qv is None:
+        logger.warning("rag: cannot embed the query in the index's space (%s) — reindex required; "
+                       "returning no results", index_model)
+        return []
 
     pool = st.search(qv, None, max(k * 5, 20))
     want = (level or "").upper()
