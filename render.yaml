@@ -7,7 +7,7 @@ databases:
   - name: meinedeutschelehrerin-db
     databaseName: meinedeutschelehrerin
     user: mdl
-    plan: free
+    plan: basic-256mb      # paid tier (pgvector index + LangGraph checkpointer live here)
     region: frankfurt
 
 services:
@@ -17,7 +17,7 @@ services:
     runtime: docker
     dockerfilePath: ./src/MeineDeutscheLehrerin.Api/Dockerfile
     dockerContext: .
-    plan: free
+    plan: starter          # always-on (no idle sleep)
     region: frankfurt
     healthCheckPath: /api/health
     envVars:
@@ -46,7 +46,7 @@ services:
     runtime: docker
     dockerfilePath: ./language-service/Dockerfile
     dockerContext: ./language-service
-    plan: free
+    plan: starter          # always-on (no idle sleep); enough RAM for the LangGraph/LangChain stack
     region: frankfurt
     healthCheckPath: /health
     envVars:
@@ -55,7 +55,7 @@ services:
       - key: LLM_MODEL
         value: claude-sonnet-4-6
       # Grammar RAG: the vector index lives in the same Postgres via pgvector, so it survives
-      # the free-tier restarts that would otherwise force a re-embed on every boot.
+      # restarts (deploys) that would otherwise force a re-embed on every boot.
       - key: RAG_DATABASE_URL
         fromDatabase:
           name: meinedeutschelehrerin-db
