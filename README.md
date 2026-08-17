@@ -29,8 +29,13 @@ structured syllabus with real exercise grading and progress tracking, so I built
   model's general knowledge: a small vector index over the lesson explanations and exercise
   rationales, so every answer cites the material it came from.
 - A multi-agent **Study Coach** (built with LangGraph): a planner plus grammar/exercise/evaluator
-  agents that coordinate over the app's own tools, remember the session per learner (it grades
-  the exercise it set last turn), and report per-turn latency/token/prompt-version metrics.
+  agents that coordinate over the app's own tools and remember the session per learner (it grades
+  the exercise it set last turn), with a Postgres checkpointer for per-thread memory.
+- A **provider-agnostic LLM layer**: every model call — grading, generation, grammar answers and
+  the coach — routes through a gateway that tries Anthropic → OpenAI → a local open-source model
+  (Ollama), falls back on failure or rate limits, and records tokens, latency and estimated cost
+  per call. Runs are traced to **LangSmith** and tagged with their prompt version, and each coach
+  turn returns its own LLMOps metrics.
 - Listening and speaking work in the browser: text-to-speech reads the listening clips, and the
   Web Speech API transcribes spoken answers on the device.
 - Spaced-repetition vocabulary (Leitner boxes) with 1,100+ words across the five levels.
@@ -46,18 +51,22 @@ structured syllabus with real exercise grading and progress tracking, so I built
 - **Frontend** — React 19, Vite, Tailwind.
 - **API** — ASP.NET Core (.NET 10) with EF Core and ASP.NET Identity. SQLite for local dev,
   PostgreSQL in production.
-- **Language service** — Python/FastAPI backed by Claude for writing and speaking feedback, the
-  grammar retrieval index, and the LangGraph multi-agent coach. If no API key is set it falls
-  back to deterministic scoring and an offline embedder, so the app stays fully usable offline.
+- **Language service** — Python/FastAPI hosting the LangGraph multi-agent coach, the writing/
+  speaking graders, content generation, and the grammar retrieval index. All LLM access goes
+  through a multi-provider **gateway** (LangChain-backed) with fallback routing and cost/latency
+  accounting; **LangSmith** tracing and prompt versioning provide observability. With no keys it
+  falls back to deterministic scoring and an offline embedder, so the app stays fully usable
+  offline (and CI runs keyless).
 - **Retrieval** — the grammar index lives in the language service: pgvector in production (in the
   same Postgres, so it survives restarts), an in-memory index in dev. Embeddings use Voyage when
-  `VOYAGE_API_KEY` is set, otherwise a deterministic TF-IDF hashing embedder.
+  `VOYAGE_API_KEY` is set, otherwise a deterministic TF-IDF hashing embedder; the index is always
+  labeled with the embedder actually used, and queries embed in that same space.
 
 ```
-React (Vite)  ->  ASP.NET Core API  ->  FastAPI language service  ->  Claude
-                        |                        |
-                        v                        v
-                 SQLite / PostgreSQL      grammar index (pgvector)
+React (Vite)  ->  ASP.NET Core API  ->  FastAPI language service  ->  LLM gateway  ->  Anthropic / OpenAI / Ollama
+                        |                        |                          |
+                        v                        v                          v
+                 SQLite / PostgreSQL      grammar index (pgvector)     LangSmith (tracing)
 ```
 
 The .NET solution is split into three projects: `Domain` (entities, enums and DTO contracts),
