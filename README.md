@@ -8,8 +8,6 @@ day) and covers all six skills: grammar, vocabulary, reading, listening, speakin
 Exercises are graded instantly, vocabulary uses spaced repetition, and a study plan tells you
 what to work on each day.
 
-I'm working toward the Goethe exams myself and couldn't find a single app that combined a
-structured syllabus with real exercise grading and progress tracking, so I built one.
 
 ## What it does
 
