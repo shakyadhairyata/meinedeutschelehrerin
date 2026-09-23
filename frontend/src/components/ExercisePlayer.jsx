@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { post } from '../api/client'
 import { AudioButton, SkillBadge, Alert, RichText } from './ui'
 import { getRecognition, recognitionSupported } from '../lib/speech'
@@ -252,12 +252,34 @@ function WritingWidget({ content, response, setResponse, disabled }) {
   )
 }
 
+// Recognition errors we can't recover from by restarting — stop for good rather than loop.
+const FATAL_SPEECH_ERRORS = new Set([
+  'not-allowed', 'service-not-allowed', 'audio-capture', 'language-not-supported', 'network',
+])
+
 function SpeakingWidget({ content, response, setResponse, disabled }) {
   const [listening, setListening] = useState(false)
   const [error, setError] = useState('')
   const recRef = useRef(null)
   const gotResultRef = useRef(false)
+  const finalRef = useRef('')            // finalized transcript, each segment appended once
+  const keepListeningRef = useRef(false) // true while the user wants to keep recording
+
   const supported = recognitionSupported()
+
+  // Stop the mic if the exercise gets locked (graded) or the widget unmounts, so the
+  // keep-alive loop can't leave recognition running after the user has moved on.
+  useEffect(() => {
+    if (disabled && keepListeningRef.current) {
+      keepListeningRef.current = false
+      recRef.current?.stop()
+      setListening(false)
+    }
+  }, [disabled])
+  useEffect(() => () => {
+    keepListeningRef.current = false
+    recRef.current?.abort?.()
+  }, [])
 
   function start() {
     if (listening) return
@@ -268,18 +290,40 @@ function SpeakingWidget({ content, response, setResponse, disabled }) {
     }
     recRef.current = r
     gotResultRef.current = false
+    finalRef.current = ''
+    keepListeningRef.current = true
     setError('')
+    // Append each FINAL segment exactly once (tracked via resultIndex) and lay the live
+    // interim on top. Re-scanning the whole results list duplicated words in continuous mode.
     r.onresult = (e) => {
-      let text = ''
-      for (let i = 0; i < e.results.length; i++) text += e.results[i][0].transcript
-      if (text.trim()) gotResultRef.current = true
+      let interim = ''
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const chunk = e.results[i][0].transcript
+        if (e.results[i].isFinal) finalRef.current += chunk + ' '
+        else interim += chunk
+      }
+      const text = `${finalRef.current}${interim}`.replace(/\s+/g, ' ').trim()
+      if (text) gotResultRef.current = true
       setResponse({ transcript: text })
     }
     r.onerror = (e) => {
-      setListening(false)
-      setError(recognitionErrorMessage(e.error))
+      const fatal = FATAL_SPEECH_ERRORS.has(e.error)
+      if (fatal) {
+        keepListeningRef.current = false
+        setListening(false)
+      }
+      // While we're going to auto-restart, don't flash transient errors (e.g. no-speech on a pause).
+      if (fatal || !keepListeningRef.current) {
+        const msg = recognitionErrorMessage(e.error)
+        if (msg) setError(msg)
+      }
     }
+    // Chrome ends the session after a short pause even in continuous mode. While the user
+    // hasn't pressed stop, restart it so recording lasts until they choose to stop.
     r.onend = () => {
+      if (keepListeningRef.current) {
+        try { r.start(); return } catch { keepListeningRef.current = false }
+      }
       setListening(false)
       if (!gotResultRef.current) {
         setError((prev) => prev || 'Ich habe nichts verstanden. Sprich noch einmal deutlich – oder tippe deine Antwort unten ein.')
@@ -289,11 +333,13 @@ function SpeakingWidget({ content, response, setResponse, disabled }) {
       r.start()
       setListening(true)
     } catch {
+      keepListeningRef.current = false
       setError('Die Aufnahme konnte nicht gestartet werden. Versuche es noch einmal.')
     }
   }
 
   function stop() {
+    keepListeningRef.current = false
     recRef.current?.stop()
     setListening(false)
   }
