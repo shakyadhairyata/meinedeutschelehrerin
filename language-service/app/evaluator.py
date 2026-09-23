@@ -8,7 +8,13 @@ import difflib
 import re
 
 from . import prompts
-from .schemas import GenerateRequest, GenerateVocabRequest, SpeakingRequest, WritingRequest
+from .schemas import (
+    EnrichVocabRequest,
+    GenerateRequest,
+    GenerateVocabRequest,
+    SpeakingRequest,
+    WritingRequest,
+)
 
 WORD_RE = re.compile(r"\b\w+\b", re.UNICODE)
 
@@ -220,6 +226,27 @@ def _offline_vocab(req: GenerateVocabRequest) -> dict:
     pool = OFFLINE_VOCAB.get(req.level.upper(), [])
     items = [v for v in pool if v["german"].strip().lower() not in excluded]
     return {"items": items[: req.count]}
+
+
+def enrich_vocabulary(req: EnrichVocabRequest) -> dict:
+    """Add a usage note + natural example to existing words. Needs a provider (LLM); without one
+    it returns no items, so callers leave the words untouched rather than write filler."""
+    if not req.items:
+        return {"items": []}
+
+    def describe(it) -> str:
+        meta = ", ".join(p for p in (it.english, it.partOfSpeech) if p)
+        return f"- {it.german}" + (f" ({meta})" if meta else "")
+
+    words = "\n".join(describe(it) for it in req.items)
+    data = _llm_json(
+        prompts.VOCAB_ENRICH_SYSTEM.format(level=req.level),
+        prompts.VOCAB_ENRICH_USER.format(level=req.level, words=words),
+        max_tokens=3000,
+    )
+    if data and isinstance(data.get("items"), list):
+        return data
+    return {"items": []}
 
 
 def generate_exercises(req: GenerateRequest) -> dict:

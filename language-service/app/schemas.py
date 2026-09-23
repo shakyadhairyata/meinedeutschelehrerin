@@ -31,6 +31,18 @@ class GenerateVocabRequest(BaseModel):
     exclude: list[str] = []
 
 
+class EnrichVocabItem(BaseModel):
+    """An existing vocabulary word to enrich with a usage note + example."""
+    german: str = ""
+    english: str = ""
+    partOfSpeech: str = ""
+
+
+class EnrichVocabRequest(BaseModel):
+    level: str = "A1"
+    items: list[EnrichVocabItem] = []
+
+
 class RagDoc(BaseModel):
     """One curriculum document pushed in by the .NET API for indexing."""
     level: str = "A1"

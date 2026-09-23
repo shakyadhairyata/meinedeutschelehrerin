@@ -22,6 +22,7 @@ public interface ILanguageService
     Task<WritingFeedbackDto> EvaluateWritingAsync(string prompt, string text, CefrLevel level, int minWords, bool useAi, CancellationToken ct = default);
     Task<SpeakingFeedbackDto> EvaluateSpeakingAsync(string targetText, string transcript, CefrLevel level, bool useAi, CancellationToken ct = default);
     Task<GeneratedVocabularyDto> GenerateVocabularyAsync(CefrLevel level, string? theme, int count, IEnumerable<string> exclude, CancellationToken ct = default);
+    Task<VocabEnrichmentDto> EnrichVocabularyAsync(CefrLevel level, IReadOnlyList<VocabEnrichInputDto> items, CancellationToken ct = default);
 }
 
 public class LanguageServiceClient : ILanguageService
@@ -87,6 +88,25 @@ public class LanguageServiceClient : ILanguageService
             _log.LogWarning(ex, "Vocabulary generation failed (is the language-service running?).");
         }
         return new GeneratedVocabularyDto(Array.Empty<GeneratedVocabItemDto>());
+    }
+
+    public async Task<VocabEnrichmentDto> EnrichVocabularyAsync(
+        CefrLevel level, IReadOnlyList<VocabEnrichInputDto> items, CancellationToken ct = default)
+    {
+        if (items.Count == 0) return new VocabEnrichmentDto(Array.Empty<VocabEnrichItemDto>());
+        try
+        {
+            var resp = await _http.PostAsJsonAsync("/enrich/vocabulary",
+                new { level = level.ToString(), items }, ct);
+            resp.EnsureSuccessStatusCode();
+            var dto = await resp.Content.ReadFromJsonAsync<VocabEnrichmentDto>(cancellationToken: ct);
+            if (dto is not null) return dto;
+        }
+        catch (Exception ex)
+        {
+            _log.LogWarning(ex, "Vocabulary enrichment failed (is the language-service running?).");
+        }
+        return new VocabEnrichmentDto(Array.Empty<VocabEnrichItemDto>());
     }
 
     // ---- deterministic offline fallbacks ----

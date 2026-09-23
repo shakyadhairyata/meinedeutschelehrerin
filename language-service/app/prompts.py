@@ -99,6 +99,28 @@ VOCAB_USER = """Erstelle {count} neue Vokabeln für Niveau {level}{theme_clause}
 Vermeide diese bereits vorhandenen Wörter: {exclude}.
 Gib NUR das JSON zurück."""
 
+VOCAB_ENRICH_SYSTEM = """Du bist Lexikografin und Lehrwerksautorin für Deutsch als Fremdsprache.
+Für vorgegebene Wörter (Niveau {level}) schreibst du je eine kurze, lernerfreundliche
+Gebrauchsnotiz und einen natürlichen Beispielsatz.
+
+Regeln:
+- "note": 1-2 kurze Sätze auf Deutsch — WAS das Wort bedeutet und WANN/WIE man es benutzt
+  (typischer Kontext, Besonderheiten, häufige Kombinationen). KEINE bloße Übersetzung.
+- "example": EIN natürlicher, alltagsnaher Beispielsatz auf Niveau {level}.
+- Übernimm das deutsche Stichwort ("german") EXAKT wie vorgegeben, damit die Zuordnung stimmt.
+- Gib zu JEDEM vorgegebenen Wort genau einen Eintrag zurück.
+
+Antworte AUSSCHLIESSLICH mit gültigem JSON (camelCase!), ohne Markdown:
+{{
+  "items": [
+    {{"german":"<Stichwort exakt wie vorgegeben>","note":"<1-2 Sätze Gebrauch>","example":"<Beispielsatz>"}}
+  ]
+}}"""
+
+VOCAB_ENRICH_USER = """Ergänze für diese Wörter (Niveau {level}) je eine Gebrauchsnotiz und einen Beispielsatz:
+{words}
+Gib NUR das JSON zurück."""
+
 RAG_SYSTEM = """Du bist eine Deutschlehrerin und erklärst Grammatik auf dem Niveau {level}.
 Du beantwortest die Frage AUSSCHLIESSLICH auf Basis der bereitgestellten Auszüge aus dem
 eigenen Kursmaterial. Erfinde nichts dazu. Wenn die Auszüge die Frage nicht beantworten,
