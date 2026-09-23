@@ -31,6 +31,56 @@ public static class DbSeeder
         await db.SaveChangesAsync(ct);
     }
 
+    /// <summary>
+    /// Brings the teaching content (<see cref="Lesson.Content"/> / <see cref="Lesson.AudioScript"/>)
+    /// of lessons that already exist up to date with the curriculum authored here — without touching
+    /// structure, exercises, vocabulary or user progress. <see cref="SeedAsync"/> only inserts levels
+    /// that are missing, so this is how edits to existing lessons (e.g. richer grammar explanations)
+    /// actually reach a database that has already been seeded. Matching is positional (level code →
+    /// unit order → lesson order), stable as long as the curriculum isn't restructured. Idempotent:
+    /// writes only where the text differs, and returns how many lessons changed.
+    /// </summary>
+    public static async Task<int> SyncContentAsync(AppDbContext db, CancellationToken ct = default)
+    {
+        var b = new CurriculumBuilder();
+        BuildA1(b);
+        BuildA2(b);
+        BuildB1(b);
+        BuildB2(b);
+        BuildC1(b);
+
+        var codes = b.Levels.Select(l => l.Code).ToList();
+        var dbLevels = await db.Levels
+            .Where(l => codes.Contains(l.Code))
+            .Include(l => l.Units).ThenInclude(u => u.Lessons)
+            .ToListAsync(ct);
+        var dbByCode = dbLevels.ToDictionary(l => l.Code);
+
+        int updated = 0;
+        foreach (var level in b.Levels)
+        {
+            if (!dbByCode.TryGetValue(level.Code, out var dbLevel)) continue;
+            var dbUnits = dbLevel.Units.ToDictionary(u => u.Order);
+            foreach (var unit in level.Units)
+            {
+                if (!dbUnits.TryGetValue(unit.Order, out var dbUnit)) continue;
+                var dbLessons = dbUnit.Lessons.ToDictionary(l => l.Order);
+                foreach (var lesson in unit.Lessons)
+                {
+                    if (!dbLessons.TryGetValue(lesson.Order, out var dbLesson)) continue;
+                    if (dbLesson.Content != lesson.Content || dbLesson.AudioScript != lesson.AudioScript)
+                    {
+                        dbLesson.Content = lesson.Content;
+                        dbLesson.AudioScript = lesson.AudioScript;
+                        updated++;
+                    }
+                }
+            }
+        }
+        if (updated > 0) await db.SaveChangesAsync(ct);
+        return updated;
+    }
+
     private static void BuildA1(CurriculumBuilder b)
     {
         var a1 = b.Level(CefrLevel.A1,
@@ -42,7 +92,7 @@ public static class DbSeeder
         var u1 = b.Unit(a1, "Begrüßung & Vorstellung", "Sag Hallo, stelle dich vor und buchstabiere deinen Namen.", "Kennenlernen");
 
         var l1g = b.Lesson(u1, "Das Verb »sein« und Personalpronomen", SkillType.Grammar,
-            "## Das Verb »sein« (Präsens)\n\n| Person | Form |\n|---|---|\n| ich | **bin** |\n| du | **bist** |\n| er/sie/es | **ist** |\n| wir | **sind** |\n| ihr | **seid** |\n| sie/Sie | **sind** |\n\n*Beispiel:* **Ich bin** Anna. **Du bist** Student. **Wir sind** aus Indien.",
+            "## Das Verb »sein« (Präsens)\n**Was ist das?** »sein« (to be) ist das wichtigste Verb im Deutschen. Es ist **unregelmäßig**, darum lernst du die Formen am besten auswendig.\n\n**Warum brauchst du das?** Du brauchst es in fast jedem Gespräch – um zu sagen, **wer** du bist, **wie** du dich fühlst und **wo** du bist.\n\n**Wie funktioniert es?**\n\n| Person | Form |\n|---|---|\n| ich | **bin** |\n| du | **bist** |\n| er/sie/es | **ist** |\n| wir | **sind** |\n| ihr | **seid** |\n| sie/Sie | **sind** |\n\n**Im Alltag**\n- Vorstellen: **Ich bin** Anna. **Ich bin** Studentin.\n- Herkunft: **Wir sind** aus Indien.\n- Befinden: **Bist** du müde? – Ja, ich **bin** sehr müde.\n\n**Achtung:** »sein« darf nicht wegfallen: ❌ Ich Student. → ✅ Ich **bin** Student.",
             grammarTopic: "Verb sein (Präsens)");
         b.Ex(l1g, ExerciseType.Conjugation, SkillType.Grammar, "Konjugiere »sein«: ___ (du)",
             new { verb = "sein", person = "du", tense = "Präsens" }, new { answers = new[] { "bist" } },
@@ -103,7 +153,7 @@ public static class DbSeeder
             new { answers = new[] { new[] { "sieben" } } }, "7 = **sieben**.");
 
         var l2g = b.Lesson(u2, "W-Fragen: Wie, Was, Wo, Woher", SkillType.Grammar,
-            "## W-Fragen\nDas Fragewort steht am Anfang, dann das Verb.\n\n- **Wie** heißt du?\n- **Woher** kommst du?\n- **Wo** wohnst du?\n- **Was** machst du?",
+            "## W-Fragen (offene Fragen)\n**Was ist das?** Fragen, die mit einem **Fragewort** beginnen (wie, was, wo, woher, wann, warum …). Die Antwort ist eine Information, kein »Ja/Nein«.\n\n**Warum brauchst du das?** Um Menschen kennenzulernen und im Alltag nach allem zu fragen.\n\n**Wie funktioniert es?** Fragewort auf **Position 1**, Verb auf **Position 2**.\n- **Wie** heißt du?\n- **Woher** kommst du?\n- **Wo** wohnst du?\n- **Was** machst du beruflich?\n\n**Im Alltag**\n- Kennenlernen: **Wie** heißen Sie? **Woher** kommen Sie?\n- Gespräch: **Wann** hast du Zeit? **Warum** lernst du Deutsch?\n\n**Achtung:** **wo** fragt nach dem Ort, **woher** nach der Herkunft: *Wo wohnst du?* vs. *Woher kommst du?*",
             grammarTopic: "W-Fragen");
         b.Ex(l2g, ExerciseType.Reorder, SkillType.Grammar, "Bring die Wörter in die richtige Reihenfolge.",
             new { tokens = new[] { "kommst", "Woher", "du", "?" } },
@@ -130,7 +180,7 @@ public static class DbSeeder
         var u3 = b.Unit(a1, "Familie & Possessivartikel", "Über deine Familie sprechen, mein/dein/sein benutzen.", "Familie");
 
         var l3g = b.Lesson(u3, "Possessivartikel: mein, dein, sein, ihr", SkillType.Grammar,
-            "## Possessivartikel (Nominativ)\n\n| | maskulin/neutrum | feminin/Plural |\n|---|---|---|\n| ich | mein | meine |\n| du | dein | deine |\n| er | sein | seine |\n| sie | ihr | ihre |\n\n*Beispiel:* **Mein** Bruder, **meine** Schwester.",
+            "## Possessivartikel: mein, dein, sein, ihr\n**Was ist das?** Wörter, die **Besitz** oder Zugehörigkeit zeigen (my, your, his, her).\n\n**Warum brauchst du das?** Um über Familie, Freunde und deine Sachen zu sprechen.\n\n**Wie funktioniert es?** Vor m/n ohne Endung, vor f/Plural mit **-e**.\n\n| | maskulin/neutrum | feminin/Plural |\n|---|---|---|\n| ich | mein | meine |\n| du | dein | deine |\n| er | sein | seine |\n| sie | ihr | ihre |\n\n**Im Alltag**\n- Familie: **Mein** Bruder heißt Tom, **meine** Schwester heißt Lea.\n- Sachen: Ist das **dein** Handy? – Nein, das ist **ihr** Handy.\n\n**Achtung:** **sein** = his/its, **ihr** = her/their – nicht verwechseln!",
             grammarTopic: "Possessivartikel");
         b.Ex(l3g, ExerciseType.FillInBlank, SkillType.Grammar, "Ergänze den Possessivartikel (ich).",
             new { text = "Das ist ___ Bruder und das ist ___ Schwester.", blanks = new[] { new { hint = "mask." }, new { hint = "fem." } } },
@@ -159,7 +209,7 @@ public static class DbSeeder
         var u4 = b.Unit(a1, "Essen & der Akkusativ", "Essen bestellen und den Akkusativ benutzen.", "Essen");
 
         var l4g = b.Lesson(u4, "Der Akkusativ: ein → einen", SkillType.Grammar,
-            "## Akkusativ (unbestimmter Artikel)\nNur **maskulin** ändert sich!\n\n| | Nominativ | Akkusativ |\n|---|---|---|\n| m | ein Apfel | **einen** Apfel |\n| f | eine Banane | eine Banane |\n| n | ein Brot | ein Brot |\n\n*Ich möchte **einen** Kaffee und **eine** Cola.*",
+            "## Der Akkusativ (unbestimmter Artikel)\n**Was ist das?** Der Fall des **direkten Objekts** – die Person oder Sache, die eine Handlung »bekommt«: Ich sehe **einen** Mann.\n\n**Warum brauchst du das?** Sehr viele Verben brauchen ein Akkusativ-Objekt: kaufen, haben, möchten, sehen, brauchen …\n\n**Wie funktioniert es?** Nur **maskulin** ändert sich (ein → **einen**); feminin und neutrum bleiben gleich.\n\n| | Nominativ | Akkusativ |\n|---|---|---|\n| m | ein Apfel | **einen** Apfel |\n| f | eine Banane | eine Banane |\n| n | ein Brot | ein Brot |\n\n**Im Alltag**\n- Im Café: Ich möchte **einen** Kaffee und **eine** Cola.\n- Einkaufen: Ich brauche **einen** Stift und **ein** Heft.\n\n**Achtung:** Nur der maskuline Artikel bekommt **-en**.",
             grammarTopic: "Akkusativ");
         b.Ex(l4g, ExerciseType.FillInBlank, SkillType.Grammar, "Ergänze ein/eine/einen.",
             new { text = "Ich nehme ___ Apfel (m) und ___ Banane (f).", blanks = new[] { new { hint = "Akk. m" }, new { hint = "Akk. f" } } },
@@ -198,7 +248,7 @@ public static class DbSeeder
         var u5 = b.Unit(a1, "Tagesablauf & trennbare Verben", "Über deinen Tag sprechen, trennbare Verben benutzen.", "Alltag");
 
         var l5g = b.Lesson(u5, "Trennbare Verben", SkillType.Grammar,
-            "## Trennbare Verben\nDas Präfix steht am **Satzende**.\n\n- aufstehen → Ich **stehe** um 7 Uhr **auf**.\n- einkaufen → Ich **kaufe** am Abend **ein**.\n- fernsehen → Ich **sehe** abends **fern**.",
+            "## Trennbare Verben\n**Was ist das?** Verben mit einer **Vorsilbe (Präfix)**, die sich abtrennt – z. B. **auf**stehen, **ein**kaufen, **fern**sehen.\n\n**Warum brauchst du das?** Sie gehören zu den häufigsten Alltagsverben. Das Präfix ändert die Bedeutung: *stehen* (to stand) → *aufstehen* (to get up).\n\n**Wie funktioniert es?**\n- Hauptsatz: Verb auf Position 2, Präfix ans **Ende** – Ich **stehe** um 7 Uhr **auf**.\n- Mit Modalverb: zusammen am Ende – Ich muss früh **aufstehen**.\n- Perfekt: -ge- in der Mitte – Ich bin **aufgestanden**.\n\n**Häufige Präfixe:** ab-, an-, auf-, aus-, ein-, mit-, vor-, zu-, weg-, fern-. Nicht trennbar: be-, ge-, er-, ver-, ent-.\n\n**Im Alltag**\n- Tagesablauf: Ich **stehe auf**, **ziehe** mich **an** und **kaufe** später **ein**.\n- Termine: Ich **rufe** dich **an** und **sage** sonst **ab**.\n\n**Achtung:** ❌ Ich aufstehe um 7 Uhr. → ✅ Ich **stehe** um 7 Uhr **auf**.",
             grammarTopic: "Trennbare Verben");
         b.Ex(l5g, ExerciseType.Reorder, SkillType.Grammar, "Bilde den Satz (aufstehen).",
             new { tokens = new[] { "stehe", "Ich", "um 7 Uhr", "auf" } },
@@ -226,7 +276,7 @@ public static class DbSeeder
         var u6 = b.Unit(a1, "Einkaufen & Modalverben", "Einkaufen gehen und Modalverben benutzen.", "Einkaufen");
 
         var l6g = b.Lesson(u6, "Modalverben: können, möchten, müssen", SkillType.Grammar,
-            "## Modalverben\nDas Modalverb steht auf Position 2, das zweite Verb im **Infinitiv am Ende**.\n\n- Ich **kann** gut Deutsch **sprechen**.\n- Ich **möchte** ein Brot **kaufen**.\n- Ich **muss** heute **arbeiten**.",
+            "## Modalverben: können, möchten, müssen\n**Was ist das?** Hilfsverben, die eine Grundbedeutung ausdrücken: **Fähigkeit** (können), **Wunsch** (möchten), **Notwendigkeit** (müssen).\n\n**Warum brauchst du das?** Um höflich Wünsche zu äußern und über Pläne und Pflichten zu sprechen.\n\n**Wie funktioniert es?** Modalverb auf **Position 2**, das zweite Verb im **Infinitiv am Satzende**.\n- Ich **kann** gut Deutsch **sprechen**.\n- Ich **möchte** einen Kaffee **trinken**.\n- Ich **muss** heute **arbeiten**.\n\n**Im Alltag**\n- Restaurant: Ich **möchte** bitte **bestellen**.\n- Arbeit: Ich **muss** noch eine E-Mail **schreiben**.\n- Bitte: **Kannst** du mir **helfen**?\n\n**Achtung:** Das zweite Verb bleibt im **Infinitiv** und steht ganz am Ende.",
             grammarTopic: "Modalverben");
         b.Ex(l6g, ExerciseType.MultipleChoice, SkillType.Grammar, "»Ich ___ ein Kilo Äpfel kaufen.« (Wunsch)",
             new { question = "Ich ___ ein Kilo Äpfel kaufen.", options = new[] { "kann", "möchte", "muss", "bist" } },
@@ -253,7 +303,7 @@ public static class DbSeeder
         var u7 = b.Unit(a1, "Artikel, Negation & Fragen", "Artikel, Verneinung mit nicht/kein und Ja/Nein-Fragen.", "Grundlagen");
 
         var l7g1 = b.Lesson(u7, "Bestimmter & unbestimmter Artikel", SkillType.Grammar,
-            "## Artikel\n**Bestimmt** (the): der (m), die (f), das (n), die (Plural).\n**Unbestimmt** (a/an): ein (m/n), eine (f).\n\n*der Tisch → ein Tisch · die Lampe → eine Lampe · das Buch → ein Buch*",
+            "## Bestimmter & unbestimmter Artikel\n**Was ist das?** Artikel begleiten Nomen. **Bestimmt** (der/die/das = the) meint etwas Bekanntes; **unbestimmt** (ein/eine = a/an) meint etwas Neues.\n\n**Warum brauchst du das?** Jedes deutsche Nomen hat ein **Genus** (m/f/n) – der Artikel zeigt es. Das lernst du mit jedem Wort mit.\n\n**Wie funktioniert es?**\n- Bestimmt: **der** Tisch (m), **die** Lampe (f), **das** Buch (n), **die** Bücher (Pl.)\n- Unbestimmt: **ein** Tisch, **eine** Lampe, **ein** Buch\n\n**Im Alltag**\n- Neu → bekannt: Ich habe **ein** Auto. **Das** Auto ist rot.\n- Im Zimmer: Da ist **eine** Lampe. **Die** Lampe ist neu.\n\n**Achtung:** Lerne jedes Nomen **mit Artikel** – nicht »Tisch«, sondern »**der** Tisch«.",
             grammarTopic: "Artikel", minutes: 15);
         b.Ex(l7g1, ExerciseType.MultipleChoice, SkillType.Grammar, "Welcher bestimmte Artikel? »___ Frau«",
             new { question = "___ Frau", options = new[] { "der", "die", "das", "ein" } },
@@ -263,7 +313,7 @@ public static class DbSeeder
             new { answers = new[] { new[] { "das", "Das" } } }, "»Kind« ist neutrum → **das** Kind.", difficulty: 1);
 
         var l7g2 = b.Lesson(u7, "Negation: nicht und kein", SkillType.Grammar,
-            "## Verneinung\n**nicht** verneint Verben, Adjektive und ganze Sätze: »Ich komme **nicht**.«\n**kein-** verneint Nomen (mit ein/ohne Artikel): »Ich habe **kein** Auto.«, »Ich habe **keine** Zeit.«",
+            "## Negation: nicht und kein\n**Was ist das?** Zwei Wörter, um etwas zu **verneinen**. Sie sind nicht austauschbar.\n\n**Warum brauchst du das?** Um »nein« zu sagen, zu widersprechen und Sätze zu verneinen.\n\n**Wie funktioniert es?**\n- **kein-** verneint ein **Nomen** (das sonst *ein* oder keinen Artikel hätte): Ich habe **kein** Auto. Ich habe **keine** Zeit.\n- **nicht** verneint alles andere – Verben, Adjektive, Namen, ganze Sätze: Ich komme **nicht**. Das ist **nicht** teuer.\n\n**Im Alltag**\n- Besitz: Ich habe **keinen** Hund und **keine** Katze.\n- Ablehnen: Nein danke, ich möchte **nicht**.\n\n**Achtung:** Vor einem Nomen mit *ein* → **kein**; sonst → **nicht**.",
             grammarTopic: "Negation", minutes: 15);
         b.Ex(l7g2, ExerciseType.MultipleChoice, SkillType.Grammar, "»Ich habe ___ Zeit.« (die Zeit)",
             new { question = "Ich habe ___ Zeit.", options = new[] { "nicht", "kein", "keine", "nein" } },
@@ -273,7 +323,7 @@ public static class DbSeeder
             new { answers = new[] { new[] { "kein" } } }, "»Problem« (n) → **kein** Problem.", difficulty: 2);
 
         var l7g3 = b.Lesson(u7, "Ja/Nein-Fragen & Satzbau", SkillType.Grammar,
-            "## Ja/Nein-Fragen\nDas **Verb steht am Anfang**: »**Kommst** du mit?« → »Ja.« / »Nein.«\nIm Aussagesatz steht das Verb auf **Position 2**: »Du **kommst** mit.«",
+            "## Ja/Nein-Fragen & Satzbau\n**Was ist das?** Fragen, auf die man mit **Ja** oder **Nein** antwortet.\n\n**Warum brauchst du das?** Für einfache Fragen im Alltag – einkaufen, sich verabreden, nachfragen.\n\n**Wie funktioniert es?**\n- Aussagesatz: Verb auf **Position 2** – Du **kommst** mit.\n- Ja/Nein-Frage: Verb auf **Position 1** – **Kommst** du mit?\n\n**Im Alltag**\n- Verabreden: **Hast** du morgen Zeit? **Gehen** wir ins Kino?\n- Einkaufen: **Haben** Sie das auch in Blau?\n\n**Achtung:** Bei Ja/Nein-Fragen gibt es **kein** Fragewort – das Verb kommt zuerst.",
             grammarTopic: "Satzbau", minutes: 15);
         b.Ex(l7g3, ExerciseType.Reorder, SkillType.Grammar, "Bilde eine Ja/Nein-Frage.",
             new { tokens = new[] { "du", "Kommst", "mit", "?" } },
@@ -348,7 +398,7 @@ public static class DbSeeder
         var u1 = b.Unit(a2, "Das Perfekt – über Gestern sprechen", "Über die Vergangenheit mit haben/sein + Partizip II sprechen.", "Vergangenheit");
 
         var l1g = b.Lesson(u1, "Das Perfekt: haben/sein + Partizip II", SkillType.Grammar,
-            "## Das Perfekt\nDas Perfekt bildet man mit **haben** oder **sein** + **Partizip II** (am Satzende).\n\n- regelmäßig: machen → ge**mach**t · spielen → ge**spiel**t\n- unregelmäßig: sehen → ge**seh**en · gehen → ge**gang**en\n- mit **sein**: Bewegung/Veränderung — gehen, fahren, kommen, aufstehen\n\n*Ich **habe** Fußball **gespielt**. Ich **bin** nach Berlin **gefahren**.*",
+            "## Das Perfekt (haben/sein + Partizip II)\n**Was ist das?** Die wichtigste **Vergangenheitsform** in der gesprochenen Sprache: **haben** oder **sein** + **Partizip II** am Satzende.\n\n**Warum brauchst du das?** Wenn du erzählst, was du gemacht hast – gestern, am Wochenende, im Urlaub. Im Gespräch nutzt man fast immer Perfekt.\n\n**Wie funktioniert es?**\n- regelmäßig: machen → ge**mach**t · spielen → ge**spiel**t\n- unregelmäßig: sehen → ge**seh**en · gehen → ge**gang**en\n- mit **sein** bei Bewegung/Veränderung: gehen, fahren, kommen, aufstehen\n\n**Im Alltag**\n- Wochenende: Ich **habe** Fußball **gespielt** und Freunde **getroffen**.\n- Reise: Ich **bin** nach Berlin **gefahren** und dort **geblieben**.\n\n**Achtung:** Bewegungs- und Veränderungsverben nehmen **sein**, die meisten anderen **haben**.",
             grammarTopic: "Perfekt", minutes: 20);
         var l1g_aux = b.Ex(l1g, ExerciseType.MultipleChoice, SkillType.Grammar, "Wähle das Hilfsverb: »Ich ___ nach Berlin gefahren.«",
             new { question = "Ich ___ nach Berlin gefahren.", options = new[] { "habe", "bin", "war", "hat" } },
@@ -379,7 +429,7 @@ public static class DbSeeder
         var u2 = b.Unit(a2, "Dativ & Wechselpräpositionen", "Den Dativ und die Wo/Wohin-Präpositionen benutzen.", "Grammatik");
 
         var l2g = b.Lesson(u2, "Der Dativ", SkillType.Grammar,
-            "## Der Dativ\n| | maskulin | feminin | neutrum | Plural |\n|---|---|---|---|---|\n| Dativ | dem | der | dem | den + n |\n\nNach **mit, bei, aus, zu, von, nach, seit** und Verben wie **helfen, geben, danken**.\n\n*Ich fahre **mit dem** Bus. Ich helfe **der** Frau.*",
+            "## Der Dativ\n**Was ist das?** Der Fall des **indirekten Objekts** – meist die Person, der etwas gegeben oder gesagt wird: Ich gebe **dem** Kind ein Buch.\n\n**Warum brauchst du das?** Er kommt nach vielen festen Präpositionen und Verben – du brauchst ihn ständig.\n\n**Wie funktioniert es?**\n\n| | maskulin | feminin | neutrum | Plural |\n|---|---|---|---|---|\n| Dativ | dem | der | dem | den + n |\n\nImmer Dativ nach **mit, bei, aus, zu, von, nach, seit** und nach Verben wie **helfen, geben, danken, gehören**.\n\n**Im Alltag**\n- Wege: Ich fahre **mit dem** Bus **zur** Arbeit.\n- Hilfe: Ich helfe **der** Frau und danke **dem** Mann.\n\n**Achtung:** Im Dativ Plural bekommt das Nomen oft ein **-n**: mit den Kinder**n**.",
             grammarTopic: "Dativ", minutes: 20);
         var l2g_mc = b.Ex(l2g, ExerciseType.MultipleChoice, SkillType.Grammar, "»Ich helfe ___ Mann.« (der Mann)",
             new { question = "Ich helfe ___ Mann.", options = new[] { "der", "den", "dem", "des" } },
@@ -389,7 +439,7 @@ public static class DbSeeder
             new { answers = new[] { new[] { "dem" }, new[] { "der" } } }, "mit + Dativ → dem Bus; aus + Dativ → der Schweiz.", difficulty: 2);
 
         var l2g2 = b.Lesson(u2, "Wechselpräpositionen: Wo? vs. Wohin?", SkillType.Grammar,
-            "## Wechselpräpositionen\nin, an, auf, über, unter, vor, hinter, neben, zwischen.\n\n- **Wo?** (Position) → **Dativ**: Das Buch liegt **auf dem** Tisch.\n- **Wohin?** (Richtung) → **Akkusativ**: Ich lege das Buch **auf den** Tisch.",
+            "## Wechselpräpositionen: Wo? vs. Wohin?\n**Was ist das?** Neun Präpositionen (in, an, auf, über, unter, vor, hinter, neben, zwischen), die **mal Dativ, mal Akkusativ** verlangen.\n\n**Warum brauchst du das?** Um Ort und Richtung zu unterscheiden – ein häufiger Fehler, wenn man die Regel nicht kennt.\n\n**Wie funktioniert es?**\n- **Wo?** (Position, keine Bewegung) → **Dativ**: Das Buch liegt **auf dem** Tisch.\n- **Wohin?** (Richtung, Bewegung) → **Akkusativ**: Ich lege das Buch **auf den** Tisch.\n\n**Im Alltag**\n- Zuhause: Das Bild hängt **an der** Wand (wo?). Ich hänge es **an die** Wand (wohin?).\n- Wege: Ich bin **im** Büro (wo?). Ich gehe **ins** Büro (wohin?).\n\n**Achtung:** Frag dich immer zuerst: **Wo?** (Dativ) oder **Wohin?** (Akkusativ).",
             grammarTopic: "Wechselpräpositionen", minutes: 20);
         var l2g2_mc = b.Ex(l2g2, ExerciseType.MultipleChoice, SkillType.Grammar, "»Das Bild hängt an ___ Wand.« (Wo? · die Wand)",
             new { question = "Das Bild hängt an ___ Wand.", options = new[] { "die", "der", "den", "dem" } },
@@ -406,7 +456,7 @@ public static class DbSeeder
         var u3 = b.Unit(a2, "Wegbeschreibung & Imperativ", "Nach dem Weg fragen und Anweisungen geben.", "Stadt");
 
         var l3g = b.Lesson(u3, "Der Imperativ", SkillType.Grammar,
-            "## Imperativ\n- du: **Geh** geradeaus! **Nimm** die erste Straße!\n- Sie: **Gehen Sie** geradeaus! **Nehmen Sie** die U-Bahn!\n- ihr: **Geht** geradeaus!",
+            "## Der Imperativ\n**Was ist das?** Die **Befehlsform** – du gibst Anweisungen, Rat oder eine Bitte.\n\n**Warum brauchst du das?** Für Wegbeschreibungen, Rezepte, Tipps und höfliche Bitten.\n\n**Wie funktioniert es?**\n- du: ohne Endung, Präfix ans Ende – **Geh** geradeaus! **Nimm** die erste Straße!\n- Sie: Verb + **Sie** – **Gehen Sie** geradeaus! **Nehmen Sie** die U-Bahn!\n- ihr: Verbstamm + **-t** – **Geht** geradeaus!\n\n**Im Alltag**\n- Weg: **Fahren Sie** bis zur Ampel und **biegen Sie** links **ab**.\n- Rat: **Trink** viel Wasser und **ruh** dich aus!\n\n**Achtung:** Mit **bitte** klingt der Imperativ höflich: **Warten Sie** bitte kurz.",
             grammarTopic: "Imperativ", minutes: 15);
         b.Ex(l3g, ExerciseType.Reorder, SkillType.Grammar, "Bilde einen Imperativ-Satz (Sie-Form).",
             new { tokens = new[] { "Sie", "Nehmen", "die erste Straße", "rechts" } },
@@ -440,7 +490,7 @@ public static class DbSeeder
             "Kopf=head, Bauch=stomach, Rücken=back, Bein=leg.", difficulty: 2);
 
         var l4g = b.Lesson(u4, "Modalverben: müssen, sollen, dürfen", SkillType.Grammar,
-            "## Modalverben (A2)\n- **müssen** (Notwendigkeit): Du **musst** viel trinken.\n- **sollen** (Rat/Auftrag): Du **sollst** zum Arzt gehen.\n- **dürfen** (Erlaubnis): Du **darfst** heute nicht arbeiten.",
+            "## Modalverben: müssen, sollen, dürfen\n**Was ist das?** Weitere Modalverben für **Notwendigkeit** (müssen), **Rat/Auftrag** (sollen) und **Erlaubnis** (dürfen).\n\n**Warum brauchst du das?** Besonders wichtig beim Arzt, bei Regeln und bei Ratschlägen.\n\n**Wie funktioniert es?** Modalverb auf Position 2, zweites Verb im **Infinitiv am Ende**.\n- **müssen** (Notwendigkeit): Du **musst** viel **trinken**.\n- **sollen** (Rat/Auftrag): Du **sollst** zum Arzt **gehen**.\n- **dürfen** (Erlaubnis): Du **darfst** heute nicht **arbeiten**.\n\n**Im Alltag**\n- Arzt: Sie **müssen** sich **ausruhen** und **dürfen** keinen Sport **machen**.\n- Regeln: Hier **darf** man nicht **rauchen**.\n\n**Achtung:** **nicht müssen** = keine Notwendigkeit; **nicht dürfen** = Verbot. Ein großer Unterschied!",
             grammarTopic: "Modalverben", minutes: 18);
         var l4g_mc = b.Ex(l4g, ExerciseType.MultipleChoice, SkillType.Grammar, "Der Arzt sagt: »Sie ___ im Bett bleiben.« (Rat)",
             new { question = "Sie ___ im Bett bleiben.", options = new[] { "dürfen", "sollen", "können", "wollen" } },
@@ -457,7 +507,7 @@ public static class DbSeeder
         var u5 = b.Unit(a2, "Vergleiche: Komparativ & Superlativ", "Dinge vergleichen und steigern.", "Vergleichen");
 
         var l5g = b.Lesson(u5, "Steigerung der Adjektive", SkillType.Grammar,
-            "## Komparativ & Superlativ\n| Grundform | Komparativ | Superlativ |\n|---|---|---|\n| klein | klein**er** | am klein**sten** |\n| groß | größer | am größten |\n| gut | besser | am besten |\n| viel | mehr | am meisten |\n\n*Berlin ist **größer als** München. Berlin ist **am größten**.*",
+            "## Steigerung der Adjektive\n**Was ist das?** Die **Vergleichsformen** der Adjektive: Komparativ (mehr) und Superlativ (am meisten).\n\n**Warum brauchst du das?** Um Dinge, Orte und Menschen zu vergleichen.\n\n**Wie funktioniert es?** Komparativ mit **-er (… als)**, Superlativ mit **am …-sten**.\n\n| Grundform | Komparativ | Superlativ |\n|---|---|---|\n| klein | klein**er** | am klein**sten** |\n| groß | größer | am größten |\n| gut | besser | am besten |\n| viel | mehr | am meisten |\n\n**Im Alltag**\n- Vergleich: Berlin ist **größer als** München.\n- Rekord: Dieser Sommer war **am heißesten**.\n\n**Achtung:** Nach dem Komparativ steht **als**, nicht *wie*: größer **als**.",
             grammarTopic: "Komparativ", minutes: 18);
         var l5g_fb = b.Ex(l5g, ExerciseType.FillInBlank, SkillType.Grammar, "Ergänze den Komparativ.",
             new { text = "Berlin ist ___ als München. (groß)", blanks = new[] { new { hint = "Komparativ" } } },
@@ -477,7 +527,7 @@ public static class DbSeeder
         var u6 = b.Unit(a2, "Reisen & Präteritum (war/hatte)", "Über Reisen erzählen und das Präteritum von sein/haben benutzen.", "Reisen");
 
         var l6g = b.Lesson(u6, "Präteritum: war, hatte, Modalverben", SkillType.Grammar,
-            "## Präteritum (gesprochen & geschrieben)\nBei **sein, haben** und Modalverben nutzt man oft das Präteritum statt Perfekt.\n\n- sein → ich **war**, du **warst**, er **war**, wir **waren**\n- haben → ich **hatte**, du **hattest**, wir **hatten**\n- können → ich **konnte** · müssen → ich **musste**",
+            "## Präteritum: war, hatte, Modalverben\n**Was ist das?** Die **einfache Vergangenheit**. Bei **sein, haben** und den Modalverben benutzt man sie auch im Gespräch (statt Perfekt).\n\n**Warum brauchst du das?** »Ich war…«, »Ich hatte…«, »Ich musste…« klingen natürlicher als das Perfekt dieser Verben.\n\n**Wie funktioniert es?**\n- sein → ich **war**, du **warst**, er **war**, wir **waren**\n- haben → ich **hatte**, du **hattest**, wir **hatten**\n- können → ich **konnte** · müssen → ich **musste**\n\n**Im Alltag**\n- Erzählen: Gestern **war** ich krank und **hatte** Fieber.\n- Grund: Ich **konnte** nicht kommen, weil ich arbeiten **musste**.\n\n**Achtung:** Bei den meisten anderen Verben nimmt man im Gespräch das **Perfekt**; das Präteritum steht dort eher in Texten.",
             grammarTopic: "Präteritum", minutes: 18);
         var l6g_fb = b.Ex(l6g, ExerciseType.FillInBlank, SkillType.Grammar, "Ergänze das Präteritum.",
             new { text = "Letztes Jahr ___ ich in Wien. Es ___ super! (sein)", blanks = new[] { new { hint = "ich" }, new { hint = "es" } } },
@@ -496,7 +546,7 @@ public static class DbSeeder
         var u7 = b.Unit(a2, "Reflexivverben & Zeitangaben", "Reflexivverben, temporale Präpositionen und als/wenn.", "Grammatik");
 
         var l7g1 = b.Lesson(u7, "Reflexivverben", SkillType.Grammar,
-            "## Reflexivverben\nViele Verben brauchen ein **Reflexivpronomen**: mich, dich, sich, uns, euch, sich.\n- sich freuen: Ich freue **mich**.\n- sich waschen: Du wäschst **dich**.\n- sich treffen: Wir treffen **uns**.",
+            "## Reflexivverben\n**Was ist das?** Verben, bei denen die Handlung auf das Subjekt zurückgeht. Sie brauchen ein **Reflexivpronomen** (mich, dich, sich, uns, euch, sich).\n\n**Warum brauchst du das?** Sehr viele Alltagsverben sind reflexiv – Tagesroutine, Gefühle, Verabredungen.\n\n**Wie funktioniert es?**\n- sich freuen: Ich freue **mich**.\n- sich waschen: Du wäschst **dich**.\n- sich treffen: Wir treffen **uns**.\n\n**Im Alltag**\n- Morgens: Ich dusche **mich** und ziehe **mich** an.\n- Gefühle: Ich freue **mich** auf das Wochenende und erhole **mich**.\n\n**Achtung:** Das Pronomen richtet sich nach dem Subjekt: ich → **mich**, du → **dich**, er/sie/es/Sie → **sich**.",
             grammarTopic: "Reflexivverben", minutes: 18);
         b.Ex(l7g1, ExerciseType.FillInBlank, SkillType.Grammar, "Ergänze das Reflexivpronomen (ich).",
             new { text = "Ich freue ___ auf den Urlaub.", blanks = new[] { new { hint = "ich" } } },
@@ -506,7 +556,7 @@ public static class DbSeeder
             new { correctIndex = 2 }, "wir → **uns**.", difficulty: 2);
 
         var l7g2 = b.Lesson(u7, "Temporale Präpositionen", SkillType.Grammar,
-            "## Zeitangaben mit Präpositionen\n- **am** + Tag/Datum: am Montag, am 3. Mai\n- **im** + Monat/Jahreszeit: im Juli, im Winter\n- **um** + Uhrzeit: um 8 Uhr\n- **seit** (Dauer bis jetzt): seit 2020 · **vor** (Vergangenheit): vor drei Tagen",
+            "## Temporale Präpositionen (Zeitangaben)\n**Was ist das?** Präpositionen, die sagen, **wann** etwas passiert.\n\n**Warum brauchst du das?** Für Termine, Pläne und deinen Tagesablauf – ständig gebraucht.\n\n**Wie funktioniert es?**\n- **am** + Tag/Datum: am Montag, am 3. Mai\n- **im** + Monat/Jahreszeit: im Juli, im Winter\n- **um** + Uhrzeit: um 8 Uhr\n- **seit** (Dauer bis jetzt): seit 2020 · **vor** (Vergangenheit): vor drei Tagen\n\n**Im Alltag**\n- Termin: **Am** Freitag **um** 15 Uhr habe ich einen Termin.\n- Dauer: Ich lerne **seit** einem Jahr Deutsch.\n\n**Achtung:** **seit** steht mit Dativ und meint bis jetzt; **vor** meint einen Punkt in der Vergangenheit.",
             grammarTopic: "Temporale Präpositionen", minutes: 18);
         b.Ex(l7g2, ExerciseType.FillInBlank, SkillType.Grammar, "Ergänze die Präpositionen.",
             new { text = "Ich stehe ___ 7 Uhr auf und im Sommer fahren wir ___ Urlaub.", blanks = new[] { new { hint = "Uhrzeit" }, new { hint = "in den" } } },
@@ -516,7 +566,7 @@ public static class DbSeeder
             new { correctIndex = 1 }, "am + Wochentag → **Am** Montag.", difficulty: 2);
 
         var l7g3 = b.Lesson(u7, "»als« oder »wenn«?", SkillType.Grammar,
-            "## als oder wenn?\n- **als**: einmalig in der **Vergangenheit** — »**Als** ich klein war, …«\n- **wenn**: **wiederholt** oder Gegenwart/Zukunft — »Immer **wenn** es regnet, …«",
+            "## »als« oder »wenn«?\n**Was ist das?** Zwei Konnektoren für die Zeit, die man leicht verwechselt.\n\n**Warum brauchst du das?** Beim Erzählen von Erinnerungen und Gewohnheiten – ein klassischer Prüfungspunkt.\n\n**Wie funktioniert es?**\n- **als**: **einmalig** in der **Vergangenheit** – »**Als** ich klein war, …«\n- **wenn**: **wiederholt** oder in Gegenwart/Zukunft – »Immer **wenn** es regnet, …«\n\n**Im Alltag**\n- Erinnerung: **Als** ich nach Deutschland kam, sprach ich kein Wort.\n- Gewohnheit: **Wenn** ich Zeit habe, koche ich gern.\n\n**Achtung:** Einmal + Vergangenheit → **als**. Sonst (oft, immer, Zukunft) → **wenn**.",
             grammarTopic: "als/wenn", minutes: 16);
         b.Ex(l7g3, ExerciseType.MultipleChoice, SkillType.Grammar, "»___ ich gestern nach Hause kam, war niemand da.«",
             new { question = "___ ich gestern nach Hause kam, war niemand da.", options = new[] { "Wenn", "Als", "Wann", "Ob" } },
@@ -585,7 +635,7 @@ public static class DbSeeder
         var u1 = b.Unit(b1, "Nebensätze: weil, dass, wenn, obwohl", "Sätze verbinden und begründen — Verb am Satzende.", "Verbindung");
 
         var l1g = b.Lesson(u1, "Nebensätze & Konnektoren", SkillType.Grammar,
-            "## Nebensätze\nIn Nebensätzen steht das **konjugierte Verb am Ende**.\n\n- **weil** (Grund): Ich lerne Deutsch, **weil** ich in Wien **arbeite**.\n- **dass** (Inhalt): Ich glaube, **dass** er recht **hat**.\n- **wenn** (Bedingung/Zeit): **Wenn** ich Zeit **habe**, lese ich.\n- **obwohl** (Gegensatz): Ich gehe spazieren, **obwohl** es **regnet**.",
+            "## Nebensätze & Konnektoren\n**Was ist das?** Sätze, die von einem Konnektor eingeleitet werden und nicht allein stehen. Das **konjugierte Verb rutscht ans Ende**.\n\n**Warum brauchst du das?** Um Gründe, Meinungen, Bedingungen und Gegensätze auszudrücken – der Schritt von einfachen zu komplexen Sätzen.\n\n**Wie funktioniert es?** Konnektor + … + **Verb am Ende**.\n- **weil** (Grund): Ich lerne Deutsch, **weil** ich in Wien **arbeite**.\n- **dass** (Inhalt): Ich glaube, **dass** er recht **hat**.\n- **wenn** (Bedingung/Zeit): **Wenn** ich Zeit **habe**, lese ich.\n- **obwohl** (Gegensatz): Ich gehe spazieren, **obwohl** es **regnet**.\n\n**Im Alltag**\n- Begründen: Ich komme später, **weil** der Bus Verspätung **hat**.\n- Meinung: Ich denke, **dass** das eine gute Idee **ist**.\n\n**Achtung:** Beginnt der Satz mit dem Nebensatz, folgt danach direkt das Hauptsatz-Verb: »**Weil** es regnet, **bleibe** ich zu Hause.«",
             grammarTopic: "Nebensatz", minutes: 22);
         var l1g_mc = b.Ex(l1g, ExerciseType.MultipleChoice, SkillType.Grammar, "Wähle die richtige Wortstellung.",
             new { question = "Ich bleibe heute zu Hause, …", options = new[] { "weil ich bin krank", "weil ich krank bin", "weil bin ich krank", "weil krank ich bin" } },
@@ -614,7 +664,7 @@ public static class DbSeeder
         var u2 = b.Unit(b1, "Konjunktiv II – höflich & hypothetisch", "Höfliche Bitten und irreale Wünsche ausdrücken.", "Höflichkeit");
 
         var l2g = b.Lesson(u2, "Konjunktiv II: würde, könnte, hätte, wäre", SkillType.Grammar,
-            "## Konjunktiv II\nFür höfliche Bitten und Irreales.\n\n- **würde** + Infinitiv: Ich **würde** gern mitkommen.\n- **könnte**: **Könnten** Sie mir helfen?\n- **hätte / wäre**: Wenn ich Zeit **hätte**, **wäre** ich glücklicher.\n\n*Wenn ich reich **wäre**, **würde** ich reisen.*",
+            "## Konjunktiv II: würde, könnte, hätte, wäre\n**Was ist das?** Die Form für **Höflichkeit** und **Irreales** – etwas, das nicht real ist oder nur vorgestellt wird.\n\n**Warum brauchst du das?** Um höflich zu bitten und Wünsche oder Ratschläge auszudrücken – im Beruf und im Alltag unverzichtbar.\n\n**Wie funktioniert es?**\n- **würde** + Infinitiv: Ich **würde** gern mitkommen.\n- **könnte** (höfliche Bitte): **Könnten** Sie mir helfen?\n- **hätte / wäre**: Wenn ich Zeit **hätte**, **wäre** ich glücklicher.\n\n**Im Alltag**\n- Höflich: Ich **hätte** gern einen Termin. **Könnten** Sie das wiederholen?\n- Wunsch: Wenn ich reich **wäre**, **würde** ich reisen.\n\n**Achtung:** **würde + Infinitiv** ist die einfachste Variante; bei sein/haben/Modalverben nimmt man lieber **wäre/hätte/könnte**.",
             grammarTopic: "Konjunktiv II", minutes: 22);
         var l2g_mc = b.Ex(l2g, ExerciseType.MultipleChoice, SkillType.Grammar, "Höfliche Bitte: »___ Sie mir bitte helfen?«",
             new { question = "___ Sie mir bitte helfen?", options = new[] { "Können", "Könnten", "Konnten", "Kannst" } },
@@ -633,7 +683,7 @@ public static class DbSeeder
         var u3 = b.Unit(b1, "Relativsätze", "Personen und Dinge genauer beschreiben.", "Beschreibung");
 
         var l3g = b.Lesson(u3, "Relativsätze (Nominativ & Akkusativ)", SkillType.Grammar,
-            "## Relativsätze\nDas Relativpronomen richtet sich nach dem Bezugswort.\n\n| | maskulin | feminin | neutrum | Plural |\n|---|---|---|---|---|\n| Nom. | der | die | das | die |\n| Akk. | den | die | das | die |\n\n*Der Mann, **der** dort steht, ist mein Lehrer. Das Buch, **das** ich lese, ist spannend.*",
+            "## Relativsätze (Nominativ & Akkusativ)\n**Was ist das?** Nebensätze, die ein Nomen **näher beschreiben**. Sie beginnen mit einem Relativpronomen (der, die, das …).\n\n**Warum brauchst du das?** Um Sätze zu verbinden statt abgehackt zu sprechen: nicht »Das ist mein Lehrer. Er steht dort.«, sondern »Das ist mein Lehrer, **der** dort steht.«\n\n**Wie funktioniert es?** Das Pronomen richtet sich in Genus/Numerus nach dem Bezugswort, im Kasus nach seiner Rolle im Nebensatz. Verb ans Ende.\n\n| | maskulin | feminin | neutrum | Plural |\n|---|---|---|---|---|\n| Nom. | der | die | das | die |\n| Akk. | den | die | das | die |\n\n**Im Alltag**\n- Personen: Der Mann, **der** dort steht, ist mein Lehrer.\n- Sachen: Das Buch, **das** ich lese, ist spannend.\n\n**Achtung:** Der Relativsatz steht zwischen Kommas, und das Verb steht am **Ende**.",
             grammarTopic: "Relativsatz", minutes: 22);
         var l3g_mc = b.Ex(l3g, ExerciseType.MultipleChoice, SkillType.Grammar, "»Das ist der Mann, ___ in Berlin wohnt.«",
             new { question = "Das ist der Mann, ___ in Berlin wohnt.", options = new[] { "die", "das", "der", "den" } },
@@ -653,7 +703,7 @@ public static class DbSeeder
         var u4 = b.Unit(b1, "Adjektivdeklination", "Adjektivendungen sicher benutzen.", "Grammatik");
 
         var l4g = b.Lesson(u4, "Adjektivendungen (Nominativ & Akkusativ)", SkillType.Grammar,
-            "## Adjektivendungen\nNach **bestimmtem** Artikel (der/die/das) meist **-e / -en**:\n- der **rote** Mantel · die **rote** Jacke · das **rote** Auto\n\nNach **unbestimmtem** Artikel (ein):\n- ein **roter** Mantel (m) · eine **rote** Jacke (f) · ein **rotes** Auto (n)\n- Akkusativ m: einen **roten** Mantel",
+            "## Adjektivendungen (Nominativ & Akkusativ)\n**Was ist das?** Adjektive vor einem Nomen bekommen eine **Endung**, die von Artikel, Genus und Kasus abhängt.\n\n**Warum brauchst du das?** Für natürliches, korrektes Deutsch – ohne Endungen klingt jeder Satz falsch.\n\n**Wie funktioniert es?**\nNach **bestimmtem** Artikel (der/die/das) meist **-e / -en**:\n- der **rote** Mantel · die **rote** Jacke · das **rote** Auto\n\nNach **unbestimmtem** Artikel (ein):\n- ein **roter** Mantel (m) · eine **rote** Jacke (f) · ein **rotes** Auto (n)\n- Akkusativ m: einen **roten** Mantel\n\n**Im Alltag**\n- Einkaufen: Ich suche eine **warme** Jacke und einen **blauen** Pullover.\n- Beschreiben: Das ist das **neue** Handy, das ich gekauft habe.\n\n**Achtung:** Ohne Artikel »trägt« das Adjektiv die Artikel-Endung: **kalter** Kaffee, **frische** Milch.",
             grammarTopic: "Adjektivdeklination", minutes: 22);
         var l4g_mc = b.Ex(l4g, ExerciseType.MultipleChoice, SkillType.Grammar, "»Ich kaufe einen ___ Mantel.« (rot, m, Akkusativ)",
             new { question = "Ich kaufe einen ___ Mantel.", options = new[] { "rote", "roter", "roten", "rotes" } },
@@ -673,7 +723,7 @@ public static class DbSeeder
         var u5 = b.Unit(b1, "Verben mit Präposition & Reflexivverben", "Feste Verb-Präposition-Verbindungen benutzen.", "Grammatik");
 
         var l5g = b.Lesson(u5, "Verben mit Präposition", SkillType.Grammar,
-            "## Verben mit fester Präposition\n- sich freuen **auf** (+Akk): Ich freue mich **auf** das Wochenende.\n- warten **auf** (+Akk): Ich warte **auf** den Bus.\n- sich interessieren **für** (+Akk): Sie interessiert sich **für** Kunst.\n- denken **an** (+Akk): Ich denke oft **an** dich.",
+            "## Verben mit Präposition\n**Was ist das?** Viele Verben haben eine **feste Präposition** mit festem Kasus. Diese Kombination lernt man zusammen.\n\n**Warum brauchst du das?** Sie sind extrem häufig – und die Präposition ist oft anders als in deiner Muttersprache.\n\n**Wie funktioniert es?**\n- sich freuen **auf** (+Akk): Ich freue mich **auf** das Wochenende.\n- warten **auf** (+Akk): Ich warte **auf** den Bus.\n- sich interessieren **für** (+Akk): Sie interessiert sich **für** Kunst.\n- denken **an** (+Akk): Ich denke oft **an** dich.\n\n**Im Alltag**\n- Small Talk: Ich freue mich **auf** den Urlaub. Interessierst du dich **für** Sport?\n- Nachfragen: Worauf wartest du? – **Auf** den Bus.\n\n**Achtung:** Lerne Verb + Präposition + Kasus als **eine Einheit**: *sich freuen auf + Akkusativ*.",
             grammarTopic: "Verben mit Präposition", minutes: 20);
         var l5g_mc = b.Ex(l5g, ExerciseType.MultipleChoice, SkillType.Grammar, "»Ich freue mich ___ das Wochenende.«",
             new { question = "Ich freue mich ___ das Wochenende.", options = new[] { "für", "auf", "an", "über" } },
@@ -694,7 +744,7 @@ public static class DbSeeder
         var u6 = b.Unit(b1, "Meinung & Umwelt – Futur I", "Über die Zukunft sprechen und argumentieren.", "Umwelt");
 
         var l6g = b.Lesson(u6, "Futur I: werden + Infinitiv", SkillType.Grammar,
-            "## Futur I\n**werden** (konjugiert) + **Infinitiv** (am Ende).\n\n- ich **werde** … machen · du **wirst** · er **wird** · wir **werden**\n\n*Morgen **werde** ich dich **anrufen**. Wir **werden** mehr für die Umwelt **tun**.*",
+            "## Futur I: werden + Infinitiv\n**Was ist das?** Die **Zukunftsform** mit **werden** (konjugiert) + **Infinitiv** am Ende.\n\n**Warum brauchst du das?** Für Vorhersagen, Pläne und Versprechen. (Für sichere Pläne nimmt man im Alltag oft das Präsens: »Morgen fahre ich…«.)\n\n**Wie funktioniert es?**\n- ich **werde** … machen · du **wirst** · er **wird** · wir **werden**\n\n**Im Alltag**\n- Versprechen: Morgen **werde** ich dich **anrufen**.\n- Vorhersage: Es **wird** morgen **regnen**.\n\n**Achtung:** Das zweite Verb steht im **Infinitiv am Ende**: Wir **werden** mehr für die Umwelt **tun**.",
             grammarTopic: "Futur I", minutes: 20);
         var l6g_mc = b.Ex(l6g, ExerciseType.MultipleChoice, SkillType.Grammar, "»Morgen ___ ich dich anrufen.«",
             new { question = "Morgen ___ ich dich anrufen.", options = new[] { "werde", "wirst", "wird", "bin" } },
@@ -720,7 +770,7 @@ public static class DbSeeder
         var u7 = b.Unit(b1, "Infinitivsätze & Konnektoren", "Infinitiv mit zu, Finalsätze und Hauptsatz-Konnektoren.", "Satzbau");
 
         var l7g1 = b.Lesson(u7, "Infinitiv mit »zu«", SkillType.Grammar,
-            "## Infinitiv mit »zu«\nNach bestimmten Verben und Ausdrücken: »Ich versuche, Deutsch **zu lernen**.«, »Es ist wichtig, früh **aufzustehen**.«\nBei trennbaren Verben steht »zu« **zwischen** Präfix und Stamm: auf**zu**stehen, ein**zu**kaufen.",
+            "## Infinitiv mit »zu«\n**Was ist das?** Eine Konstruktion mit **zu + Infinitiv** nach bestimmten Verben und Ausdrücken.\n\n**Warum brauchst du das?** Um Absichten, Meinungen und Bewertungen flüssig auszudrücken: »Ich versuche zu…«, »Es ist wichtig zu…«.\n\n**Wie funktioniert es?**\n- Nach Verben wie *versuchen, vergessen, anfangen, vorhaben*: Ich versuche, Deutsch **zu lernen**.\n- Nach *Es ist + Adjektiv*: Es ist wichtig, früh **aufzustehen**.\n- Bei trennbaren Verben steht »zu« **zwischen** Präfix und Stamm: auf**zu**stehen, ein**zu**kaufen.\n\n**Im Alltag**\n- Pläne: Ich habe vor, nächstes Jahr **umzuziehen**.\n- Bewertung: Es macht Spaß, neue Leute **kennenzulernen**.\n\n**Achtung:** Nach Modalverben steht der Infinitiv **ohne** »zu«: Ich kann Deutsch **sprechen**.",
             grammarTopic: "Infinitiv mit zu", minutes: 20);
         b.Ex(l7g1, ExerciseType.MultipleChoice, SkillType.Grammar, "»Ich habe vor, nächstes Jahr ___.« (umziehen)",
             new { question = "Ich habe vor, nächstes Jahr ___.", options = new[] { "umziehen", "zu umziehen", "umzuziehen", "umziehen zu" } },
@@ -730,7 +780,7 @@ public static class DbSeeder
             new { answer = "Ich versuche Deutsch zu lernen" }, "»Ich versuche, Deutsch zu lernen.«", difficulty: 3);
 
         var l7g2 = b.Lesson(u7, "Finalsätze: um … zu / damit", SkillType.Grammar,
-            "## Absicht: um … zu / damit\n- **um … zu** (gleiches Subjekt): Ich lerne, **um** einen Job **zu** finden.\n- **damit** (verschiedene Subjekte): Ich erkläre es, **damit** du es verstehst.",
+            "## Finalsätze: um … zu / damit\n**Was ist das?** Zwei Wege, eine **Absicht** oder ein **Ziel** auszudrücken (»wozu?«, »mit welchem Ziel?«).\n\n**Warum brauchst du das?** Um Gründe und Ziele zu nennen – im Beruf, in Bewerbungen und im Alltag.\n\n**Wie funktioniert es?**\n- **um … zu** (bei **gleichem** Subjekt): Ich lerne, **um** einen Job **zu** finden.\n- **damit** (bei **verschiedenen** Subjekten): Ich erkläre es, **damit** du es verstehst.\n\n**Im Alltag**\n- Ziel: Ich spare Geld, **um** zu reisen.\n- Für andere: Ich schreibe es auf, **damit** du es nicht vergisst.\n\n**Achtung:** Gleiches Subjekt → **um … zu**; verschiedene Subjekte → **damit**.",
             grammarTopic: "Finalsatz", minutes: 20);
         b.Ex(l7g2, ExerciseType.MultipleChoice, SkillType.Grammar, "»Ich spare Geld, ___ ein Auto zu kaufen.«",
             new { question = "Ich spare Geld, ___ ein Auto zu kaufen.", options = new[] { "damit", "um", "weil", "dass" } },
@@ -740,7 +790,7 @@ public static class DbSeeder
             new { answers = new[] { new[] { "damit" } } }, "verschiedene Subjekte → **damit**.", difficulty: 3);
 
         var l7g3 = b.Lesson(u7, "Konnektoren im Hauptsatz: deshalb, trotzdem", SkillType.Grammar,
-            "## Hauptsatz-Konnektoren\nDiese stehen auf **Position 1**, das Verb folgt direkt (Position 2).\n- **deshalb / deswegen** (Folge): Es regnet, **deshalb bleibe** ich zu Hause.\n- **trotzdem** (Gegensatz): Es regnet; **trotzdem gehe** ich raus.",
+            "## Konnektoren im Hauptsatz: deshalb, trotzdem\n**Was ist das?** Verbindungswörter, die **zwei Hauptsätze** verknüpfen. Anders als bei Nebensätzen bleibt das Verb auf Position 2.\n\n**Warum brauchst du das?** Um Folgen und Gegensätze auszudrücken, ohne das Verb ans Ende zu schicken.\n\n**Wie funktioniert es?** Der Konnektor steht auf **Position 1**, das Verb folgt direkt (Position 2).\n- **deshalb / deswegen** (Folge): Es regnet, **deshalb bleibe** ich zu Hause.\n- **trotzdem** (Gegensatz): Es regnet; **trotzdem gehe** ich raus.\n\n**Im Alltag**\n- Folge: Ich habe verschlafen, **deshalb war** ich zu spät.\n- Gegensatz: Es war teuer; **trotzdem habe** ich es gekauft.\n\n**Achtung:** Nach **deshalb/trotzdem** kommt sofort das Verb (Inversion), nicht das Subjekt.",
             grammarTopic: "Konnektoren (Hauptsatz)", minutes: 18);
         b.Ex(l7g3, ExerciseType.MultipleChoice, SkillType.Grammar, "»Ich bin müde, ___ arbeite ich weiter.« (Gegensatz)",
             new { question = "Ich bin müde, ___ arbeite ich weiter.", options = new[] { "deshalb", "trotzdem", "deswegen", "weil" } },
@@ -807,7 +857,7 @@ public static class DbSeeder
         // Unit 1: Passiv
         var u1 = b.Unit(b2, "Das Passiv", "Vorgänge ohne Handelnden ausdrücken.", "Grammatik");
         var l1g = b.Lesson(u1, "Vorgangspassiv & Passiv mit Modalverben", SkillType.Grammar,
-            "## Das Passiv\n**werden + Partizip II**.\n\n- Präsens: Das Haus **wird gebaut**.\n- Präteritum: Das Haus **wurde gebaut**.\n- Perfekt: Das Haus **ist gebaut worden**.\n- mit Modalverb: Das Problem **muss gelöst werden**.",
+            "## Vorgangspassiv & Passiv mit Modalverben\n**Was ist das?** Beim Passiv steht die **Handlung** im Fokus, nicht der Handelnde: »Das Haus **wird gebaut**« – wer baut, ist unwichtig.\n\n**Warum brauchst du das?** In Nachrichten, Anleitungen, Berichten und im Beruf – überall, wo der Prozess wichtiger ist als die Person.\n\n**Wie funktioniert es?** **werden + Partizip II**.\n- Präsens: Das Haus **wird gebaut**.\n- Präteritum: Das Haus **wurde gebaut**.\n- Perfekt: Das Haus **ist gebaut worden**.\n- mit Modalverb: Das Problem **muss gelöst werden**.\n\n**Im Alltag**\n- Anleitung: Der Antrag **wird** online **ausgefüllt** und **abgeschickt**.\n- Bericht: Gestern **wurde** ein neues Gesetz **beschlossen**.\n\n**Achtung:** Wer die Handlung ausführt, steht mit **von**: Das Haus wird **von einer Firma** gebaut.",
             grammarTopic: "Passiv", minutes: 22);
         var l1g_mc = b.Ex(l1g, ExerciseType.MultipleChoice, SkillType.Grammar, "»Der Brief ___ gestern geschrieben.« (Präteritum Passiv)",
             new { question = "Der Brief ___ gestern geschrieben.", options = new[] { "wird", "wurde", "hat", "ist" } },
@@ -829,7 +879,7 @@ public static class DbSeeder
         // Unit 2: Konnektoren
         var u2 = b.Unit(b2, "Anspruchsvolle Konnektoren", "Komplexe Beziehungen ausdrücken.", "Verbindung");
         var l2g = b.Lesson(u2, "je…desto, sodass, indem, trotzdem", SkillType.Grammar,
-            "## Konnektoren (B2)\n- **je … desto**: **Je** mehr ich übe, **desto** besser werde ich.\n- **sodass** (Folge): Er sprach laut, **sodass** alle ihn hörten.\n- **indem** (Mittel): Man lernt, **indem** man Fehler macht.\n- **trotzdem** (Gegensatz): Es war spät; **trotzdem** arbeitete sie weiter.",
+            "## Konnektoren: je…desto, sodass, indem\n**Was ist das?** Fortgeschrittene Konnektoren für **Verhältnis**, **Folge**, **Mittel** und **Gegensatz**.\n\n**Warum brauchst du das?** Für differenzierte, erwachsene Sprache in Diskussion und Text.\n\n**Wie funktioniert es?**\n- **je … desto** (Verhältnis): **Je** mehr ich übe, **desto** besser werde ich.\n- **sodass** (Folge): Er sprach laut, **sodass** alle ihn hörten.\n- **indem** (Mittel/Methode): Man lernt, **indem** man Fehler macht.\n- **trotzdem** (Gegensatz): Es war spät; **trotzdem** arbeitete sie weiter.\n\n**Im Alltag**\n- Verhältnis: **Je** später es wird, **desto** müder bin ich.\n- Methode: Du sparst Zeit, **indem** du alles vorbereitest.\n\n**Achtung:** Bei **je … desto** steht im je-Teil das Verb am Ende: »Je mehr ich **lerne**, desto sicherer **werde** ich.«",
             grammarTopic: "Konnektoren", minutes: 20);
         var l2g_mc = b.Ex(l2g, ExerciseType.MultipleChoice, SkillType.Grammar, "»Je mehr man liest, ___ größer wird der Wortschatz.«",
             new { question = "Je mehr man liest, ___ größer wird der Wortschatz.", options = new[] { "desto", "sodass", "indem", "trotzdem" } },
@@ -847,7 +897,7 @@ public static class DbSeeder
         // Unit 3: Indirekte Rede (Konjunktiv I)
         var u3 = b.Unit(b2, "Indirekte Rede (Konjunktiv I)", "Aussagen anderer wiedergeben.", "Stil");
         var l3g = b.Lesson(u3, "Konjunktiv I", SkillType.Grammar,
-            "## Indirekte Rede\nKonjunktiv I gibt Aussagen wieder.\n- sein → er **sei** · haben → er **habe** · kommen → er **komme**\n\n*Direkt: »Ich bin krank.« → Indirekt: Er sagt, er **sei** krank.*",
+            "## Konjunktiv I (indirekte Rede)\n**Was ist das?** Die Form, mit der man **wiedergibt**, was jemand anderes gesagt hat – neutral, ohne Stellung zu beziehen.\n\n**Warum brauchst du das?** In Nachrichten, Berichten und Zusammenfassungen: »Der Minister sagte, er **habe**…«.\n\n**Wie funktioniert es?**\n- sein → er **sei** · haben → er **habe** · kommen → er **komme**\n- Direkt: »Ich bin krank.« → Indirekt: Er sagt, er **sei** krank.\n\n**Im Alltag**\n- Nachricht: Die Firma teilt mit, sie **werde** neue Stellen schaffen.\n- Weitergeben: Sie sagt, sie **habe** keine Zeit.\n\n**Achtung:** Sieht der Konjunktiv I wie der Indikativ aus (z. B. »sie haben«), weicht man auf **Konjunktiv II** aus: sie **hätten**.",
             grammarTopic: "Konjunktiv I", minutes: 22);
         var l3g_mc = b.Ex(l3g, ExerciseType.MultipleChoice, SkillType.Grammar, "»Er sagt, er ___ krank.« (Konjunktiv I)",
             new { question = "Er sagt, er ___ krank.", options = new[] { "ist", "sei", "wäre", "war" } },
@@ -866,7 +916,7 @@ public static class DbSeeder
         // Unit 4: Nomen-Verb-Verbindungen
         var u4 = b.Unit(b2, "Nomen-Verb-Verbindungen", "Feste Wendungen der Schriftsprache.", "Stil");
         var l4g = b.Lesson(u4, "Funktionsverbgefüge (Einführung)", SkillType.Grammar,
-            "## Nomen-Verb-Verbindungen\n- eine Entscheidung **treffen**\n- in Frage **stellen**\n- zur Verfügung **stehen/stellen**\n- Kritik **üben**\n- eine Rolle **spielen**",
+            "## Funktionsverbgefüge (Einführung)\n**Was ist das?** Feste Verbindungen aus **Nomen + Verb**, bei denen das Nomen die Bedeutung trägt: *eine Entscheidung treffen* = entscheiden.\n\n**Warum brauchst du das?** Sie klingen formell und gebildet – typisch für Beruf, Zeitung und schriftliches Deutsch.\n\n**Wie funktioniert es?** Man lernt sie als **feste Wendung**:\n- eine Entscheidung **treffen** (= entscheiden)\n- in Frage **stellen** (= bezweifeln)\n- zur Verfügung **stehen/stellen**\n- Kritik **üben** (= kritisieren)\n- eine Rolle **spielen**\n\n**Im Alltag**\n- Beruf: Wir **treffen** morgen eine **Entscheidung**.\n- Diskussion: Er **stellt** den Plan **in Frage**.\n\n**Achtung:** Das Verb hat hier oft eine **andere** Bedeutung als allein – lerne die ganze Wendung, nicht nur das Verb.",
             grammarTopic: "Nomen-Verb-Verbindung", minutes: 20);
         var l4g_mc = b.Ex(l4g, ExerciseType.MultipleChoice, SkillType.Grammar, "Welches Verb passt: »eine Entscheidung ___«?",
             new { question = "eine Entscheidung ___", options = new[] { "machen", "treffen", "nehmen", "geben" } },
@@ -879,7 +929,7 @@ public static class DbSeeder
         // Unit 5: Partizipien als Attribut
         var u5 = b.Unit(b2, "Partizipien als Attribut", "Partizip I und II als Adjektive.", "Grammatik");
         var l5g = b.Lesson(u5, "Partizip I & II als Adjektiv", SkillType.Grammar,
-            "## Partizipien als Attribut\n- **Partizip I** (-end, gleichzeitig/aktiv): die **lachenden** Kinder\n- **Partizip II** (passiv/abgeschlossen): das **reparierte** Auto",
+            "## Partizip I & II als Adjektiv\n**Was ist das?** Partizipien, die wie ein **Adjektiv** vor einem Nomen stehen und es beschreiben.\n\n**Warum brauchst du das?** Für kompakte, elegante Beschreibungen statt langer Relativsätze.\n\n**Wie funktioniert es?**\n- **Partizip I** (-end, gleichzeitig/aktiv): die **lachenden** Kinder (= die Kinder, die lachen)\n- **Partizip II** (passiv/abgeschlossen): das **reparierte** Auto (= das Auto, das repariert wurde)\n\n**Im Alltag**\n- Aktiv/gleichzeitig: der **schlafende** Hund, ein **steigendes** Interesse.\n- Abgeschlossen/passiv: die **gekochten** Eier, der **verlorene** Schlüssel.\n\n**Achtung:** Beide bekommen normale **Adjektivendungen**: Partizip I = aktiv/gleichzeitig, Partizip II = meist passiv/abgeschlossen.",
             grammarTopic: "Partizipialattribut", minutes: 20);
         var l5g_mc = b.Ex(l5g, ExerciseType.MultipleChoice, SkillType.Grammar, "»das ___ Auto« (reparieren, abgeschlossen)",
             new { question = "das ___ Auto (reparieren, abgeschlossen)", options = new[] { "reparierende", "reparierte", "reparieren", "zu reparierende" } },
@@ -969,7 +1019,7 @@ public static class DbSeeder
         // Unit 1: Nominalstil
         var u1 = b.Unit(c1, "Nominalstil", "Verbalstil in Nominalstil umwandeln.", "Stil");
         var l1g = b.Lesson(u1, "Verbalstil ↔ Nominalstil", SkillType.Grammar,
-            "## Nominalstil\nTypisch für Wissenschaft und Verwaltung.\n\n- Verbalstil: »**Weil die Preise steigen**, …«\n- Nominalstil: »**Aufgrund des Anstiegs der Preise** …« / »**Aufgrund steigender Preise** …«\n- »**Nachdem** er angekommen **war**« → »**Nach seiner Ankunft**«",
+            "## Verbalstil ↔ Nominalstil\n**Was ist das?** Zwei Ausdrucksweisen: der **Verbalstil** nutzt Verben und Nebensätze, der **Nominalstil** verdichtet dasselbe zu Nomen und Präpositionen.\n\n**Warum brauchst du das?** Der Nominalstil ist typisch für Wissenschaft, Recht und Verwaltung; du musst ihn **verstehen** und aktiv **umformen** können (häufige C1-Aufgabe).\n\n**Wie funktioniert es?**\n- Verbalstil: »**Weil die Preise steigen**, …«\n- Nominalstil: »**Aufgrund steigender Preise** …« / »**Aufgrund des Anstiegs der Preise** …«\n- »**Nachdem** er angekommen **war**« → »**Nach seiner Ankunft**«\n\n**Im Alltag**\n- Behörde: »**Nach Prüfung des Antrags** …« statt »Nachdem man den Antrag geprüft hat, …«.\n- Bericht: »**Zur Verbesserung der Qualität** …« statt »Um die Qualität zu verbessern, …«.\n\n**Achtung:** Nominalstil wirkt sachlich, aber schnell schwerfällig – im Gespräch bleibt der **Verbalstil** natürlicher.",
             grammarTopic: "Nominalisierung", minutes: 24);
         var l1g_mc = b.Ex(l1g, ExerciseType.MultipleChoice, SkillType.Grammar, "Nominalisiere: »weil die Preise steigen«",
             new { question = "Nominalstil von »weil die Preise steigen«:", options = new[] { "wegen die Preise steigen", "aufgrund steigender Preise", "weil der Preisanstieg", "trotz der Preise" } },
@@ -988,7 +1038,7 @@ public static class DbSeeder
         // Unit 2: Erweiterte Partizipialattribute
         var u2 = b.Unit(c1, "Erweiterte Partizipialattribute", "Komplexe Attribute verstehen und bilden.", "Grammatik");
         var l2g = b.Lesson(u2, "Erweiterte Partizipialkonstruktionen", SkillType.Grammar,
-            "## Erweiterte Attribute\n»die **in den letzten Jahren stark gestiegenen** Preise« = »die Preise, die in den letzten Jahren stark gestiegen sind«.\n\n- Partizip I (aktiv/gleichzeitig): »das **schnell wachsende** Unternehmen«\n- Partizip II (passiv/vollendet): »der **gestern veröffentlichte** Bericht«",
+            "## Erweiterte Partizipialkonstruktionen\n**Was ist das?** Ein Partizip-Attribut mit **Ergänzungen davor** – es ersetzt einen ganzen Relativsatz und steht zwischen Artikel und Nomen.\n\n**Warum brauchst du das?** Sehr häufig in Fachtexten, Zeitung und Wissenschaft; du musst solche Konstruktionen schnell **entschlüsseln**.\n\n**Wie funktioniert es?**\n- »die **in den letzten Jahren stark gestiegenen** Preise« = »die Preise, die in den letzten Jahren stark gestiegen sind«\n- Partizip I (aktiv/gleichzeitig): »das **schnell wachsende** Unternehmen«\n- Partizip II (passiv/vollendet): »der **gestern veröffentlichte** Bericht«\n\n**Im Alltag**\n- Zeitung: »die **von Experten empfohlene** Maßnahme«.\n- Fachtext: »ein **auf Nachhaltigkeit ausgerichtetes** Konzept«.\n\n**Achtung:** Zum Verstehen findest du zuerst **Artikel + Nomen** und liest den Block dazwischen wie einen Relativsatz.",
             grammarTopic: "Partizipialattribut", minutes: 24);
         var l2g_mc = b.Ex(l2g, ExerciseType.MultipleChoice, SkillType.Grammar, "»der gestern ___ Bericht« (veröffentlichen)",
             new { question = "der gestern ___ Bericht", options = new[] { "veröffentlichende", "veröffentlichte", "veröffentlichen", "zu veröffentlichende" } },
@@ -1007,7 +1057,7 @@ public static class DbSeeder
         // Unit 3: Konnektoren des gehobenen Stils
         var u3 = b.Unit(c1, "Konnektoren des gehobenen Stils", "Präzise und formell verknüpfen.", "Stil");
         var l3g = b.Lesson(u3, "folglich, dennoch, zumal, hingegen", SkillType.Grammar,
-            "## Gehobene Konnektoren\n- **folglich / infolgedessen** (Folge): …, **folglich** muss gehandelt werden.\n- **dennoch / gleichwohl** (Gegensatz): Es war riskant; **dennoch** wagte er es.\n- **zumal** (verstärkender Grund): Wir bleiben, **zumal** es regnet.\n- **hingegen** (Kontrast): Er ist optimistisch, sie **hingegen** skeptisch.",
+            "## folglich, dennoch, zumal, hingegen\n**Was ist das?** **Gehobene Konnektoren** für Folge, Gegensatz, verstärkten Grund und Kontrast – die feinere Ebene über weil/aber/deshalb.\n\n**Warum brauchst du das?** Für präzise, stilvolle Argumentation in Diskussion, Essay und Beruf.\n\n**Wie funktioniert es?**\n- **folglich / infolgedessen** (Folge): …, **folglich** muss gehandelt werden.\n- **dennoch / gleichwohl** (Gegensatz): Es war riskant; **dennoch** wagte er es.\n- **zumal** (verstärkender Grund): Wir bleiben, **zumal** es regnet.\n- **hingegen** (Kontrast): Er ist optimistisch, sie **hingegen** skeptisch.\n\n**Im Alltag**\n- Argument: Die Zahlen sinken; **folglich** müssen wir reagieren.\n- Kontrast: Das eine Modell ist teuer, das andere **hingegen** günstig.\n\n**Achtung:** Wie *deshalb* lösen diese im Hauptsatz **Inversion** aus (Verb direkt nach dem Konnektor).",
             grammarTopic: "Konnektoren (C1)", minutes: 22);
         var l3g_mc = b.Ex(l3g, ExerciseType.MultipleChoice, SkillType.Grammar, "»Das Experiment war riskant; ___ wurde es durchgeführt.« (Gegensatz)",
             new { question = "Das Experiment war riskant; ___ wurde es durchgeführt.", options = new[] { "folglich", "dennoch", "zumal", "deshalb" } },
@@ -1019,7 +1069,7 @@ public static class DbSeeder
         // Unit 4: Funktionsverbgefüge
         var u4 = b.Unit(c1, "Funktionsverbgefüge", "Idiomatische Verb-Nomen-Gefüge.", "Stil");
         var l4g = b.Lesson(u4, "Funktionsverbgefüge", SkillType.Grammar,
-            "## Funktionsverbgefüge\n- in Frage **stellen** (= bezweifeln)\n- zur Verfügung **stehen/stellen**\n- in Betracht **ziehen** (= erwägen)\n- Anwendung **finden** (= angewendet werden)\n- in Kraft **treten** (= gültig werden)",
+            "## Funktionsverbgefüge\n**Was ist das?** Feste **Nomen-Verb-Verbindungen** der gehobenen Sprache, bei denen das Nomen die Bedeutung trägt und das Verb nur »funktioniert«.\n\n**Warum brauchst du das?** Kennzeichen von formellem, professionellem Deutsch – Recht, Verwaltung, Wirtschaft.\n\n**Wie funktioniert es?** Als feste Wendung lernen (oft = ein einzelnes Verb):\n- in Frage **stellen** (= bezweifeln)\n- zur Verfügung **stehen/stellen**\n- in Betracht **ziehen** (= erwägen)\n- Anwendung **finden** (= angewendet werden)\n- in Kraft **treten** (= gültig werden)\n\n**Im Alltag**\n- Recht: Das Gesetz **tritt** am 1. Januar **in Kraft**.\n- Beruf: Wir **ziehen** mehrere Optionen **in Betracht**.\n\n**Achtung:** Diese Wendungen sind idiomatisch – Präposition und Verb sind **fest** und nicht frei ersetzbar.",
             grammarTopic: "Funktionsverbgefüge", minutes: 22);
         var l4g_mc = b.Ex(l4g, ExerciseType.MultipleChoice, SkillType.Grammar, "»Diese Möglichkeit sollten wir in Betracht ___.«",
             new { question = "Diese Möglichkeit sollten wir in Betracht ___.", options = new[] { "nehmen", "ziehen", "stellen", "bringen" } },
@@ -1032,7 +1082,7 @@ public static class DbSeeder
         // Unit 5: Konjunktiv & Distanz
         var u5 = b.Unit(c1, "Konjunktiv & Distanz", "Irreales und Distanz ausdrücken.", "Stil");
         var l5g = b.Lesson(u5, "Konjunktiv II (Vergangenheit) & Distanz", SkillType.Grammar,
-            "## Konjunktiv II der Vergangenheit\n**hätte/wäre + Partizip II**: »Wenn ich das **gewusst hätte**, **wäre** ich nicht **gekommen**.«\n\nAuch für vorsichtige Aussagen: »Das **dürfte** schwierig sein.«, »Man **könnte** argumentieren, dass …«",
+            "## Konjunktiv II (Vergangenheit) & Distanz\n**Was ist das?** Der Konjunktiv II der Vergangenheit (**hätte/wäre + Partizip II**) drückt **Irreales in der Vergangenheit** aus – etwas, das nicht passiert ist.\n\n**Warum brauchst du das?** Für Bedauern, hypothetische Rückblicke und vorsichtige, distanzierte Aussagen – Kennzeichen reifer Sprache.\n\n**Wie funktioniert es?**\n- Irreal (Vergangenheit): »Wenn ich das **gewusst hätte**, **wäre** ich nicht **gekommen**.«\n- Distanz/Vorsicht: »Das **dürfte** schwierig sein.«, »Man **könnte** argumentieren, dass …«\n\n**Im Alltag**\n- Bedauern: **Hätte** ich früher **angefangen**, **wäre** ich jetzt fertig.\n- Höfliche Vermutung: Das **hätte** man anders **lösen können**.\n\n**Achtung:** Für die Vergangenheit immer **hätte/wäre + Partizip II** – nicht *würde*.",
             grammarTopic: "Konjunktiv II", minutes: 22);
         var l5g_mc = b.Ex(l5g, ExerciseType.MultipleChoice, SkillType.Grammar, "»Wenn ich das gewusst hätte, ___ ich anders entschieden.«",
             new { question = "Wenn ich das gewusst hätte, ___ ich anders entschieden.", options = new[] { "würde", "hätte", "wäre", "habe" } },
