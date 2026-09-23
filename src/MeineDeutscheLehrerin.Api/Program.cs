@@ -60,6 +60,9 @@ using (var scope = app.Services.CreateScope())
     // Migrations.Postgres assembly (selected in AddInfrastructure). Schema evolves on every deploy.
     await db.Database.MigrateAsync();
     await DbSeeder.SeedAsync(db);
+    // Bring existing lessons' teaching content up to date (seeding only inserts missing levels).
+    var contentUpdated = await DbSeeder.SyncContentAsync(db);
+    if (contentUpdated > 0) Console.WriteLine($"Lesson content sync: {contentUpdated} lesson(s) updated.");
     await FeatureFlagService.SeedAsync(db);
 
     // Seed the Admin role, and the configured admin account (skipped unless Admin:Email + Admin:Password are set).
