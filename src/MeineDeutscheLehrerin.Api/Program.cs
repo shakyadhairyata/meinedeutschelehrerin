@@ -122,6 +122,15 @@ if (args.Length > 0 && args[0].Equals("generate-vocab", StringComparison.Ordinal
     return;
 }
 
+// CLI mode: `dotnet run -- enrich-vocab [LEVEL|all] [limit]` — add a usage note + example to existing vocab and exit.
+if (args.Length > 0 && args[0].Equals("enrich-vocab", StringComparison.OrdinalIgnoreCase))
+{
+    var levelArg = args.Length > 1 ? args[1] : "all";
+    var limit = args.Length > 2 && int.TryParse(args[2], out var n) ? n : 0;
+    await MeineDeutscheLehrerin.Api.Tools.VocabEnrichmentRunner.RunAsync(app.Services, levelArg, limit);
+    return;
+}
+
 // CLI mode: `dotnet run -- import-vocab all <dir>` | `import-vocab <LEVEL> <file.json>` — import wordlists and exit.
 if (args.Length > 0 && args[0].Equals("import-vocab", StringComparison.OrdinalIgnoreCase))
 {

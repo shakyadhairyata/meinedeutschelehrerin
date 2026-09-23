@@ -121,6 +121,13 @@ public record GeneratedVocabItemDto(
     string German, string English, string PartOfSpeech,
     string? Article, string? Plural, string Example, string Theme);
 
+// Vocab enrichment: add a usage note + natural example to words that already exist.
+public record VocabEnrichInputDto(string German, string English, string PartOfSpeech);
+
+public record VocabEnrichmentDto(IReadOnlyList<VocabEnrichItemDto> Items);
+
+public record VocabEnrichItemDto(string German, string Note, string Example);
+
 public record GeneratedExerciseDto(
     ExerciseType Type, SkillType Skill, string Prompt, JsonNode? Content,
     JsonNode? Solution, string Explanation, string? GrammarTopic, int Difficulty);

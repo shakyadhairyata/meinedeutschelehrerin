@@ -10,6 +10,7 @@ from . import claude_client, evaluator
 from .rag import retriever, store
 from .schemas import (
     CoachRequest,
+    EnrichVocabRequest,
     GenerateRequest,
     GenerateVocabRequest,
     RagIndexRequest,
@@ -53,6 +54,12 @@ def generate_exercises(req: GenerateRequest):
 @app.post("/generate/vocabulary")
 def generate_vocabulary(req: GenerateVocabRequest):
     return evaluator.generate_vocabulary(req)
+
+
+@app.post("/enrich/vocabulary")
+def enrich_vocabulary(req: EnrichVocabRequest):
+    """Add a usage note + natural example to existing vocabulary words (batch)."""
+    return evaluator.enrich_vocabulary(req)
 
 
 # ---------------- Grammar RAG ----------------
