@@ -128,6 +128,16 @@ public record VocabEnrichmentDto(IReadOnlyList<VocabEnrichItemDto> Items);
 
 public record VocabEnrichItemDto(string German, string Note, string Example);
 
+// Word lookup (hover/tap a word in a lesson): matched from the vocabulary, or glossed by AI and saved.
+public record WordLookupDto(
+    string Word, bool Found, string Source,
+    string? German, string? English, string? PartOfSpeech,
+    string? Article, string? Plural, string? Example, string? Note);
+
+// One AI gloss for an unknown word (base form + meaning).
+public record WordGlossDto(
+    string German, string English, string PartOfSpeech, string? Article, string? Plural, string Example);
+
 public record GeneratedExerciseDto(
     ExerciseType Type, SkillType Skill, string Prompt, JsonNode? Content,
     JsonNode? Solution, string Explanation, string? GrammarTopic, int Difficulty);

@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { get, post } from '../api/client'
-import { Spinner, Markdown, SkillBadge, AudioButton, ProgressBar, Alert } from '../components/ui'
+import { Spinner, SkillBadge, AudioButton, ProgressBar, Alert } from '../components/ui'
 import ExercisePlayer from '../components/ExercisePlayer'
+import LessonText from '../components/WordLookup'
+import { useAuth } from '../auth/AuthContext'
 
 export default function Lesson() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { profile } = useAuth()
   const [lesson, setLesson] = useState(null)
   const [error, setError] = useState('')
   const [step, setStep] = useState(0) // 0..exercises.length (last = summary)
@@ -47,7 +50,7 @@ export default function Lesson() {
           {lesson.grammarTopic && <span className="text-xs text-slate-400">Thema: {lesson.grammarTopic}</span>}
         </div>
         <h1 className="text-2xl font-bold text-slate-800">{lesson.title}</h1>
-        <div className="mt-3"><Markdown>{lesson.content}</Markdown></div>
+        <div className="mt-3"><LessonText content={lesson.content} level={profile?.targetLevel} /></div>
         {lesson.audioScript && (
           <div className="mt-3 flex items-center gap-3 rounded-lg bg-emerald-50 p-3">
             <AudioButton text={lesson.audioScript} label="Hörtext abspielen" />

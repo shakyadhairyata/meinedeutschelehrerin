@@ -13,6 +13,7 @@ from .schemas import (
     GenerateRequest,
     GenerateVocabRequest,
     SpeakingRequest,
+    WordLookupRequest,
     WritingRequest,
 )
 
@@ -247,6 +248,21 @@ def enrich_vocabulary(req: EnrichVocabRequest) -> dict:
     if data and isinstance(data.get("items"), list):
         return data
     return {"items": []}
+
+
+def lookup_word(req: WordLookupRequest) -> dict:
+    """Return the base form + meaning of one word (in its sentence context). Empty dict if the
+    word can't be resolved or no provider is configured — the caller then reports 'no entry'."""
+    if not req.word.strip():
+        return {}
+    data = _llm_json(
+        prompts.LOOKUP_SYSTEM.format(level=req.level),
+        prompts.LOOKUP_USER.format(word=req.word, context=req.context or ""),
+        max_tokens=400,
+    )
+    if data and data.get("german") and data.get("english"):
+        return data
+    return {}
 
 
 def generate_exercises(req: GenerateRequest) -> dict:

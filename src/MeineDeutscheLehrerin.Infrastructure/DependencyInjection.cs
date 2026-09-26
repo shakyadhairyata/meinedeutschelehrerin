@@ -57,6 +57,7 @@ public static class DependencyInjection
         services.AddScoped<IStudyPlanService, StudyPlanService>();
         services.AddScoped<IFeatureFlagService, FeatureFlagService>();
         services.AddScoped<IAiAccessService, AiAccessService>();
+        services.AddScoped<ILookupService, LookupService>();
 
         return services;
     }

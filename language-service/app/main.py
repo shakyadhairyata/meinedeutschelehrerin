@@ -16,6 +16,7 @@ from .schemas import (
     RagIndexRequest,
     RagQueryRequest,
     SpeakingRequest,
+    WordLookupRequest,
     WritingRequest,
 )
 
@@ -60,6 +61,12 @@ def generate_vocabulary(req: GenerateVocabRequest):
 def enrich_vocabulary(req: EnrichVocabRequest):
     """Add a usage note + natural example to existing vocabulary words (batch)."""
     return evaluator.enrich_vocabulary(req)
+
+
+@app.post("/lookup/word")
+def lookup_word(req: WordLookupRequest):
+    """Base form + meaning of one (possibly inflected) word, given its sentence context."""
+    return evaluator.lookup_word(req)
 
 
 # ---------------- Grammar RAG ----------------

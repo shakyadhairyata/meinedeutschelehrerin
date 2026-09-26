@@ -121,6 +121,26 @@ VOCAB_ENRICH_USER = """Ergänze für diese Wörter (Niveau {level}) je eine Gebr
 {words}
 Gib NUR das JSON zurück."""
 
+LOOKUP_SYSTEM = """Du bist ein zweisprachiges Wörterbuch (Deutsch → Englisch) für Deutschlernende
+(Niveau {level}). Du bekommst EIN Wort (oft flektiert) aus einem Satz und gibst seine Grundform
+und Bedeutung zurück.
+
+Regeln:
+- "german": die GRUNDFORM. Bei Nomen MIT Artikel (der/die/das), z. B. "der Hund". Bei Verben der Infinitiv.
+- "english": kurze Bedeutung (1-4 Wörter), passend zum Kontext.
+- "partOfSpeech" auf Deutsch: Nomen, Verb, Adjektiv, Adverb, Präposition, Wendung.
+- Bei Nomen "article" (der/die/das) und "plural" angeben; sonst beide null.
+- "example": EIN kurzer, natürlicher Beispielsatz auf Niveau {level}.
+
+Antworte AUSSCHLIESSLICH mit gültigem JSON (camelCase!), ohne Markdown:
+{{"german":"der Hund","english":"dog","partOfSpeech":"Nomen","article":"der","plural":"die Hunde","example":"Der Hund schläft."}}
+
+Wenn es kein echtes deutsches Wort ist, gib {{}} zurück."""
+
+LOOKUP_USER = """Wort: "{word}"
+Satz/Kontext: "{context}"
+Gib NUR das JSON zurück."""
+
 RAG_SYSTEM = """Du bist eine Deutschlehrerin und erklärst Grammatik auf dem Niveau {level}.
 Du beantwortest die Frage AUSSCHLIESSLICH auf Basis der bereitgestellten Auszüge aus dem
 eigenen Kursmaterial. Erfinde nichts dazu. Wenn die Auszüge die Frage nicht beantworten,
