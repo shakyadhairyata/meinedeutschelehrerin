@@ -60,3 +60,25 @@ export function renderMarkdown(md) {
   }
   return html.join('\n')
 }
+
+// Wrap each word in the rendered HTML in a <span class="lw"> so it can be hovered/tapped for a
+// lookup. Only touches text between tags (never tag contents), preserves HTML entities like
+// &amp;/&lt;, and skips inside <code> (examples/code shouldn't be word-lookup targets).
+export function wrapWords(html) {
+  let inCode = false
+  return html.replace(/(<[^>]+>)|([^<]+)/g, (_, tag, text) => {
+    if (tag) {
+      const t = tag.slice(0, 6).toLowerCase()
+      if (t.startsWith('<code')) inCode = true
+      else if (t.startsWith('</code')) inCode = false
+      return tag
+    }
+    if (inCode) return text
+    return text.replace(/(&[a-zA-Z#0-9]+;)|([\p{L}][\p{L}­-]*)/gu,
+      (m, entity, word) => (entity ? entity : `<span class="lw">${word}</span>`))
+  })
+}
+
+export function renderMarkdownLookup(md) {
+  return wrapWords(renderMarkdown(md))
+}

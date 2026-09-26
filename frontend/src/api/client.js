@@ -62,3 +62,11 @@ export async function api(path, { method = 'GET', body, retry = true } = {}) {
 export const get = (p) => api(p)
 export const post = (p, body) => api(p, { method: 'POST', body })
 export const put = (p, body) => api(p, { method: 'PUT', body })
+
+// Word lookup for hover/tap in a lesson: matched from the vocabulary, or (on a miss) glossed by AI.
+export function lookupWord(word, level, context) {
+  const params = new URLSearchParams({ word })
+  if (level) params.set('level', level)
+  if (context) params.set('context', context)
+  return get(`/api/lookup?${params.toString()}`)
+}

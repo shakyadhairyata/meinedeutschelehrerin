@@ -43,6 +43,13 @@ class EnrichVocabRequest(BaseModel):
     items: list[EnrichVocabItem] = []
 
 
+class WordLookupRequest(BaseModel):
+    """Look up one (possibly inflected) word from a sentence: base form + meaning."""
+    word: str = ""
+    context: str = ""
+    level: str = "A1"
+
+
 class RagDoc(BaseModel):
     """One curriculum document pushed in by the .NET API for indexing."""
     level: str = "A1"

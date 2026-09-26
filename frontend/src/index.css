@@ -61,6 +61,33 @@ select.input { color-scheme: dark; }
 .prose-lesson td { @apply border border-white/10 px-3 py-1.5; }
 .prose-lesson code { @apply rounded bg-white/10 px-1 py-0.5 text-sm text-brand-300; }
 
+/* ---- word lookup: no permanent mark; only an affordance on hover ---- */
+.lw:hover {
+  cursor: help;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  background: rgba(16, 217, 106, 0.12);
+  border-radius: 3px;
+}
+.wordpop {
+  max-width: 260px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #0f1613;
+  color: #e7ece9;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 34px -12px rgba(0, 0, 0, 0.8);
+  font-size: 13px;
+  line-height: 1.45;
+  animation: pop 0.14s ease-out;
+}
+.wordpop-head { font-weight: 700; color: #ffffff; font-size: 15px; }
+.wordpop-en { color: #a7f3d0; margin-top: 2px; }
+.wordpop-ex { color: #cbd5cf; font-style: italic; margin-top: 6px; }
+.wordpop-note { color: #9fb0a8; margin-top: 6px; }
+.wordpop-tag { color: #34d399; font-size: 11px; font-weight: 600; margin-top: 8px; }
+.wordpop-muted { color: #9fb0a8; }
+
 /*
   Dark-theme remap: the pages use a light Tailwind slate palette. These rules come AFTER
   @tailwind utilities, so (same specificity) they win — flipping the whole app to dark
