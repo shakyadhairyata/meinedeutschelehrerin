@@ -28,8 +28,10 @@ export default function LessonText({ content, level }) {
       return
     }
     setPop({ ...anchor, word, loading: true, data: null })
+    // Send the surrounding sentence/block so the gloss can disambiguate words with several meanings.
+    const context = (el.closest('p,li,td,th,h1,h2,h3,blockquote')?.textContent || '').trim().slice(0, 240)
     try {
-      const res = await lookupWord(word, level)
+      const res = await lookupWord(word, level, context)
       cache.set(key, res)
       setPop((p) => (p && p.word === word ? { ...p, loading: false, data: res } : p))
     } catch (e) {
@@ -117,7 +119,7 @@ function WordPopover({ pop }) {
           </div>
           {d.example && <div className="wordpop-ex">„{d.example}“</div>}
           {d.note && <div className="wordpop-note">{d.note}</div>}
-          {d.source === 'ai' && <div className="wordpop-tag">✨ Neu – zur Vokabelliste hinzugefügt</div>}
+          {d.source === 'ai' && <div className="wordpop-tag">✨ Neu nachgeschlagen</div>}
         </>
       )}
     </div>

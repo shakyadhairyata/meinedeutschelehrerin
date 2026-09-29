@@ -32,14 +32,14 @@ public class LookupController : ApiControllerBase
     {
         if (string.IsNullOrWhiteSpace(word)) return BadRequest(new { error = "word is required" });
 
-        // Free, offline, always: match the word against the existing vocabulary.
-        var hit = await _lookup.MatchVocabAsync(word, ct);
+        // Free, offline, always: curated vocabulary, then the lookup cache.
+        var hit = await _lookup.MatchAsync(word, ct);
         if (hit is not null) return Ok(hit);
 
         // Miss: only spend an AI credit if the tier/quota allows; otherwise report "no entry".
         if (await _ai.TryConsumeAsync(UserId, ct))
         {
-            var glossed = await _lookup.GlossAndSaveAsync(word, context, level, ct);
+            var glossed = await _lookup.GlossAndCacheAsync(word, context, level, ct);
             if (glossed is not null) return Ok(glossed);
         }
 

@@ -9,12 +9,14 @@ namespace MeineDeutscheLehrerin.Infrastructure.Services;
 
 public interface ILookupService
 {
-    /// <summary>Fast, free, offline: match a word against the existing vocabulary. Null on a miss.</summary>
-    Task<WordLookupDto?> MatchVocabAsync(string word, CancellationToken ct = default);
+    /// <summary>Free, offline: match a word against the curated vocabulary and then the lookup cache
+    /// (previously looked-up words). Null on a miss.</summary>
+    Task<WordLookupDto?> MatchAsync(string word, CancellationToken ct = default);
 
-    /// <summary>Miss path: gloss the word via the language-service (AI) and SAVE the base form to the
-    /// vocabulary, so it is a free vocab hit next time. Null if the word can't be resolved.</summary>
-    Task<WordLookupDto?> GlossAndSaveAsync(string word, string? context, CefrLevel level, CancellationToken ct = default);
+    /// <summary>Miss path: gloss the word via the language-service (AI) and cache it by its surface
+    /// form, so the SAME word — inflected forms included — is free next time. The cache is separate
+    /// from the vocabulary, so looked-up words never enter the study/SRS deck. Null if unresolved.</summary>
+    Task<WordLookupDto?> GlossAndCacheAsync(string word, string? context, CefrLevel level, CancellationToken ct = default);
 }
 
 public class LookupService : ILookupService
@@ -32,53 +34,49 @@ public class LookupService : ILookupService
     private static string Normalize(string w) =>
         new string((w ?? "").Trim().Where(c => char.IsLetter(c) || c == '-').ToArray()).ToLowerInvariant();
 
-    public async Task<WordLookupDto?> MatchVocabAsync(string word, CancellationToken ct = default)
+    public async Task<WordLookupDto?> MatchAsync(string word, CancellationToken ct = default)
     {
         var norm = Normalize(word);
         if (norm.Length == 0) return null;
 
-        // Match the headword: exact ("essen"), or the noun after its article ("der Hund" ← "hund"),
-        // or the last token of a phrase ("sich freuen" ← "freuen").
+        // 1) Curated vocabulary: exact ("essen"), noun after its article ("der Hund" ← "hund"),
+        //    or the last token of a phrase ("sich freuen" ← "freuen").
         var suffix = " " + norm;
         var v = await _db.VocabularyItems.AsNoTracking()
             .FirstOrDefaultAsync(x => x.German.ToLower() == norm || x.German.ToLower().EndsWith(suffix), ct);
-        if (v is null) return null;
+        if (v is not null)
+            return new WordLookupDto(word, true, "vocab", v.German, v.English, v.PartOfSpeech,
+                v.Article, v.Plural, v.ExampleSentence, v.Note);
 
-        return new WordLookupDto(word, true, "vocab", v.German, v.English, v.PartOfSpeech,
-            v.Article, v.Plural, v.ExampleSentence, v.Note);
+        // 2) Lookup cache: this exact surface form was glossed before (free, no AI).
+        var c = await _db.LookupCache.AsNoTracking().FirstOrDefaultAsync(x => x.Word == norm, ct);
+        if (c is not null)
+            return new WordLookupDto(word, true, "cache", c.German, c.English, c.PartOfSpeech,
+                c.Article, c.Plural, c.Example, null);
+
+        return null;
     }
 
-    public async Task<WordLookupDto?> GlossAndSaveAsync(string word, string? context, CefrLevel level, CancellationToken ct = default)
+    public async Task<WordLookupDto?> GlossAndCacheAsync(string word, string? context, CefrLevel level, CancellationToken ct = default)
     {
         var g = await _lang.LookupWordAsync(word, context, level, ct);
         if (g is null) return null;
 
-        // Save the base form so the next lookup is a free vocab hit. Tagged "Nachschlagen" so
-        // looked-up words are identifiable. Deduped against the level's existing words.
-        var lvl = await _db.Levels.FirstOrDefaultAsync(l => l.Code == level, ct);
-        if (lvl is not null)
+        // Cache by the SURFACE form, so this exact word is free next time — not in the vocab deck.
+        var norm = Normalize(word);
+        if (norm.Length > 0 && !await _db.LookupCache.AnyAsync(x => x.Word == norm, ct))
         {
-            var germ = g.German.Trim();
-            if (germ.Length > 0)
+            _db.LookupCache.Add(new WordLookupEntry
             {
-                var exists = await _db.VocabularyItems
-                    .AnyAsync(x => x.LevelId == lvl.Id && x.German.ToLower() == germ.ToLower(), ct);
-                if (!exists)
-                {
-                    _db.VocabularyItems.Add(new VocabularyItem
-                    {
-                        LevelId = lvl.Id,
-                        German = germ,
-                        English = g.English,
-                        PartOfSpeech = g.PartOfSpeech ?? "",
-                        Article = g.Article,
-                        Plural = g.Plural,
-                        ExampleSentence = g.Example ?? "",
-                        ThemeTag = "Nachschlagen",
-                    });
-                    await _db.SaveChangesAsync(ct);
-                }
-            }
+                Word = norm,
+                German = g.German.Trim(),
+                English = g.English,
+                PartOfSpeech = g.PartOfSpeech ?? "",
+                Article = g.Article,
+                Plural = g.Plural,
+                Example = g.Example ?? "",
+            });
+            await _db.SaveChangesAsync(ct);
         }
 
         return new WordLookupDto(word, true, "ai", g.German, g.English, g.PartOfSpeech,
