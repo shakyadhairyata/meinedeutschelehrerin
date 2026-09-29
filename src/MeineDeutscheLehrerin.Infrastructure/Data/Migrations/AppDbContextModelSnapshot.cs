@@ -559,6 +559,50 @@ namespace MeineDeutscheLehrerin.Infrastructure.Data.Migrations
                     b.ToTable("VocabularyItems");
                 });
 
+            modelBuilder.Entity("MeineDeutscheLehrerin.Domain.Entities.WordLookupEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Article")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("English")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Example")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("German")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PartOfSpeech")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Plural")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Word")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Word")
+                        .IsUnique();
+
+                    b.ToTable("LookupCache");
+                });
+
             modelBuilder.Entity("MeineDeutscheLehrerin.Infrastructure.Identity.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
